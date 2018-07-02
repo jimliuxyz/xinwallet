@@ -7,7 +7,9 @@ import android.widget.EditText
 import android.widget.TextView
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
+import com.xinwang.xinwallet.presenter.customviews.BRDialogView
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
+import com.xinwang.xinwallet.tools.animation.BRDialog
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 
 class SmsVerifyActivity : XinActivity() {
@@ -72,6 +74,17 @@ class SmsVerifyActivity : XinActivity() {
     }
 
     fun loginClicked(view: View){
+
+        BRDialog.showCustomDialog(this, "test", "test",
+                "ok", "close", object : BRDialogView.BROnClickListener {
+            override fun onClick(brDialogView: BRDialogView) {
+                brDialogView.dismissWithAnimation()
+            }
+        }, object : BRDialogView.BROnClickListener {
+            override fun onClick(brDialogView: BRDialogView) {
+                brDialogView.dismissWithAnimation()
+            }
+        }, null, 0)
 
     }
 

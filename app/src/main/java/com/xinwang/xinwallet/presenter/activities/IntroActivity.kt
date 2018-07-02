@@ -4,6 +4,7 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import com.xinwang.xinwallet.R
 
 class IntroActivity : AppCompatActivity() {
@@ -17,5 +18,6 @@ class IntroActivity : AppCompatActivity() {
         val intent = Intent(this@IntroActivity, LoginActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+
     }
 }

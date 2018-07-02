@@ -1,6 +1,26 @@
 <resources>
-    <string name="app_name">emoneyprototype</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">xinwallet</string>
+    <string name="Splash.btn.login">Login</string>
+    <string name="SmsVerify.btn.next">Confirm</string>
+    <string name="Login.btn.next">Next</string>
+    <string name="Login.title">Phone Number</string>
+    <string name="SmsVerify.title">SMS Verification</string>
+    <string name="SmsVerify.desc1">your message is sent</string>
+    <string name="AccessibilityLabels.close">Close</string>
+    <string name="PinCode.title">Pin Code</string>
+    <string name="PinCode.placeholder1">%1$d digits PIN</string>
+    <string name="PinCode.placeholder2">enter again</string>
+    <string name="PinCode.option">PIN option</string>
+    <string name="PinCode.next">Confirm</string>
+    <string name="PinCode.option1">customize PIN digits</string>
+    <string name="PinCode.option2">6 digits PIN</string>
+    <string name="PinCode.option3">cancel</string>
+    <string name="SmsVerify.popup.verified">SMS verified</string>
+    <string name="RenewWallet.popup.warning1">you may lost all money and data in this wallet</string>
+    <string name="RenewWallet.popup.warning2">please confrim again</string>
+    <string name="RenewWallet.title">you already have a wallet</string>
+    <string name="RenewWallet.retain">retain</string>
+    <string name="RenewWallet.renew">renew</string>
+    <string name="SmsVerify.popup.failure">SMS failure\\ntry again</string>
+    <string name="RenewWallet.balance">balance:</string>
 </resources>

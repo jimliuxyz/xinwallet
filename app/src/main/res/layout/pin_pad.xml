@@ -27,6 +27,7 @@
 
     <com.xinwang.xinwallet.presenter.customviews.BRButton
         android:id="@+id/num2"
+        android:textAllCaps="false"
         android:layout_column="1"
         android:layout_columnWeight="1"
         android:layout_gravity="fill_horizontal"

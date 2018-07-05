@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.activities.LoginActivity">
+    tools:context=".presenter.activities.SmsVerifyActivity">
 
 
     <TextView
@@ -49,7 +49,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
-        android:onClick="loginClicked"
+        android:onClick="nextClicked"
         android:text="@string/Login.btn.next"
         app:buttonType="1"
         app:isBreadButton="true"

@@ -73,18 +73,21 @@ class SmsVerifyActivity : XinActivity() {
             etPincode.setText(text.substring(0, etPincode.text.length - 1))
     }
 
-    fun loginClicked(view: View){
+    fun nextClicked(view: View){
 
-        BRDialog.showCustomDialog(this, "test", "test",
-                "ok", "close", object : BRDialogView.BROnClickListener {
-            override fun onClick(brDialogView: BRDialogView) {
-                brDialogView.dismissWithAnimation()
-            }
-        }, object : BRDialogView.BROnClickListener {
-            override fun onClick(brDialogView: BRDialogView) {
-                brDialogView.dismissWithAnimation()
-            }
-        }, null, 0)
+//        BRDialog.showCustomDialog(this, "test", "test",
+//                "ok", "close", object : BRDialogView.BROnClickListener {
+//            override fun onClick(brDialogView: BRDialogView) {
+//                brDialogView.dismissWithAnimation()
+//            }
+//        }, object : BRDialogView.BROnClickListener {
+//            override fun onClick(brDialogView: BRDialogView) {
+//                brDialogView.dismissWithAnimation()
+//            }
+//        }, null, 0)
+
+//        BRDialog.showSimpleDialog(this, "", getString(R.string.SmsVerify_popup_verified))
+
 
     }
 

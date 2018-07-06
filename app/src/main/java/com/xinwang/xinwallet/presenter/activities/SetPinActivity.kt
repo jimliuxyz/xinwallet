@@ -16,12 +16,12 @@ import kotlinx.android.synthetic.main.activity_set_pin.*
 class SetPinActivity : AppCompatActivity() {
     private val TAG = LoginActivity::class.java.name
 
-    lateinit var etPin1: EditText
-    lateinit var etPin2: EditText
-    lateinit var etPin3: EditText
-    lateinit var etPin4: EditText
-    lateinit var etPin5: EditText
-    lateinit var etPin6: EditText
+    lateinit var etPin1: TextView
+    lateinit var etPin2: TextView
+    lateinit var etPin3: TextView
+    lateinit var etPin4: TextView
+    lateinit var etPin5: TextView
+    lateinit var etPin6: TextView
     lateinit var pinLayout: View
     lateinit var keypad: BRKeyboard
 
@@ -92,18 +92,18 @@ class SetPinActivity : AppCompatActivity() {
 
     private fun handleDeleteClick() {
         pinCursor = if (pinCursor <= 0) 0 else pinCursor - 1
-        fillPinCode(pinCursor, "")
+        fillPinCode(pinCursor, "–")
     }
 
     private fun fillPinCode(idx: Int, str: String) {
 
         when (idx) {
-            1 - 1 -> etPin1.setText(str)
-            2 - 1 -> etPin2.setText(str)
-            3 - 1 -> etPin3.setText(str)
-            4 - 1 -> etPin4.setText(str)
-            5 - 1 -> etPin5.setText(str)
-            6 - 1 -> etPin6.setText(str)
+            1 - 1 -> etPin1.setText("●")
+            2 - 1 -> etPin2.setText("●")
+            3 - 1 -> etPin3.setText("●")
+            4 - 1 -> etPin4.setText("●")
+            5 - 1 -> etPin5.setText("●")
+            6 - 1 -> etPin6.setText("●")
             else -> return
         }
 
@@ -124,7 +124,7 @@ class SetPinActivity : AppCompatActivity() {
     private fun clearPinCode(){
         pinCursor = 0
         for (i in 0..6){
-            fillPinCode(i, "")
+            fillPinCode(i, "–")
         }
     }
 

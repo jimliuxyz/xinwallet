@@ -24,12 +24,12 @@ import java.util.*
 class ReSetPinActivity : AppCompatActivity() {
     private val TAG = LoginActivity::class.java.name
 
-    lateinit var etPin1: EditText
-    lateinit var etPin2: EditText
-    lateinit var etPin3: EditText
-    lateinit var etPin4: EditText
-    lateinit var etPin5: EditText
-    lateinit var etPin6: EditText
+    lateinit var etPin1: TextView
+    lateinit var etPin2: TextView
+    lateinit var etPin3: TextView
+    lateinit var etPin4: TextView
+    lateinit var etPin5: TextView
+    lateinit var etPin6: TextView
     lateinit var pinLayout: View
     lateinit var keypad: BRKeyboard
 
@@ -49,8 +49,6 @@ class ReSetPinActivity : AppCompatActivity() {
 
         firstPinCode = intent.getStringExtra("pinCode")
 
-        println("firstPinCode=" + firstPinCode)
-        Toast.makeText(this, firstPinCode, Toast.LENGTH_SHORT).show()
         findViewById<TextView>(R.id.textDesc)?.let {
             it.text = "${it.text}\n+${countrycode} ${phonenumber}"
         }
@@ -109,12 +107,21 @@ class ReSetPinActivity : AppCompatActivity() {
     private fun fillPinCode(idx: Int, str: String) {
 
         when (idx) {
-            1 - 1 -> etPin1.setText(str)
-            2 - 1 -> etPin2.setText(str)
-            3 - 1 -> etPin3.setText(str)
-            4 - 1 -> etPin4.setText(str)
-            5 - 1 -> etPin5.setText(str)
-            6 - 1 -> etPin6.setText(str)
+//            1 - 1 -> etPin1.setText(str)
+//            2 - 1 -> etPin2.setText(str)
+//            3 - 1 -> etPin3.setText(str)
+//            4 - 1 -> etPin4.setText(str)
+//            5 - 1 -> etPin5.setText(str)
+//            6 - 1 -> etPin6.setText(str)
+
+
+            1 - 1 -> etPin1.setText("*")
+            2 - 1 -> etPin2.setText("*")
+            3 - 1 -> etPin3.setText("*")
+            4 - 1 -> etPin4.setText("*")
+            5 - 1 -> etPin5.setText("*")
+            6 - 1 -> etPin6.setText("*")
+
             else -> return
         }
 
@@ -127,15 +134,16 @@ class ReSetPinActivity : AppCompatActivity() {
                 var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
                 var editor = sharedPreferences.edit()
                 editor.putString("UserPinCode", firstPinCode)
-                if(editor.commit()) BRDialog.showSimpleDialog(this, "correct", getString(R.string.SmsVerify_popup_verified))
+                if (editor.commit()) BRDialog.showSimpleDialog(this, "correct", getString(R.string.SmsVerify_popup_verified))
             } else {
-                Toast.makeText(this,pincode.joinToString(separator = "")+"=="+firstPinCode.trim(),Toast.LENGTH_SHORT).show()
-                val intent = Intent(this,SetPinActivity::class.java)
+                Toast.makeText(this, pincode.joinToString(separator = "") + "==" + firstPinCode.trim(), Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, SetPinActivity::class.java)
                 startActivity(intent)
                 finish()
-                overridePendingTransition(R.anim.enter_from_left,R.anim.exit_to_right)
+                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right)
+                BRDialog.showSimpleDialog(this,"Incorrect","pin code is incorrect,")
 
-               // Toast.makeText(this, "wangPinCode", Toast.LENGTH_SHORT).show()
+
             }
 
         }
@@ -171,7 +179,7 @@ class ReSetPinActivity : AppCompatActivity() {
     fun nextClicked(view: View) {
 
         var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
-        Toast.makeText(this,sharedPreferences.getString("UserPinCode",""),Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, sharedPreferences.getString("UserPinCode", ""), Toast.LENGTH_SHORT).show()
     }
 
 }

@@ -83,6 +83,7 @@ class SetPinActivity : AppCompatActivity() {
         pinCursor = if (pinCursor >= pinDigits) pinDigits else pinCursor + 1
 
        // SpringAnimator.failShakeAnimation(this, pinLayout)
+        //20180706 test by nate.
 
     }
 

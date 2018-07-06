@@ -33,6 +33,7 @@ class SetPinActivity : AppCompatActivity() {
         val countrycode = intent.getStringExtra("countrycode")
         val phonenumber = intent.getStringExtra("phonenumber")
 
+
         findViewById<TextView>(R.id.textDesc)?.let {
             it.text = "${it.text}\n+${countrycode} ${phonenumber}"
         }
@@ -81,7 +82,8 @@ class SetPinActivity : AppCompatActivity() {
         fillPinCode(pinCursor, dig.toString())
         pinCursor = if (pinCursor >= pinDigits) pinDigits else pinCursor + 1
 
-        SpringAnimator.failShakeAnimation(this, pinLayout)
+       // SpringAnimator.failShakeAnimation(this, pinLayout)
+
     }
 
     private fun handleDeleteClick() {

@@ -86,6 +86,7 @@ class SetPinActivity : AppCompatActivity() {
         pinCursor = if (pinCursor >= pinDigits) pinDigits else pinCursor + 1
 
 
+       // SpringAnimator.failShakeAnimation(this, pinLayout)
 
     }
 
@@ -108,18 +109,19 @@ class SetPinActivity : AppCompatActivity() {
 
         pincode[idx] = if(str.length > 0) str[0] else ' '
 
-        if(pin6.text.length>0){
-           // Toast.makeText(this,pincode[0].toString(),Toast.LENGTH_SHORT).show()
+        var pinSt=pincode.joinToString(separator = "").trim()
+        if(pinSt.length==6){
+            Toast.makeText(this,pinSt,Toast.LENGTH_SHORT).show()
             val intent = Intent(this,ReSetPinActivity::class.java)
-            intent.putExtra("pineCodeArray",pincode)
+            intent.putExtra("pinCode",pinSt)
             startActivity(intent)
             overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-
+            finish()
         }
-        println("pincode : " + pincode.joinToString("").trim()+"_@"+pin6.text.length)
+
     }
 
-    private fun clearPinCOde(){
+    private fun clearPinCode(){
         pinCursor = 0
         for (i in 0..6){
             fillPinCode(i, "")
@@ -131,7 +133,7 @@ class SetPinActivity : AppCompatActivity() {
     }
 
     private fun togglePinDigits() {
-        clearPinCOde()
+        clearPinCode()
         if (pinDigits == 4) {
             pinDigits = 6
             etPin5.visibility = View.VISIBLE

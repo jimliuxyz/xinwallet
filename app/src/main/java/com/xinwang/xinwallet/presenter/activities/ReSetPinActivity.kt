@@ -13,6 +13,7 @@ import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import kotlinx.android.synthetic.main.activity_set_pin.*
 import android.R.array
 import android.app.Activity
+import android.content.Intent
 import android.drm.DrmStore
 import android.view.ActionMode
 import com.xinwang.xinwallet.tools.animation.BRDialog
@@ -46,10 +47,10 @@ class ReSetPinActivity : AppCompatActivity() {
         val countrycode = intent.getStringExtra("countrycode")
         val phonenumber = intent.getStringExtra("phonenumber")
 
-        val pincode = intent.getCharArrayExtra("pineCodeArray")
+        firstPinCode = intent.getStringExtra("pinCode")
 
-        firstPinCode = pincode.joinToString(separator = "")
         println("firstPinCode=" + firstPinCode)
+        Toast.makeText(this, firstPinCode, Toast.LENGTH_SHORT).show()
         findViewById<TextView>(R.id.textDesc)?.let {
             it.text = "${it.text}\n+${countrycode} ${phonenumber}"
         }
@@ -120,15 +121,21 @@ class ReSetPinActivity : AppCompatActivity() {
         pincode[idx] = if (str.length > 0) str[0] else ' '
 
         if (pin6.text.length > 0) {
-            if (pincode.joinToString(separator = "").equals(firstPinCode)) {
+
+            if (pincode.joinToString(separator = "").equals(firstPinCode.trim())) {
                 // save SharedPreferences
                 var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
                 var editor = sharedPreferences.edit()
                 editor.putString("UserPinCode", firstPinCode)
                 if(editor.commit()) BRDialog.showSimpleDialog(this, "correct", getString(R.string.SmsVerify_popup_verified))
             } else {
-                Toast.makeText(this, "wangPinCode", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,pincode.joinToString(separator = "")+"=="+firstPinCode.trim(),Toast.LENGTH_SHORT).show()
+                val intent = Intent(this,SetPinActivity::class.java)
+                startActivity(intent)
                 finish()
+                overridePendingTransition(R.anim.enter_from_left,R.anim.exit_to_right)
+
+               // Toast.makeText(this, "wangPinCode", Toast.LENGTH_SHORT).show()
             }
 
         }

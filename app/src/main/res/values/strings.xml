@@ -23,4 +23,7 @@
     <string name="SmsVerify.popup.failure">SMS failure\\ntry again</string>
     <string name="RenewWallet.balance">balance:</string>
     <string name="PinCode.title2">Enter your pincode again</string>
+    <string name="CellphoneNumber">CellphoneNumber</string>
+    <string name="EnterPhoneNumber">Enter your cell phone Number</string>
+
 </resources>

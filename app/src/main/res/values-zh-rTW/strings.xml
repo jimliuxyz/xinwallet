@@ -24,5 +24,7 @@
     <string name="SmsVerify.popup.failure">驗證碼輸入錯誤\\n請重新操作</string>
     <string name="RenewWallet.balance">錢包餘額:</string>
     <string name="PinCode.title2">請再次輸入PIN</string>
+    <string name="CellphoneNumber">手機號碼</string>
+    <string name="EnterPhoneNumber">請輸入手機號碼</string>
 
 </resources>

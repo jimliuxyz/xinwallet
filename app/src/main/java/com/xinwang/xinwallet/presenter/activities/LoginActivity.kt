@@ -4,14 +4,19 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.util.JsonReader
 import android.util.Log
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import com.hbb20.CountryCodePicker
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
+import org.json.JSONObject
+import java.net.HttpURLConnection
+import java.net.URL
 
 class LoginActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
@@ -29,7 +34,6 @@ class LoginActivity : XinActivity() {
 
         ccp = findViewById(R.id.ccp)
         ccp.setOnCountryChangeListener {
-//            println(ccp.selectedCountryNameCode)
         }
 
         keypad = findViewById(R.id.brkeyboard)
@@ -37,13 +41,10 @@ class LoginActivity : XinActivity() {
         keypad.setBRButtonBackgroundResId(R.drawable.keyboard_trans_button)
         keypad.setBRButtonTextColor(R.color.gray)
         keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
-
         keypad.addOnInsertListener { key: String ->
-//            println(key)
             handleClick(key)
         }
 
-        etPhoneNumber.setText("1234567890")
     }
 
     private fun handleClick(key: String?) {
@@ -64,7 +65,7 @@ class LoginActivity : XinActivity() {
 
     private fun handleDigitClick(dig: Int?) {
         etPhoneNumber.append(dig.toString())
-        SpringAnimator.failShakeAnimation(this, etPhoneNumber)
+       // SpringAnimator.failShakeAnimation(this, etPhoneNumber)
     }
 
     private fun handleDeleteClick() {
@@ -74,11 +75,37 @@ class LoginActivity : XinActivity() {
     }
 
     fun loginClicked(view: View){
-        val intent = Intent(this, SmsVerifyActivity::class.java)
-        intent.putExtra("countrycode", ccp.selectedCountryCode)
-        intent.putExtra("phonenumber", etPhoneNumber.text.trim().toString())
-        startActivity(intent)
-        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+
+        if(etPhoneNumber.text.trim().length>0){
+            val phone=etPhoneNumber.text
+
+            Thread{
+                val url = URL("https://twilio168.azurewebsites.net/api/HttpTriggerCSharp3?code=vsBbawBOQg3Ww0o7Mocv2mXOAcVwywv1NvCBGzmEkcGE5x9RXTHHcQ==&phoneNo="+phone)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.requestMethod = "GET"
+                val inputStream = connection.inputStream
+                val reader =inputStream.bufferedReader()
+                val ss=reader.readLine()
+                val jsonObj = JSONObject(ss)
+                var response=  jsonObj.getString("status")
+                while (response.equals("ok")){
+
+                    val intent = Intent(this, SmsVerifyActivity::class.java)
+                    intent.putExtra("countrycode", ccp.selectedCountryCode)
+                    intent.putExtra("phonenumber", etPhoneNumber.text.trim().toString())
+                    startActivity(intent)
+                }
+
+                runOnUiThread { Toast.makeText(this,url.toString(),Toast.LENGTH_SHORT).show() }
+
+            }.start()
+
+        }else{
+            Toast.makeText(this,R.string.EnterPhoneNumber,Toast.LENGTH_SHORT).show()
+        }
+
+
+
     }
 
 }

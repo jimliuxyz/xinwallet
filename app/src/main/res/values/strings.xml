@@ -24,6 +24,8 @@
     <string name="RenewWallet.balance">balance:</string>
     <string name="PinCode.title2">Enter your pincode again</string>
     <string name="CellphoneNumber">CellphoneNumber</string>
-    <string name="EnterPhoneNumber">Enter your cell phone Number</string>
+    <string name="EnterPhoneNumber">Enter your cell phone number</string>
+    <string name="Agreement">Agreement</string>
+    <string name="SMS.veriftyCode">SMS VerifityCode</string>
 
 </resources>

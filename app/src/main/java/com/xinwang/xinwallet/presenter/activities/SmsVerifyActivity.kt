@@ -39,11 +39,10 @@ class SmsVerifyActivity : XinActivity() {
         keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
 
         keypad.addOnInsertListener { key: String ->
-            //            println(key)
             handleClick(key)
         }
 
-        etPincode.setText("123456")
+       // etPincode.setText("123456")
     }
 
     private fun handleClick(key: String?) {
@@ -64,7 +63,7 @@ class SmsVerifyActivity : XinActivity() {
 
     private fun handleDigitClick(dig: Int?) {
         etPincode.append(dig.toString())
-        SpringAnimator.failShakeAnimation(this, etPincode)
+        //SpringAnimator.failShakeAnimation(this, etPincode)
     }
 
     private fun handleDeleteClick() {
@@ -75,18 +74,19 @@ class SmsVerifyActivity : XinActivity() {
 
     fun nextClicked(view: View){
 
-//        BRDialog.showCustomDialog(this, "test", "test",
-//                "ok", "close", object : BRDialogView.BROnClickListener {
-//            override fun onClick(brDialogView: BRDialogView) {
-//                brDialogView.dismissWithAnimation()
-//            }
-//        }, object : BRDialogView.BROnClickListener {
-//            override fun onClick(brDialogView: BRDialogView) {
-//                brDialogView.dismissWithAnimation()
-//            }
-//        }, null, 0)
 
-//        BRDialog.showSimpleDialog(this, "", getString(R.string.SmsVerify_popup_verified))
+        BRDialog.showCustomDialog(this, "test", "test",
+                "ok", "close", object : BRDialogView.BROnClickListener {
+            override fun onClick(brDialogView: BRDialogView) {
+                brDialogView.dismissWithAnimation()
+            }
+        }, object : BRDialogView.BROnClickListener {
+            override fun onClick(brDialogView: BRDialogView) {
+                brDialogView.dismissWithAnimation()
+            }
+        }, null, 0)
+
+        BRDialog.showSimpleDialog(this, "", getString(R.string.SmsVerify_popup_verified))
 
 
     }

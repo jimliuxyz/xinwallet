@@ -88,7 +88,7 @@ class LoginActivity : XinActivity() {
                 val ss=reader.readLine()
                 val jsonObj = JSONObject(ss)
                 var response=  jsonObj.getString("status")
-                while (response.equals("ok")){
+               if (response.equals("ok")){
 
                     val intent = Intent(this, SmsVerifyActivity::class.java)
                     intent.putExtra("countrycode", ccp.selectedCountryCode)
@@ -96,7 +96,9 @@ class LoginActivity : XinActivity() {
                     startActivity(intent)
                 }
 
-                runOnUiThread { Toast.makeText(this,url.toString(),Toast.LENGTH_SHORT).show() }
+                runOnUiThread {
+                    //Toast.makeText(this,url.toString(),Toast.LENGTH_SHORT).show()
+                }
 
             }.start()
 

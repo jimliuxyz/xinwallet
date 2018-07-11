@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="5dp"
         app:ccp_autoDetectCountry="true"
         app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
         app:ccp_countryPreference="cn,us,tw"
@@ -23,7 +23,7 @@
     <EditText
         android:id="@+id/phonenumber"
         android:layout_width="0dp"
-        android:layout_height="52dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="50dp"
@@ -44,9 +44,8 @@
 
     <com.xinwang.xinwallet.presenter.customviews.BRButton
         android:id="@+id/button"
-        android:layout_width="312dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="350dp"
+        android:layout_height="65dp"
         android:background="@android:color/transparent"
         android:onClick="loginClicked"
         android:text="@string/Login.btn.next"
@@ -54,8 +53,10 @@
         app:isBreadButton="true"
         app:layout_constraintBottom_toTopOf="@+id/brkeyboard"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phonenumber" />
+        app:layout_constraintTop_toBottomOf="@+id/phonenumber"
+        app:layout_constraintVertical_bias="0.7" />
 
     <com.xinwang.xinwallet.presenter.customviews.BRKeyboard
         android:id="@+id/brkeyboard"

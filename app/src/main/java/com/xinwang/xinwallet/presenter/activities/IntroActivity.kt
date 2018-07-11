@@ -13,6 +13,7 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
     }
 
+
     fun loginClicked(view: View){
         val intent = Intent(this@IntroActivity, LoginActivity::class.java)
         startActivity(intent)

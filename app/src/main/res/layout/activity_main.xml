@@ -22,20 +22,21 @@
         android:id="@+id/ccp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:ccp_autoDetectCountry="true"
-        app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
-        app:ccp_countryPreference="cn,us,tw"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
+        app:ccp_countryPreference="cn,us,tw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.xinwang.xinwallet.presenter.customviews.BRKeyboard
         android:id="@+id/brkeyboard"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -43,7 +44,6 @@
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:showAlphabet="true"
-        android:layout_width="0dp" />
+        app:showAlphabet="true" />
 
 </android.support.constraint.ConstraintLayout>

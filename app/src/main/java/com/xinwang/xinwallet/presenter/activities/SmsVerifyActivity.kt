@@ -102,6 +102,9 @@ class SmsVerifyActivity : XinActivity() {
 //                    intent.putExtra("countrycode", ccp.selectedCountryCode)
 //                    intent.putExtra("phonenumber", etPhoneNumber.text.trim().toString())
 //                    startActivity(intent)
+                }else if(result.equals("ng")){
+
+
                 }
 
 

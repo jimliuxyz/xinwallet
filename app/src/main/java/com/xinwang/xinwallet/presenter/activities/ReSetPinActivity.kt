@@ -1,6 +1,5 @@
 package com.xinwang.xinwallet.presenter.activities
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +11,16 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import kotlinx.android.synthetic.main.activity_set_pin.*
+import android.R.array
+import android.app.Activity
+import android.drm.DrmStore
+import android.view.ActionMode
+import com.xinwang.xinwallet.tools.animation.BRDialog
+import java.io.File.separator
+import java.util.*
 
-class SetPinActivity : AppCompatActivity() {
+
+class ReSetPinActivity : AppCompatActivity() {
     private val TAG = LoginActivity::class.java.name
 
     lateinit var etPin1: EditText
@@ -28,15 +35,21 @@ class SetPinActivity : AppCompatActivity() {
     var pinDigits = 6
     var pinCursor = 0
     var pincode: CharArray = "      ".toCharArray()
+    var firstPinCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_pin)
 
+        textView.setText("Enter PinCode Again")
+
         val countrycode = intent.getStringExtra("countrycode")
         val phonenumber = intent.getStringExtra("phonenumber")
 
+        val pincode = intent.getCharArrayExtra("pineCodeArray")
 
+        firstPinCode = pincode.joinToString(separator = "")
+        println("firstPinCode=" + firstPinCode)
         findViewById<TextView>(R.id.textDesc)?.let {
             it.text = "${it.text}\n+${countrycode} ${phonenumber}"
         }
@@ -85,8 +98,6 @@ class SetPinActivity : AppCompatActivity() {
         fillPinCode(pinCursor, dig.toString())
         pinCursor = if (pinCursor >= pinDigits) pinDigits else pinCursor + 1
 
-
-
     }
 
     private fun handleDeleteClick() {
@@ -106,22 +117,27 @@ class SetPinActivity : AppCompatActivity() {
             else -> return
         }
 
-        pincode[idx] = if(str.length > 0) str[0] else ' '
+        pincode[idx] = if (str.length > 0) str[0] else ' '
 
-        if(pin6.text.length>0){
-           // Toast.makeText(this,pincode[0].toString(),Toast.LENGTH_SHORT).show()
-            val intent = Intent(this,ReSetPinActivity::class.java)
-            intent.putExtra("pineCodeArray",pincode)
-            startActivity(intent)
-            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+        if (pin6.text.length > 0) {
+            if (pincode.joinToString(separator = "").equals(firstPinCode)) {
+                // save SharedPreferences
+                var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
+                var editor = sharedPreferences.edit()
+                editor.putString("UserPinCode", firstPinCode)
+                if(editor.commit()) BRDialog.showSimpleDialog(this, "correct", getString(R.string.SmsVerify_popup_verified))
+            } else {
+                Toast.makeText(this, "wangPinCode", Toast.LENGTH_SHORT).show()
+                finish()
+            }
 
         }
-        println("pincode : " + pincode.joinToString("").trim()+"_@"+pin6.text.length)
+
     }
 
-    private fun clearPinCOde(){
+    private fun clearPinCOde() {
         pinCursor = 0
-        for (i in 0..6){
+        for (i in 0..6) {
             fillPinCode(i, "")
         }
     }
@@ -147,6 +163,8 @@ class SetPinActivity : AppCompatActivity() {
 
     fun nextClicked(view: View) {
 
+        var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
+        Toast.makeText(this,sharedPreferences.getString("UserPinCode",""),Toast.LENGTH_SHORT).show()
     }
 
 }

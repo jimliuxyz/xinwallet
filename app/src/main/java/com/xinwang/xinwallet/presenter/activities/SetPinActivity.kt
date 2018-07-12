@@ -65,6 +65,12 @@ class SetPinActivity : AppCompatActivity() {
 //        }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+//        clearPinCode()
+        Toast.makeText(this,"test", Toast.LENGTH_LONG)
+    }
+
     private fun handleClick(key: String?) {
 
         if (key == null) {
@@ -85,29 +91,31 @@ class SetPinActivity : AppCompatActivity() {
         fillPinCode(pinCursor, dig.toString())
         pinCursor = if (pinCursor >= pinDigits) pinDigits else pinCursor + 1
 
-
        // SpringAnimator.failShakeAnimation(this, pinLayout)
 
     }
 
     private fun handleDeleteClick() {
         pinCursor = if (pinCursor <= 0) 0 else pinCursor - 1
-        fillPinCode(pinCursor, "–")
+        fillPinCode(pinCursor, getString(R.string.PinCode_dot_default))
     }
 
     private fun fillPinCode(idx: Int, str: String) {
 
+        var unicode =if(str.equals(getString(R.string.PinCode_dot_default))) R.string.PinCode_dot_default else R.string.PinCode_dot_typed
+
         when (idx) {
-            1 - 1 -> etPin1.setText("●")
-            2 - 1 -> etPin2.setText("●")
-            3 - 1 -> etPin3.setText("●")
-            4 - 1 -> etPin4.setText("●")
-            5 - 1 -> etPin5.setText("●")
-            6 - 1 -> etPin6.setText("●")
+            1 - 1 -> etPin1.setText(unicode)
+            2 - 1 -> etPin2.setText(unicode)
+            3 - 1 -> etPin3.setText(unicode)
+            4 - 1 -> etPin4.setText(unicode)
+            5 - 1 -> etPin5.setText(unicode)
+            6 - 1 -> etPin6.setText(unicode)
             else -> return
         }
 
-        pincode[idx] = if(str.length > 0) str[0] else ' '
+       // pincode[idx] = if(str.length > 0) str[0] else ' '
+        pincode[idx]=if(str.equals(R.string.PinCode_dot_default)) ' ' else str[0]
 
         var pinSt=pincode.joinToString(separator = "").trim()
         if(pinSt.length==6){
@@ -116,7 +124,7 @@ class SetPinActivity : AppCompatActivity() {
             intent.putExtra("pinCode",pinSt)
             startActivity(intent)
             overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-            finish()
+//            finish()
         }
 
     }
@@ -124,7 +132,7 @@ class SetPinActivity : AppCompatActivity() {
     private fun clearPinCode(){
         pinCursor = 0
         for (i in 0..6){
-            fillPinCode(i, "–")
+            fillPinCode(i, getString(R.string.PinCode_dot_default))
         }
     }
 

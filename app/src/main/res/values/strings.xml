@@ -1,4 +1,6 @@
 <resources>
+    <string name="PinCode.dot.default">–</string>
+    <string name="PinCode.dot.typed">●</string>
     <string name="app_name">xinwallet</string>
     <string name="Splash.btn.login">Login</string>
     <string name="SmsVerify.btn.next">Confirm</string>
@@ -29,6 +31,7 @@
     <string name="SMS.veriftyCode">SMS Verification Code</string>
     <string name="Resend.VerificationCode"><u>Resend Verification code</u></string>
     <string name="Verificationcode.fourDigital"> At least 4 digits </string>
-    
+    <string name="title_activity_main2_test">Main2Activity_test</string>
+
 
 </resources>

@@ -15,6 +15,7 @@ import android.R.array
 import android.app.Activity
 import android.content.Intent
 import android.drm.DrmStore
+import android.support.v7.widget.Toolbar
 import android.view.ActionMode
 import com.xinwang.xinwallet.tools.animation.BRDialog
 import java.io.File.separator
@@ -41,6 +42,7 @@ class ReSetPinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_set_pin)
+        setSupportActionBar(toolbar)
 
         textView.setText("Enter PinCode Again")
 
@@ -66,11 +68,10 @@ class ReSetPinActivity : AppCompatActivity() {
         keypad.setBRButtonBackgroundResId(R.drawable.keyboard_trans_button)
         keypad.setBRButtonTextColor(R.color.gray)
         keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
-
         keypad.addOnInsertListener { key: String ->
-            //            println(key)
             handleClick(key)
         }
+
 
 //        findViewById<View>(R.id.btnNext).let {
 //            it.visibility = View.GONE
@@ -101,59 +102,49 @@ class ReSetPinActivity : AppCompatActivity() {
 
     private fun handleDeleteClick() {
         pinCursor = if (pinCursor <= 0) 0 else pinCursor - 1
-        fillPinCode(pinCursor, "")
+        fillPinCode(pinCursor, getString(R.string.PinCode_dot_default))
     }
 
     private fun fillPinCode(idx: Int, str: String) {
 
+        var unicode = if (str.equals(getString(R.string.PinCode_dot_default))) R.string.PinCode_dot_default else R.string.PinCode_dot_typed
         when (idx) {
-//            1 - 1 -> etPin1.setText(str)
-//            2 - 1 -> etPin2.setText(str)
-//            3 - 1 -> etPin3.setText(str)
-//            4 - 1 -> etPin4.setText(str)
-//            5 - 1 -> etPin5.setText(str)
-//            6 - 1 -> etPin6.setText(str)
-
-
-            1 - 1 -> etPin1.setText("*")
-            2 - 1 -> etPin2.setText("*")
-            3 - 1 -> etPin3.setText("*")
-            4 - 1 -> etPin4.setText("*")
-            5 - 1 -> etPin5.setText("*")
-            6 - 1 -> etPin6.setText("*")
-
+            1 - 1 -> etPin1.setText(unicode)
+            2 - 1 -> etPin2.setText(unicode)
+            3 - 1 -> etPin3.setText(unicode)
+            4 - 1 -> etPin4.setText(unicode)
+            5 - 1 -> etPin5.setText(unicode)
+            6 - 1 -> etPin6.setText(unicode)
             else -> return
         }
 
-        pincode[idx] = if (str.length > 0) str[0] else ' '
 
-        if (pin6.text.length > 0) {
+        pincode[idx] = if (str == getString(R.string.PinCode_dot_default)) ' ' else str[0]
 
-            if (pincode.joinToString(separator = "").equals(firstPinCode.trim())) {
+
+        var pinSt: String = pincode.joinToString(separator = "").trim()
+
+        if (pinSt.length == 6) {//last pin number
+
+            if (pinSt.equals(firstPinCode.trim())) {
                 // save SharedPreferences
                 var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
                 var editor = sharedPreferences.edit()
                 editor.putString("UserPinCode", firstPinCode)
                 if (editor.commit()) BRDialog.showSimpleDialog(this, "correct", getString(R.string.SmsVerify_popup_verified))
             } else {
-                Toast.makeText(this, pincode.joinToString(separator = "") + "==" + firstPinCode.trim(), Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, SetPinActivity::class.java)
-                startActivity(intent)
-                finish()
-                overridePendingTransition(R.anim.enter_from_left, R.anim.exit_to_right)
-                BRDialog.showSimpleDialog(this,"Incorrect","pin code is incorrect,")
-
-
+                // Toast.makeText(this, pincode.joinToString(separator = "") + "==" + firstPinCode.trim(), Toast.LENGTH_SHORT).show()
+                BRDialog.showSimpleDialog(this, "Incorrect", "pin code is incorrect,")
+                SpringAnimator.failShakeAnimation(this, pinLayout)
+                clearPinCode()
             }
-
         }
-
     }
 
-    private fun clearPinCOde() {
-        pinCursor = 0
+    private fun clearPinCode() {
+        pinCursor = -1
         for (i in 0..6) {
-            fillPinCode(i, "")
+            fillPinCode(i, getString(R.string.PinCode_dot_default))
         }
     }
 
@@ -162,7 +153,7 @@ class ReSetPinActivity : AppCompatActivity() {
     }
 
     private fun togglePinDigits() {
-        clearPinCOde()
+        clearPinCode()
         if (pinDigits == 4) {
             pinDigits = 6
             etPin5.visibility = View.VISIBLE
@@ -180,6 +171,7 @@ class ReSetPinActivity : AppCompatActivity() {
 
         var sharedPreferences = getSharedPreferences("shared1", Activity.MODE_PRIVATE)
         Toast.makeText(this, sharedPreferences.getString("UserPinCode", ""), Toast.LENGTH_SHORT).show()
+
     }
 
 }

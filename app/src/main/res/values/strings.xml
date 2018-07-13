@@ -1,6 +1,5 @@
 <resources>
-    <string name="PinCode.dot.default">–</string>
-    <string name="PinCode.dot.typed">●</string>
+
     <string name="app_name">xinwallet</string>
     <string name="Splash.btn.login">Login</string>
     <string name="SmsVerify.btn.next">Confirm</string>
@@ -9,9 +8,9 @@
     <string name="SmsVerify.title">SMS Verification</string>
     <string name="SmsVerify.desc1">your message is sent</string>
     <string name="AccessibilityLabels.close">Close</string>
-    <string name="PinCode.title1">Enter New PinCode</string>
+    <string name="PinCode.title1">Set PinCode</string>
     <string name="PinCode.title2">Enter your PinCode again</string>
-    <string name="PineCode.body1">設置新的PinCode\n您的PinCode將用於登入和確認交易</string>
+    <string name="PineCode.body1">Enter New PinCode</string>
     <string name="PineCode.body2">您的PinCode將用於登入和確認交易</string>
     <string name="PinCode.placeholder1">%1$d digits PIN</string>
     <string name="PinCode.placeholder2">enter again</string>

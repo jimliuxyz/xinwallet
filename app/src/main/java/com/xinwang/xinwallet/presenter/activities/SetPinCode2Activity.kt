@@ -16,8 +16,8 @@ class SetPinCode2Activity : PinCodeActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         pincode1 = intent.getStringExtra("pincode")
+        brkeyboard.setBRKeyboardColor(R.color.white)
     }
 
     override fun onPinCodeReady(pincode: String) {

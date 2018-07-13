@@ -19,7 +19,7 @@ import io.michaelrocks.libphonenumber.android.Phonenumber
 import kotlinx.android.synthetic.main.activity_login.*
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
-import com.jimliuxyz.tsnote.services.translation.XinWalletService
+import com.xinwang.xinwallet.apiservice.XinWalletService
 
 
 class LoginActivity : XinActivity() {

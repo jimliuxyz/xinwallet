@@ -1,9 +1,13 @@
-package com.jimliuxyz.tsnote.services.translation
+package com.xinwang.xinwallet.apiservice
 
 import com.google.gson.JsonObject
+import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
+import com.xinwang.xinwallet.tools.crypto.AESCipher
+import com.xinwang.xinwallet.tools.crypto.CryptoHelper
 import com.xinwang.xinwallet.tools.util.doNetwork
 import com.xinwang.xinwallet.tools.util.doUI
+import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -22,9 +26,18 @@ class XinWalletService {
     private val BASE_URL = "https://twilio168.azurewebsites.net/"
 //    private val AZURE_CODE = ""
 
+    private val ENCODE_KEY = "XIN34524-1343"
+    private var USER_TOKEN = ""
+
     private var api: XinWalletWebApi
 
+    companion object {
+        val instance = XinWalletService()
+    }
+
     private constructor() {
+        println("isPinCodeSetted() : " + this.isPinCodeSetted())
+        println("hasUserToken() : " + this.hasUserToken())
 
         val okHttpClient = OkHttpClient().newBuilder()
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -40,11 +53,8 @@ class XinWalletService {
         api = retrofit.create<XinWalletWebApi>(XinWalletWebApi::class.java)
     }
 
-    companion object {
-        val instance = XinWalletService()
-    }
 
-    fun requestSMSVerify(phoneNo: String, callback: (status:String?) -> Unit) {
+    fun requestSMSVerify(phoneNo: String, callback: (status: String?) -> Unit) {
         val AZURE_CODE = "vsBbawBOQg3Ww0o7Mocv2mXOAcVwywv1NvCBGzmEkcGE5x9RXTHHcQ=="
 
         doNetwork {
@@ -68,7 +78,7 @@ class XinWalletService {
     }
 
 
-    fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status:String?) -> Unit) {
+    fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?) -> Unit) {
         val AZURE_CODE = "hNVOk/a7GCnVlrTxBACnEQsapW0SHFeswnuCzfI84aJl8MkDzPk/rA=="
 
         doNetwork {
@@ -95,9 +105,54 @@ class XinWalletService {
         }
     }
 
+    fun isPinCodeSetted(): Boolean {
+        val md5 = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_PINCODE, "")
+        return !md5.isNullOrBlank()
+    }
 
-//    fun setLocalValue(strResId: Int, value:String){
-//        XinWalletApp.instance.applicationContext.setPref(strResId, value)
-//    }
+    fun setPinCode(pincode: String) {
+        val md5 = CryptoHelper.md5((ENCODE_KEY + pincode).toByteArray()).contentToString()
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, md5)
+    }
+
+    fun verifyPinCodo(pincode_: String): Boolean {
+        val md5_ = CryptoHelper.md5((ENCODE_KEY + pincode_).toByteArray()).contentToString()
+        val md5 = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_PINCODE, "")
+
+        return md5_.equals(md5)
+    }
+
+    fun delPinCode() {
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, "")
+    }
+
+
+    fun setUserToken(token: String) {
+        USER_TOKEN = token
+        val cipher = AESCipher.encrypt(ENCODE_KEY, token)
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_USERTOKEN, cipher)
+    }
+
+    fun getUserToken(): String? {
+        if (!USER_TOKEN.isNullOrBlank())
+            return USER_TOKEN
+
+        val cipher = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_USERTOKEN, "")
+        if (cipher.isNullOrBlank())
+            return null
+
+        USER_TOKEN = AESCipher.decrypt(ENCODE_KEY, cipher)
+        return USER_TOKEN
+    }
+
+    fun delUserToken() {
+        USER_TOKEN = ""
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_USERTOKEN, "")
+    }
+
+    fun hasUserToken(): Boolean {
+        val token = getUserToken()
+        return !token.isNullOrBlank()
+    }
 
 }

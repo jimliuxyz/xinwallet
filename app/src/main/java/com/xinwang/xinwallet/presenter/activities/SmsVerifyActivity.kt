@@ -7,21 +7,13 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
-import com.jimliuxyz.tsnote.services.translation.XinWalletService
+import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
-import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
-import com.xinwang.xinwallet.tools.animation.BRDialog
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import kotlinx.android.synthetic.main.activity_sms_verify.*
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONObject
 
 class SmsVerifyActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
@@ -56,6 +48,7 @@ class SmsVerifyActivity : XinActivity() {
                 updatePasscode()
             }
         })
+
     }
 
     override fun onStart() {
@@ -87,7 +80,7 @@ class SmsVerifyActivity : XinActivity() {
                 if (ok) {
                     //BRDialog.showSimpleDialog(this, "", getString(R.string.SmsVerify_popup_verified))
 
-                    val intent = Intent(this, SetPinActivity::class.java)
+                    val intent = Intent(this, SetPinCode1Activity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
                     startActivity(intent)

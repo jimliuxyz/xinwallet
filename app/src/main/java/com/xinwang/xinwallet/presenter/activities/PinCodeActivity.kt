@@ -1,45 +1,43 @@
 package com.xinwang.xinwallet.presenter.activities
 
-import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
-import kotlinx.android.synthetic.main.activity_set_pin.*
+import com.xinwang.xinwallet.tools.util.doIO
+import kotlinx.android.synthetic.main.activity_pincoin.*
 
-class SetPinActivity : AppCompatActivity() {
+open class PinCodeActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
 
-    lateinit var etPin1: TextView
-    lateinit var etPin2: TextView
-    lateinit var etPin3: TextView
-    lateinit var etPin4: TextView
-    lateinit var etPin5: TextView
-    lateinit var etPin6: TextView
-    lateinit var pinLayout: View
-    lateinit var keypad: BRKeyboard
+    private val CHAR_CLEAR: String = "–"
+    private val CHAR_DONE: String = "●"
 
-    var pinDigits = 6
-    var pinCursor = 0
-    var pincode: CharArray = "      ".toCharArray()
+    private lateinit var etPin1: TextView
+    private lateinit var etPin2: TextView
+    private lateinit var etPin3: TextView
+    private lateinit var etPin4: TextView
+    private lateinit var etPin5: TextView
+    private lateinit var etPin6: TextView
+    private lateinit var pinLayout: View
+    private lateinit var keypad: BRKeyboard
+
+    private var pinDigits = 6
+    private var pinCursor = 0
+    private var pincode: CharArray = "      ".toCharArray()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_set_pin)
-
-        val countrycode = intent.getStringExtra("countrycode")
-        val phonenumber = intent.getStringExtra("phonenumber")
-
-
-//        findViewById<TextView>(R.id.textDesc)?.let {
-//            it.text = "${it.text}\n+${countrycode} ${phonenumber}"
-//        }
+        setContentView(R.layout.activity_pincoin)
+        setSupportActionBar(toolbar)
+//        toolbar.title = ""
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         pinLayout = findViewById(R.id.pinLayout)
         etPin1 = findViewById(R.id.pin1)
@@ -56,19 +54,8 @@ class SetPinActivity : AppCompatActivity() {
         keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
 
         keypad.addOnInsertListener { key: String ->
-            //            println(key)
             handleClick(key)
         }
-
-//        findViewById<View>(R.id.btnNext).let {
-//            it.visibility = View.GONE
-//        }
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-//        clearPinCode()
-        Toast.makeText(this,"test", Toast.LENGTH_LONG)
     }
 
     private fun handleClick(key: String?) {
@@ -90,53 +77,66 @@ class SetPinActivity : AppCompatActivity() {
     private fun handleDigitClick(dig: Int?) {
         fillPinCode(pinCursor, dig.toString())
         pinCursor = if (pinCursor >= pinDigits) pinDigits else pinCursor + 1
-
-       // SpringAnimator.failShakeAnimation(this, pinLayout)
-
     }
 
     private fun handleDeleteClick() {
         pinCursor = if (pinCursor <= 0) 0 else pinCursor - 1
-        fillPinCode(pinCursor, getString(R.string.PinCode_dot_default))
+        fillPinCode(pinCursor, CHAR_CLEAR)
     }
 
     private fun fillPinCode(idx: Int, str: String) {
-
-        var unicode =if(str.equals(getString(R.string.PinCode_dot_default))) R.string.PinCode_dot_default else R.string.PinCode_dot_typed
+        var replacer = if (str.equals(CHAR_CLEAR)) CHAR_CLEAR else CHAR_DONE
 
         when (idx) {
-            1 - 1 -> etPin1.setText(unicode)
-            2 - 1 -> etPin2.setText(unicode)
-            3 - 1 -> etPin3.setText(unicode)
-            4 - 1 -> etPin4.setText(unicode)
-            5 - 1 -> etPin5.setText(unicode)
-            6 - 1 -> etPin6.setText(unicode)
+            1 - 1 -> etPin1.setText(replacer)
+            2 - 1 -> etPin2.setText(replacer)
+            3 - 1 -> etPin3.setText(replacer)
+            4 - 1 -> etPin4.setText(replacer)
+            5 - 1 -> etPin5.setText(replacer)
+            6 - 1 -> etPin6.setText(replacer)
             else -> return
         }
 
-       // pincode[idx] = if(str.length > 0) str[0] else ' '
-        pincode[idx]=if(str.equals(R.string.PinCode_dot_default)) ' ' else str[0]
+        pincode[idx] = if (replacer.equals(CHAR_CLEAR)) ' ' else str[0]
 
-        var pinSt=pincode.joinToString(separator = "").trim()
-        if(pinSt.length==6){
-            Toast.makeText(this,pinSt,Toast.LENGTH_SHORT).show()
-            val intent = Intent(this,ReSetPinActivity::class.java)
-            intent.putExtra("pinCode",pinSt)
-            startActivity(intent)
-            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-//            finish()
+        var pincodeStr = pincode.joinToString(separator = "").trim()
+//        println(" " + pincodeStr)
+
+        if (pincodeStr.length == pinDigits) {
+            doIO {
+                runOnUiThread {
+                    onPinCodeReady(pincodeStr)
+                }
+            }
         }
-
     }
 
-    private fun clearPinCode(){
+    open fun hideAppBar() {
+        appBar.visibility = View.GONE
+    }
+
+    open fun sharkNClear() {
+        SpringAnimator.failShakeAnimation(this, pinLayout)
+
+        pinLayout.postOnAnimationDelayed( {
+            clearPinCode()
+        }, 300)
+    }
+
+    //for override
+    open fun onPinCodeReady(pincode: String) {
+        sharkNClear()
+        Toast.makeText(this, "you should override `onPincodeReady`", Toast.LENGTH_LONG).show()
+    }
+
+    open fun clearPinCode() {
         pinCursor = 0
-        for (i in 0..6){
-            fillPinCode(i, getString(R.string.PinCode_dot_default))
+        for (i in 0..6) {
+            fillPinCode(i, CHAR_CLEAR)
         }
     }
 
-    fun pinOptionClick(view: View) {
+    private fun pinOptionClick(view: View) {
         togglePinDigits()
     }
 

@@ -21,13 +21,12 @@
     <string name="PinCode.option2">cancel</string>
     <string name="SmsVerify.popup.verified">SMS verified</string>
     <string name="RenewWallet.popup.warning1">you may lost all money and data in this wallet</string>
-    <string name="RenewWallet.popup.warningf2">please confirm again</string>
+    <string name="RenewWallet.popup.warning2">please confirm again</string>
     <string name="RenewWallet.title">you already have a wallet</string>
     <string name="RenewWallet.retain">retain</string>
     <string name="RenewWallet.renew">renew</string>
     <string name="SmsVerify.popup.failure">SMS failure\\ntry again</string>
     <string name="RenewWallet.balance">balance:</string>
-
     <string name="CellphoneNumber">PhoneNumber</string>
     <string name="InvalidPhoneNumber">Invalid phone number</string>
     <string name="Agreement">點選下一步即表示同意使用授權及隱私權</string>
@@ -39,7 +38,9 @@
     <string name="SMS.Checked.done">完成簡訊驗證</string>
     <string name="SMS.enterPhonePlease">請輸入正確的手機號碼</string>
     <string name="SMS.enterOTP">輸入驗證碼</string>
-    
-
-
+    <string name="title_activity_main2_test">Main2Activity_test</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.jimliuxyz.tsnote.services.translation
+package com.xinwang.xinwallet.apiservice
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject

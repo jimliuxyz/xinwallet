@@ -128,6 +128,7 @@
         android:background="@android:color/transparent"
         android:onClick="nextClicked"
         android:text="@string/PinCode.next"
+        android:visibility="invisible"
         app:buttonType="1"
         app:isBreadButton="true"
         app:layout_constraintBottom_toTopOf="@+id/brkeyboard"
@@ -163,7 +164,9 @@
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        android:text="@string/PinCode.next"
+        android:gravity="center"
+        android:text="@string/PineCode.body1"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />

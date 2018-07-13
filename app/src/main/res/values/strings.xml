@@ -9,7 +9,10 @@
     <string name="SmsVerify.title">SMS Verification</string>
     <string name="SmsVerify.desc1">your message is sent</string>
     <string name="AccessibilityLabels.close">Close</string>
-    <string name="PinCode.title1">Enter Pincode</string>
+    <string name="PinCode.title1">Enter New PinCode</string>
+    <string name="PinCode.title2">Enter your PinCode again</string>
+    <string name="PineCode.body1">設置新的PinCode\n您的PinCode將用於登入和確認交易</string>
+    <string name="PineCode.body2">您的PinCode將用於登入和確認交易</string>
     <string name="PinCode.placeholder1">%1$d digits PIN</string>
     <string name="PinCode.placeholder2">enter again</string>
     <string name="PinCode.option">PIN option</string>
@@ -18,20 +21,25 @@
     <string name="PinCode.option2">cancel</string>
     <string name="SmsVerify.popup.verified">SMS verified</string>
     <string name="RenewWallet.popup.warning1">you may lost all money and data in this wallet</string>
-    <string name="RenewWallet.popup.warning2">please confirm again</string>
+    <string name="RenewWallet.popup.warningf2">please confirm again</string>
     <string name="RenewWallet.title">you already have a wallet</string>
     <string name="RenewWallet.retain">retain</string>
     <string name="RenewWallet.renew">renew</string>
     <string name="SmsVerify.popup.failure">SMS failure\\ntry again</string>
     <string name="RenewWallet.balance">balance:</string>
-    <string name="PinCode.title2">Enter your pincode again</string>
-    <string name="CellphoneNumber">CellphoneNumber</string>
+
+    <string name="CellphoneNumber">PhoneNumber</string>
     <string name="InvalidPhoneNumber">Invalid phone number</string>
     <string name="Agreement">點選下一步即表示同意使用授權及隱私權</string>
     <string name="SMS.veriftyCode">SMS Verification Code</string>
     <string name="Resend.VerificationCode"><u>Resend Verification code</u></string>
     <string name="Verificationcode.fourDigital"> At least 4 digits </string>
-    <string name="title_activity_main2_test">Main2Activity_test</string>
+    <string name="SMS.unsentInfo">請輸入簡訊驗證碼。\n若您未收到簡訊，請嘗試下列方法：</string>
+    <string name="SMS.resentSMS">重新送驗證碼</string>
+    <string name="SMS.Checked.done">完成簡訊驗證</string>
+    <string name="SMS.enterPhonePlease">請輸入正確的手機號碼</string>
+    <string name="SMS.enterOTP">輸入驗證碼</string>
+    
 
 
 </resources>

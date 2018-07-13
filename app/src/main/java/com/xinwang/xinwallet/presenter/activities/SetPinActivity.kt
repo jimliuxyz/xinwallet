@@ -37,9 +37,9 @@ class SetPinActivity : AppCompatActivity() {
         val phonenumber = intent.getStringExtra("phonenumber")
 
 
-        findViewById<TextView>(R.id.textDesc)?.let {
-            it.text = "${it.text}\n+${countrycode} ${phonenumber}"
-        }
+//        findViewById<TextView>(R.id.textDesc)?.let {
+//            it.text = "${it.text}\n+${countrycode} ${phonenumber}"
+//        }
 
         pinLayout = findViewById(R.id.pinLayout)
         etPin1 = findViewById(R.id.pin1)

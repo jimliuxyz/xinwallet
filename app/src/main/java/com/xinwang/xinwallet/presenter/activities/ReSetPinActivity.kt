@@ -44,16 +44,16 @@ class ReSetPinActivity : AppCompatActivity() {
         setContentView(R.layout.activity_set_pin)
         setSupportActionBar(toolbar)
 
-        textView.setText("Enter PinCode Again")
+        textDesc.setText(R.string.PinCode_title2)
 
         val countrycode = intent.getStringExtra("countrycode")
         val phonenumber = intent.getStringExtra("phonenumber")
 
         firstPinCode = intent.getStringExtra("pinCode")
 
-        findViewById<TextView>(R.id.textDesc)?.let {
-            it.text = "${it.text}\n+${countrycode} ${phonenumber}"
-        }
+//        findViewById<TextView>(R.id.textDesc)?.let {
+//            it.text = "${it.text}\n+${countrycode} ${phonenumber}"
+//        }
 
         pinLayout = findViewById(R.id.pinLayout)
         etPin1 = findViewById(R.id.pin1)

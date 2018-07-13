@@ -17,6 +17,7 @@ import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.BRDialog
+import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import kotlinx.android.synthetic.main.activity_sms_verify.*
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -55,7 +56,6 @@ class SmsVerifyActivity : XinActivity() {
                 updatePasscode()
             }
         })
-
     }
 
     override fun onStart() {
@@ -94,10 +94,11 @@ class SmsVerifyActivity : XinActivity() {
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
                     finish()
                 } else {
-                    AlertDialog.Builder(this).setMessage(R.string.SmsVerify_popup_failure)
-                            .setPositiveButton("ok") { dialog, which ->
-                            }
-                            .create().show()
+                    SpringAnimator.failShakeAnimation(this,etPasscode)
+//                    AlertDialog.Builder(this).setMessage(R.string.SmsVerify_popup_failure)
+//                            .setPositiveButton("ok") { dialog, which ->
+//                            }
+//                            .create().show()
                 }
             }
         }

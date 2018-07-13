@@ -56,7 +56,7 @@
     <item name="extra_light_blue_background" type="color">#F5F8FA</item>
 
     <item name="button_primary_normal" type="color">#1a337d</item>
-    <item name="button_secondary" type="color">#F5F8FA</item>
+    <item name="button_secondary" type="color">#f5f8fa</item>
     <item name="button_secondary_text" type="color">#232426</item>
 
     //fingerprint

@@ -5,22 +5,35 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
+import java.util.*
 
-class IntroActivity : AppCompatActivity() {
+class IntroActivity : XinActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
-
-//        LoaderDialogFragment().show(supportFragmentManager, "LoaderDialogFragment")
     }
 
+    var timer: Timer? = null
 
-    fun loginClicked(view: View){
-        val intent = Intent(this@IntroActivity, LoginActivity::class.java)
-        startActivity(intent)
-        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+    override fun onResume() {
+        super.onResume()
 
+        timer = Timer()
+        timer?.schedule(object : TimerTask(){
+            override fun run() {
+                val intent = Intent(this@IntroActivity, HomeActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }, 2000)
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer?.cancel()
     }
 }

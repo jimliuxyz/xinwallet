@@ -9,7 +9,7 @@ import com.xinwang.xinwallet.R
 
 class UnlockAppActivity : PinCodeActivity() {
 
-    private lateinit var backto: String
+    private var backto: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -23,12 +23,19 @@ class UnlockAppActivity : PinCodeActivity() {
     }
 
     override fun onPinCodeReady(pincode: String) {
-        if (XinWalletService.instance.verifyPinCodo(pincode)) {
-            val intent = Intent()
-            intent.setClassName(this, backto)
+        if (XinWalletService.instance.verifyPinCode(pincode)) {
+            println("go ~ " + backto)
 
-            startActivity(intent)
-            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+            if (!backto.isNullOrBlank()) {
+                val intent = Intent()
+                intent.setClassName(this, backto)
+
+                startActivity(intent)
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+            } else {
+                finish()
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+            }
         } else {
             sharkNClear()
         }

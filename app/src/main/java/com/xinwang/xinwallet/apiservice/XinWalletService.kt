@@ -26,7 +26,7 @@ class XinWalletService {
     private val BASE_URL = "https://twilio168.azurewebsites.net/"
 //    private val AZURE_CODE = ""
 
-    private val ENCODE_KEY = "XIN34524-1343"
+    private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
     private var USER_TOKEN = ""
 
     private var api: XinWalletWebApi
@@ -36,6 +36,7 @@ class XinWalletService {
     }
 
     private constructor() {
+//        delUserToken()
         println("isPinCodeSetted() : " + this.isPinCodeSetted())
         println("hasUserToken() : " + this.hasUserToken())
 
@@ -79,12 +80,46 @@ class XinWalletService {
 
 
     fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?) -> Unit) {
-        val AZURE_CODE = "hNVOk/a7GCnVlrTxBACnEQsapW0SHFeswnuCzfI84aJl8MkDzPk/rA=="
+        val AZURE_CODE = "G/HlMKjalgY5r0GXahXfaWQ2aVnVypkmowdUXUEsOUEfmheOCcaXLw=="
 
         doNetwork {
             val call = api.verifySMSPasscode(AZURE_CODE
                     , URLEncoder.encode(phoneNo, "utf-8")
                     , URLEncoder.encode(passcode, "utf-8")
+            )
+            var res: JsonObject? = null
+
+            try {
+                res = call.execute().body()
+                println(res)
+
+                var status = res!!.get("status").asString
+                var token = res!!.get("token").asString
+
+                val ok = !status.isNullOrBlank() && status.equals("ok")
+                if (ok)
+                    setUserToken(token)
+                else
+                    delUserToken()
+
+                doUI {
+                    callback(status)
+                }
+                return@doNetwork
+            } catch (e: Exception) {
+                println("request return:" + "\n" + res?.toString())
+                e.printStackTrace()
+            }
+            callback(null)
+        }
+    }
+
+    fun setUserName(username: String, callback: (status: String?) -> Unit) {
+        val AZURE_CODE = "code=32npjc/WSfYFIRnzVtz/F8ezvoalEjc0DMt8Z1ovaiCKUoXkYteSJA=="
+
+        doNetwork {
+            val call = api.setUserName(AZURE_CODE, USER_TOKEN
+                    , URLEncoder.encode(username, "utf-8")
             )
             var res: JsonObject? = null
 
@@ -115,14 +150,14 @@ class XinWalletService {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, md5)
     }
 
-    fun verifyPinCodo(pincode_: String): Boolean {
-        val md5_ = CryptoHelper.md5((ENCODE_KEY + pincode_).toByteArray()).contentToString()
+    fun verifyPinCode(pincode: String): Boolean {
+        val md5_ = CryptoHelper.md5((ENCODE_KEY + pincode).toByteArray()).contentToString()
         val md5 = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_PINCODE, "")
 
         return md5_.equals(md5)
     }
 
-    fun delPinCode() {
+    private fun delPinCode() {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, "")
     }
 
@@ -148,6 +183,7 @@ class XinWalletService {
     fun delUserToken() {
         USER_TOKEN = ""
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_USERTOKEN, "")
+        delPinCode()
     }
 
     fun hasUserToken(): Boolean {
@@ -155,4 +191,7 @@ class XinWalletService {
         return !token.isNullOrBlank()
     }
 
+    fun isLoginReady(): Boolean {
+        return hasUserToken() && isPinCodeSetted()
+    }
 }

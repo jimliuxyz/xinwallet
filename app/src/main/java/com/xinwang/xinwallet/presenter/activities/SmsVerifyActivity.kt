@@ -85,7 +85,7 @@ class SmsVerifyActivity : XinActivity() {
 
                     startActivity(intent)
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-                    finish()
+//                    finish()
                 } else {
                     SpringAnimator.failShakeAnimation(this,etPasscode)
 //                    AlertDialog.Builder(this).setMessage(R.string.SmsVerify_popup_failure)

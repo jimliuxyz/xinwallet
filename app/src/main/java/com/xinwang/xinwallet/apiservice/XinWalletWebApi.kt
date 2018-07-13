@@ -17,11 +17,17 @@ interface XinWalletWebApi {
             @Query("phoneNo", encoded = true) phoneNo: String)
             : Call<JsonObject>
 
-    @GET("api/HttpTriggerDBtest")
+    @GET("api/HttpTriggerSmsCheck")
     fun verifySMSPasscode(
             @Query("code") code: String,
             @Query("phoneNo", encoded = true) phoneNo: String,
             @Query("smsCode", encoded = true) smsCode: String)
             : Call<JsonObject>
 
+    @GET("api/HttpTriggerInputName")
+    fun setUserName(
+            @Query("code") code: String,
+            @Query("token") token: String,
+            @Query("name", encoded = true) name: String)
+            : Call<JsonObject>
 }

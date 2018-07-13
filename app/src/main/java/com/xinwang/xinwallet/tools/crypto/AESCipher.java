@@ -2,6 +2,7 @@ package com.xinwang.xinwallet.tools.crypto;
 
 import android.util.Base64;
 import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -37,4 +38,25 @@ public class AESCipher {
             return null;
         }
     }
+
+//    public static byte[] Encrypt(SecretKey secretKey, String msg) throws Exception
+//    {
+//        Cipher cipher = Cipher.getInstance("AES"); //: 等同 AES/ECB/PKCS5Padding
+//        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+//        System.out.println("AES_DEFAULT IV:"+cipher.getIV());
+//        System.out.println("AES_DEFAULT Algoritm:"+cipher.getAlgorithm());
+//        byte[] byteCipherText = cipher.doFinal(msg.getBytes());
+//        System.out.println("加密結果的Base64編碼：" + Base64.getEncoder().encodeToString(byteCipherText));
+//        return byteCipherText;
+//    }
+//
+//    public static byte[] Decrypt(SecretKey secretKey, byte[] cipherText) throws Exception
+//    {
+//        Cipher cipher = Cipher.getInstance("AES");
+//        cipher.init(Cipher.DECRYPT_MODE, secretKey);
+//        byte[] decryptedText = cipher.doFinal(cipherText);
+//        String strDecryptedText = new String(decryptedText);
+//        System.out.println("解密結果：" + strDecryptedText);
+//        return decryptedText;
+//    }
 }

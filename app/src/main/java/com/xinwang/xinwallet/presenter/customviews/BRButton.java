@@ -140,6 +140,8 @@ public class BRButton extends Button {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnabled())
+            return super.onTouchEvent(event);
         if (isBreadButton) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (getParent() != null) {
@@ -179,6 +181,7 @@ public class BRButton extends Button {
             modifiedWidth = width - 10;
             modifiedHeight = height - height / 4 - 5;
             bRect.set(5, 5, modifiedWidth, modifiedHeight + 5);
+            int ROUND_PIXELS = (int)bRect.height()/2;
             canvas.drawRoundRect(bRect, ROUND_PIXELS, ROUND_PIXELS, bPaint);
             if (type == 2 || type == 3)
                 canvas.drawRoundRect(bRect, ROUND_PIXELS, ROUND_PIXELS, bPaintStroke);
@@ -206,6 +209,9 @@ public class BRButton extends Button {
         if (type == 1) { //blue
             bPaint.setColor(getContext().getColor(R.color.button_primary_normal));
             setTextColor(getContext().getColor(R.color.white));
+            if(!isEnabled()){
+                bPaint.setColor(getContext().getColor(R.color.extra_light_gray));
+            }
         } else if (type == 2) { //gray stroke
             bPaintStroke.setColor(getContext().getColor(R.color.extra_light_gray));
             bPaintStroke.setStyle(Paint.Style.STROKE);
@@ -229,6 +235,12 @@ public class BRButton extends Button {
             bPaint.setStyle(Paint.Style.FILL);
         }
         invalidate();
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setType(type);
     }
 
     private void press(int duration) {

@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#303F9F</color>
 
 
     <item name="white" type="color">#ffffff</item>
@@ -55,7 +55,7 @@
     <item name="pin_pad_text" type="color">#A3A8AE</item>
     <item name="extra_light_blue_background" type="color">#F5F8FA</item>
 
-    <item name="button_primary_normal" type="color">#4C98FD</item>
+    <item name="button_primary_normal" type="color">#1a337d</item>
     <item name="button_secondary" type="color">#F5F8FA</item>
     <item name="button_secondary_text" type="color">#232426</item>
 
@@ -88,5 +88,9 @@
     // Dialog button colors
     <color name="dialog_button_positive">#4b77f3</color>
     <color name="dialog_button_negative">#b3c0c8</color>
+
+    //Xin
+    <color name="primary_color">#1a337d</color>
+    <color name="loader_ring_color">#1a337d</color>
 
 </resources>

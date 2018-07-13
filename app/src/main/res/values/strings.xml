@@ -26,7 +26,7 @@
     <string name="RenewWallet.balance">balance:</string>
     <string name="PinCode.title2">Enter your pincode again</string>
     <string name="CellphoneNumber">CellphoneNumber</string>
-    <string name="EnterPhoneNumber">Enter your cell phone number</string>
+    <string name="InvalidPhoneNumber">Invalid phone number</string>
     <string name="Agreement">點選下一步即表示同意使用授權及隱私權</string>
     <string name="SMS.veriftyCode">SMS Verification Code</string>
     <string name="Resend.VerificationCode"><u>Resend Verification code</u></string>

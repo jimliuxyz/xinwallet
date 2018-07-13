@@ -25,9 +25,8 @@
     <string name="RenewWallet.balance">錢包餘額:</string>
     <string name="PinCode.title2">請再次輸入PIN</string>
     <string name="CellphoneNumber">手機號碼</string>
-    <string name="EnterPhoneNumber">請輸入手機號碼</string>
+    <string name="InvalidPhoneNumber">無效的手機號碼</string>
     <string name="Agreement">點選下一步即表示同意使用授權及隱私權</string>
     <string name="Resend.VerificationCode"><u>重送簡訊驗證碼</u></string>
-    <string name="Verificationcode.fourDigital">請輸入四位驗證碼</string>
 
 </resources>

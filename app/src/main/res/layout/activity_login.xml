@@ -7,89 +7,135 @@
     tools:context=".presenter.activities.LoginActivity">
 
 
+    <View
+        android:id="@+id/banner"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/primary_color"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.hbb20.CountryCodePicker
         android:id="@+id/ccp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="24dp"
         app:ccp_autoDetectCountry="true"
         app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
         app:ccp_countryPreference="cn,us,tw"
         app:ccp_textSize="22dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+
+    <!--<EditText-->
+    <!--android:id="@+id/etPhoneNumber"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:layout_marginLeft="15dp"-->
+    <!--android:layout_marginRight="15dp"-->
+    <!--android:layout_marginTop="50dp"-->
+    <!--android:clickable="false"-->
+    <!--android:cursorVisible="false"-->
+    <!--android:ems="10"-->
+    <!--android:focusable="false"-->
+    <!--android:focusableInTouchMode="false"-->
+    <!--android:hint="@string/CelletPhoneNumber"-->
+    <!--android:inputType="phone"-->
+    <!--android:maxLength="13"-->
+    <!--android:textIsSelectable="false"-->
+    <!--android:textSize="26sp"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintHorizontal_bias="0.0"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:layout_constraintTop_toBottomOf="@+id/view" />-->
+
 
     <EditText
-        android:id="@+id/phonenumber"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="50dp"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:hint="@string/CellphoneNumber"
-        android:inputType="phone"
-        android:maxLength="13"
-        android:textIsSelectable="false"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <com.xinwang.xinwallet.presenter.customviews.BRButton
-        android:id="@+id/button"
-        android:layout_width="350dp"
-        android:layout_height="65dp"
-        android:background="@android:color/transparent"
-        android:onClick="loginClicked"
-        android:text="@string/Login.btn.next"
-        app:buttonType="1"
-        app:isBreadButton="true"
-        app:layout_constraintBottom_toTopOf="@+id/brkeyboard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phonenumber"
-        app:layout_constraintVertical_bias="0.7" />
-
-    <com.xinwang.xinwallet.presenter.customviews.BRKeyboard
-        android:id="@+id/brkeyboard"
+        android:id="@+id/etPhoneNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:showAlphabet="false" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="180dp"
-        android:layout_margin="0dp"
-        android:layout_marginTop="8dp"
-        android:background="#2765d2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/Agreement"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:background="@android:color/transparent"
+        android:backgroundTint="@color/gray"
+        android:clickable="false"
+        android:cursorVisible="true"
+        android:ems="20"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:hint="@string/CellphoneNumber"
+        android:inputType="phone"
+        android:maxLength="20"
+        android:textIsSelectable="false"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ccp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/ccp"
+        app:layout_constraintTop_toTopOf="@+id/ccp" />
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/extra_light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phonenumber" />
+        app:layout_constraintTop_toBottomOf="@+id/ccp" />
+
+    <TextView
+        android:id="@+id/btnResend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/Agreement"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <com.xinwang.xinwallet.presenter.customviews.BRButton
+        android:id="@+id/btnNext"
+        android:layout_width="350dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/primary_color"
+        android:onClick="loginClicked"
+        android:text="@string/Login.btn.next"
+        app:buttonType="1"
+        app:hasShadow="false"
+        app:isBreadButton="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnResend" />
+
+    <!--<com.xinwang.xinwallet.presenter.customviews.BRKeyboard-->
+    <!--android:id="@+id/brkeyboard"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--app:layout_constraintEnd_toEndOf="parent"-->
+    <!--app:layout_constraintStart_toStartOf="parent"-->
+    <!--app:showAlphabet="false" />-->
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
 
 
 </android.support.constraint.ConstraintLayout>

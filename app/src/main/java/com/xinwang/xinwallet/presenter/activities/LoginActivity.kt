@@ -1,10 +1,9 @@
 package com.xinwang.xinwallet.presenter.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.util.JsonReader
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.EditText
@@ -13,101 +12,101 @@ import com.hbb20.CountryCodePicker
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
-import com.xinwang.xinwallet.tools.animation.SpringAnimator
-import org.json.JSONObject
-import java.net.HttpURLConnection
-import java.net.URL
+import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
+import io.michaelrocks.libphonenumber.android.NumberParseException
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+import io.michaelrocks.libphonenumber.android.Phonenumber
+import kotlinx.android.synthetic.main.activity_login.*
+import android.text.InputType
+import android.text.method.PasswordTransformationMethod
+import com.jimliuxyz.tsnote.services.translation.XinWalletService
+
 
 class LoginActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
 
-    lateinit var etPhoneNumber: EditText
-    lateinit var ccp: CountryCodePicker
-    lateinit var keypad: BRKeyboard
+    private var curPhoneNo: Phonenumber.PhoneNumber? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        etPhoneNumber = findViewById(R.id.phonenumber)
-//        etPincode.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+//        etPasscode.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
-        ccp = findViewById(R.id.ccp)
+        //set keyboard style to number only
+        etPhoneNumber.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+        etPhoneNumber.transformationMethod = object : PasswordTransformationMethod() {
+            override fun getTransformation(source: CharSequence, view: View): CharSequence {
+                return source
+            }
+        }
+
+        etPhoneNumber.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                verifyPhoneNumber()
+            }
+        })
+
         ccp.setOnCountryChangeListener {
+            verifyPhoneNumber()
         }
-
-        keypad = findViewById(R.id.brkeyboard)
-        keypad.setShowDot(false)
-        keypad.setBRButtonBackgroundResId(R.drawable.keyboard_trans_button)
-        keypad.setBRButtonTextColor(R.color.gray)
-        keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
-        keypad.addOnInsertListener { key: String ->
-            handleClick(key)
-        }
-
+        ccp.showNameCode(false)
     }
 
-    private fun handleClick(key: String?) {
+    override fun onStart() {
+        super.onStart()
+        ccp.setCountryForNameCode("TW")
+        etPhoneNumber.setText("0986123456")
+        etPhoneNumber.requestFocus()
+        verifyPhoneNumber()
+    }
 
-        if (key == null) {
-            Log.e(TAG, "handleClick: key is null! ")
-            return
+    private fun verifyPhoneNumber(): Phonenumber.PhoneNumber? {
+        var phoneUtil = PhoneNumberUtil.createInstance(this)
+
+        curPhoneNo = null
+        try {
+            curPhoneNo = phoneUtil.parse(etPhoneNumber.text, ccp.selectedCountryNameCode)?.takeIf {
+                phoneUtil.isValidNumber(it)
+            }
+        } catch (e: NumberParseException) {
+            e.printStackTrace()
         }
 
-        if (key.isEmpty()) {
-            handleDeleteClick()
-        } else if (Character.isDigit(key[0])) {
-            handleDigitClick(Integer.parseInt(key.substring(0, 1)))
-        } else {
-            Log.e(TAG, "handleClick: oops: $key")
-        }
+        btnNext.isEnabled = curPhoneNo != null
+        return curPhoneNo
     }
 
-    private fun handleDigitClick(dig: Int?) {
-        etPhoneNumber.append(dig.toString())
-       // SpringAnimator.failShakeAnimation(this, etPhoneNumber)
-    }
+    fun loginClicked(view: View) {
 
-    private fun handleDeleteClick() {
-        var text = etPhoneNumber.text
-        if (text.length > 0)
-            etPhoneNumber.setText(text.substring(0, etPhoneNumber.text.length - 1))
-    }
+        val loader = LoaderDialogFragment()
+        loader.show(supportFragmentManager, "LoaderDialogFragment")
 
-    fun loginClicked(view: View){
+        val phoneNo = "${curPhoneNo!!.countryCode}${curPhoneNo!!.nationalNumber}"
+        XinWalletService.instance.requestSMSVerify(phoneNo){status->
+            runOnUiThread {
+                loader.dismiss()
 
-        if(etPhoneNumber.text.trim().length>0){
-            val phone=etPhoneNumber.text
+                val ok = !status.isNullOrBlank() && status.equals("ok")
 
-            Thread{
-                val url = URL("https://twilio168.azurewebsites.net/api/HttpTriggerCSharp3?code=vsBbawBOQg3Ww0o7Mocv2mXOAcVwywv1NvCBGzmEkcGE5x9RXTHHcQ==&phoneNo="+phone)
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                val inputStream = connection.inputStream
-                val reader =inputStream.bufferedReader()
-                val ss=reader.readLine()
-                val jsonObj = JSONObject(ss)
-                var response=  jsonObj.getString("status")
-               if (response.equals("ok")){
-
+                if (ok) {
                     val intent = Intent(this, SmsVerifyActivity::class.java)
-                    intent.putExtra("countrycode", ccp.selectedCountryCode)
-                    intent.putExtra("phonenumber", etPhoneNumber.text.trim().toString())
+                    intent.putExtra("countrycode", curPhoneNo!!.countryCode.toString())
+                    intent.putExtra("phonenumber", curPhoneNo!!.nationalNumber.toString())
+
                     startActivity(intent)
+                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+                } else {
+                    //todo: server may failed, show a message
                 }
-
-                runOnUiThread {
-                    //Toast.makeText(this,url.toString(),Toast.LENGTH_SHORT).show()
-                }
-
-            }.start()
-
-        }else{
-            Toast.makeText(this,R.string.EnterPhoneNumber,Toast.LENGTH_SHORT).show()
+            }
         }
-
-
-
     }
 
 }

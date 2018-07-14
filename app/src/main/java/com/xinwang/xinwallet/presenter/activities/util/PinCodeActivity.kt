@@ -1,4 +1,4 @@
-package com.xinwang.xinwallet.presenter.activities
+package com.xinwang.xinwallet.presenter.activities.util
 
 import android.os.Bundle
 import android.util.Log
@@ -6,11 +6,10 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
-import com.xinwang.xinwallet.presenter.activities.util.XinActivity
+import com.xinwang.xinwallet.presenter.activities.login.LoginActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import com.xinwang.xinwallet.tools.util.doIO
-import kotlinx.android.synthetic.main.activity_pincoin.*
 
 open class PinCodeActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name

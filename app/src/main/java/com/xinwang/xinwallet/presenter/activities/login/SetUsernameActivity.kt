@@ -1,4 +1,4 @@
-package com.xinwang.xinwallet.presenter.activities
+package com.xinwang.xinwallet.presenter.activities.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.presenter.activities.HomeActivity
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.SpringAnimator

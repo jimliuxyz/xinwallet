@@ -1,4 +1,4 @@
-package com.xinwang.xinwallet.presenter.activities
+package com.xinwang.xinwallet.presenter.activities.login
 
 import android.content.Intent
 import android.os.Bundle

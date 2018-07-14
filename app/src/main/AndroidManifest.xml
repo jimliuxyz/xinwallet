@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presenter.activities.LoginActivity"
+            android:name=".presenter.activities.login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
@@ -36,7 +36,7 @@
             <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".presenter.activities.SmsVerifyActivity"
+            android:name=".presenter.activities.login.SmsVerifyActivity"
             android:launchMode="singleTask">
 
             <!-- <intent-filter> -->
@@ -44,19 +44,19 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.SetPinCode1Activity">
+        <activity android:name=".presenter.activities.login.SetPinCode1Activity">
 
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->
             <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".presenter.activities.SetPinCode2Activity"></activity>
-        <activity android:name=".presenter.activities.UnlockAppActivity" />
+        <activity android:name=".presenter.activities.login.SetPinCode2Activity"></activity>
+        <activity android:name=".presenter.activities.util.UnlockAppActivity" />
         <activity
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/Home.title" />
-        <activity android:name=".presenter.activities.SetUsernameActivity"
+        <activity android:name=".presenter.activities.login.SetUsernameActivity"
             android:windowSoftInputMode="stateAlwaysVisible">
 
             <!--<intent-filter>-->

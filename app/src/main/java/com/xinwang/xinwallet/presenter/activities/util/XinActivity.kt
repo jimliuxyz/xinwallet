@@ -11,6 +11,7 @@ import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.*
+import com.xinwang.xinwallet.presenter.activities.login.*
 
 open class XinActivity : AppCompatActivity() {
 

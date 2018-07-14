@@ -1,4 +1,4 @@
 <resources>
-    <string name="PREF_PINCODE">PREF_PINCODE</string>
-    <string name="PREF_USERTOKEN">PREF_USERTOKEN</string>
+    <string name="PREF_PINCODE" translatable="false">PREF_PINCODE</string>
+    <string name="PREF_USERTOKEN" translatable="false">PREF_USERTOKEN</string>
 </resources>

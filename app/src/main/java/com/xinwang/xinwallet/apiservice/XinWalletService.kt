@@ -54,32 +54,38 @@ class XinWalletService {
         api = retrofit.create<XinWalletWebApi>(XinWalletWebApi::class.java)
     }
 
+    private fun exceptionToErrMsg(e: Exception): String {
+        return e.javaClass.simpleName
+    }
 
-    fun requestSMSVerify(phoneNo: String, callback: (status: String?) -> Unit) {
+
+    fun requestSMSVerify(phoneNo: String, callback: (status: String?, errmsg: String?) -> Unit) {
         val AZURE_CODE = "vsBbawBOQg3Ww0o7Mocv2mXOAcVwywv1NvCBGzmEkcGE5x9RXTHHcQ=="
 
         doNetwork {
             val call = api.requestSMSVerify(AZURE_CODE, URLEncoder.encode(phoneNo, "utf-8"))
             var res: JsonObject? = null
 
+            var errmsg = ""
             try {
                 res = call.execute().body()
 
                 var status = res!!.get("status").asString
                 doUI {
-                    callback(status)
+                    callback(status, errmsg)
                 }
                 return@doNetwork
             } catch (e: Exception) {
                 println("request return:" + "\n" + res?.toString())
+                errmsg = exceptionToErrMsg(e).take(30)
                 e.printStackTrace()
             }
-            callback(null)
+            callback(null, errmsg)
         }
     }
 
 
-    fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?) -> Unit) {
+    fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?, errmsg: String?) -> Unit) {
         val AZURE_CODE = "G/HlMKjalgY5r0GXahXfaWQ2aVnVypkmowdUXUEsOUEfmheOCcaXLw=="
 
         doNetwork {
@@ -89,6 +95,7 @@ class XinWalletService {
             )
             var res: JsonObject? = null
 
+            var errmsg = ""
             try {
                 res = call.execute().body()
                 println(res)
@@ -103,40 +110,42 @@ class XinWalletService {
                     delUserToken()
 
                 doUI {
-                    callback(status)
+                    callback(status, errmsg)
                 }
                 return@doNetwork
             } catch (e: Exception) {
                 println("request return:" + "\n" + res?.toString())
+                errmsg = exceptionToErrMsg(e).take(30)
                 e.printStackTrace()
             }
-            callback(null)
+            callback(null, errmsg)
         }
     }
 
-    fun setUserName(username: String, callback: (status: String?) -> Unit) {
-        val AZURE_CODE = "code=32npjc/WSfYFIRnzVtz/F8ezvoalEjc0DMt8Z1ovaiCKUoXkYteSJA=="
-
+    fun setUserName(username: String, callback: (status: String?, errmsg: String?) -> Unit) {
+        val AZURE_CODE = "32npjc/WSfYFIRnzVtz/F8ezvoalEjc0DMt8Z1ovaiCKUoXkYteSJA=="
         doNetwork {
             val call = api.setUserName(AZURE_CODE, USER_TOKEN
                     , URLEncoder.encode(username, "utf-8")
             )
             var res: JsonObject? = null
 
+            var errmsg = ""
             try {
                 res = call.execute().body()
                 println(res)
 
                 var status = res!!.get("status").asString
                 doUI {
-                    callback(status)
+                    callback(status, errmsg)
                 }
                 return@doNetwork
             } catch (e: Exception) {
                 println("request return:" + "\n" + res?.toString())
+                errmsg = exceptionToErrMsg(e).take(30)
                 e.printStackTrace()
             }
-            callback(null)
+            callback(null, errmsg)
         }
     }
 

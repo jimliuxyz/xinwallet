@@ -8,10 +8,9 @@
     <string name="SmsVerify.title">SMS Verification</string>
     <string name="SmsVerify.desc1">your message is sent</string>
     <string name="AccessibilityLabels.close">Close</string>
-    <string name="PinCode.title1">Set PinCode</string>
-    <string name="PinCode.title2">Enter your PinCode again</string>
-    <string name="PineCode.body1">Enter New PinCode</string>
-    <string name="PineCode.body2">您的PinCode將用於登入和確認交易</string>
+    <string name="PinCode.Set1.title">Setup PinCode</string>
+    <string name="PinCode.Set2.title">Confirm Again</string>
+    <string name="PinCode.Set1.desc">Your PinCode will be used to log in and confirm the transaction</string>
     <string name="PinCode.placeholder1">%1$d digits PIN</string>
     <string name="PinCode.placeholder2">enter again</string>
     <string name="PinCode.option">PIN option</string>
@@ -26,21 +25,18 @@
     <string name="RenewWallet.renew">renew</string>
     <string name="SmsVerify.popup.failure">SMS failure\\ntry again</string>
     <string name="RenewWallet.balance">balance:</string>
-    <string name="CellphoneNumber">PhoneNumber</string>
-    <string name="InvalidPhoneNumber">Invalid phone number</string>
-    <string name="Agreement">點選下一步即表示同意使用授權及隱私權</string>
-    <string name="SMS.veriftyCode">SMS Verification Code</string>
-    <string name="Resend.VerificationCode"><u>Resend Verification code</u></string>
-    <string name="Verificationcode.fourDigital"> At least 4 digits </string>
-    <string name="SMS.unsentInfo">請輸入簡訊驗證碼。\n若您未收到簡訊，請嘗試下列方法：</string>
-    <string name="SMS.resentSMS">重新送驗證碼</string>
-    <string name="SMS.Checked.done">完成簡訊驗證</string>
-    <string name="SMS.enterPhonePlease">請輸入正確的手機號碼</string>
-    <string name="SMS.enterOTP">輸入驗證碼</string>
-    <string name="title_activity_main2_test">Main2Activity_test</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="User.enterName">Enter your name</string>
+    <string name="Login.PhoneNumber">Mobile Number</string>
+    <string name="Login.desc">By clicking "Next" to agree the use of authorization and privacy.</string>
+    <string name="SMS.resend"><u>resend SMS passcode</u></string>
+    <string name="SMS.unsentInfo">Please enter SMS passcode.</string>
+    <string name="Home.title" translatable="false">Wallet</string>
+    <string name="Home.tag.home" translatable="false">Home</string>
+    <string name="Home.tag.dashboard" translatable="false">Dashboard</string>
+    <string name="Home.tag.notifications" translatable="false">Notifications</string>
+    <string name="SetUsername.title">Enter your name</string>
+    <string name="Unlock.title">Unlock</string>
+    <string name="Unlock.desc">Please enter your PinCode</string>
+    <string name="SMS.Checked.done">SMS passcode verified</string>
+    <string name="SMS.enterOTP">Enter SMS Passcode</string>
+    <string name="Splash.desc">welcome</string>
 </resources>

@@ -2,12 +2,12 @@ package com.xinwang.xinwallet.presenter.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.widget.Toast
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
@@ -53,8 +53,14 @@ class SmsVerifyActivity : XinActivity() {
 
     override fun onStart() {
         super.onStart()
-        etPasscode.setText("")
+//        etPasscode.setText("")
+        etPasscode.setText("3333")
         updatePasscode()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showSoftInput(true, etPasscode)
     }
 
     private fun updatePasscode() {
@@ -71,31 +77,40 @@ class SmsVerifyActivity : XinActivity() {
         loader.show(supportFragmentManager, "LoaderDialogFragment")
 
         val phoneNo = "${countrycode}${phonenumber}"
-        XinWalletService.instance.verifySMSPasscode(phoneNo, etPasscode.text.toString()) { status ->
+        XinWalletService.instance.verifySMSPasscode(phoneNo, etPasscode.text.toString()) { status, errmsg ->
             runOnUiThread {
                 loader.dismiss()
 
                 val ok = !status.isNullOrBlank() && status.equals("ok")
 
                 if (ok) {
-                    //BRDialog.showSimpleDialog(this, "", getString(R.string.SmsVerify_popup_verified))
+                    showSoftInput(false, etPasscode) // don't show soft input again, to avoid odd layout on next activity
 
                     val intent = Intent(this, SetPinCode1Activity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
                     startActivity(intent)
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
 //                    finish()
                 } else {
-                    SpringAnimator.failShakeAnimation(this,etPasscode)
-//                    AlertDialog.Builder(this).setMessage(R.string.SmsVerify_popup_failure)
-//                            .setPositiveButton("ok") { dialog, which ->
-//                            }
-//                            .create().show()
+                    SpringAnimator.failShakeAnimation(this, etPasscode)
+                    etPasscode.postOnAnimationDelayed({
+                        showSoftInput(true, etPasscode)
+                        etPasscode.setText("")
+                    }, 300)
+                    if (!errmsg.isNullOrBlank())
+                        Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
                 }
             }
         }
     }
 
+    fun navBack(view: View) {
+        finish()
+    }
+
+    fun resend(view: View) {
+        //todo : resend
+        super.onBackPressed()
+    }
 
 }

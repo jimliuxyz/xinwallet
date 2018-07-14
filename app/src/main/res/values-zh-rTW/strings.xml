@@ -8,7 +8,7 @@
     <string name="SmsVerify.desc1">驗證碼已發送至您的手機</string>
     <string name="AccessibilityLabels.close">關閉</string>
     <string name="SmsVerify.title">輸入驗證碼</string>
-    <string name="PinCode.title1">輸入PIN</string>
+    <string name="PinCode.Set1.title">設定PinCode</string>
     <string name="PinCode.placeholder1">輸入%1$d位PIN</string>
     <string name="PinCode.placeholder2">請再次輸入PIN</string>
     <string name="PinCode.option">PIN選項</string>
@@ -23,10 +23,17 @@
     <string name="RenewWallet.renew">創建新錢包</string>
     <string name="SmsVerify.popup.failure">驗證碼輸入錯誤\\n請重新操作</string>
     <string name="RenewWallet.balance">錢包餘額:</string>
-    <string name="PinCode.title2">請再次輸入PIN</string>
-    <string name="CellphoneNumber">手機號碼</string>
-    <string name="InvalidPhoneNumber">無效的手機號碼</string>
-    <string name="Agreement">點選下一步即表示同意使用授權及隱私權</string>
-    <string name="Resend.VerificationCode"><u>重送簡訊驗證碼</u></string>
+    <string name="PinCode.Set2.title">請再次輸入PinCode</string>
+    <string name="Login.PhoneNumber">手機號碼</string>
+    <string name="Login.desc">點擊「下一步」即表示同意使用授權及隱私權</string>
+    <string name="SMS.resend"><u>重送簡訊驗證碼</u></string>
+    <string name="PinCode.Set1.desc">您的PinCode將用於登入和確認交易</string>
+    <string name="Unlock.title">解鎖</string>
+    <string name="Unlock.desc">請輸入PinCode</string>
+    <string name="SMS.unsentInfo">請輸入簡訊驗證碼。 若您未收到簡訊，請嘗試下列方法：</string>
+    <string name="SMS.Checked.done">完成簡訊驗證</string>
+    <string name="SMS.enterOTP">輸入驗證碼</string>
+    <string name="SetUsername.title">請輸入姓名</string>
+    <string name="Splash.desc">歡迎使用電子錢包</string>
 
 </resources>

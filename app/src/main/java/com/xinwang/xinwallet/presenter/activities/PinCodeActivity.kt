@@ -34,10 +34,6 @@ open class PinCodeActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pincoin)
-        setSupportActionBar(toolbar)
-//        toolbar.title = ""
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         pinLayout = findViewById(R.id.pinLayout)
         etPin1 = findViewById(R.id.pin1)
@@ -51,7 +47,8 @@ open class PinCodeActivity : XinActivity() {
         keypad.setShowDot(false)
         keypad.setBRButtonBackgroundResId(R.drawable.keyboard_trans_button)
         keypad.setBRButtonTextColor(R.color.gray)
-        keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
+//        keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
+        keypad.setBreadground(getDrawable(R.color.white))
 
         keypad.addOnInsertListener { key: String ->
             handleClick(key)
@@ -111,10 +108,6 @@ open class PinCodeActivity : XinActivity() {
         }
     }
 
-    open fun hideAppBar() {
-        appBar.visibility = View.GONE
-    }
-
     open fun sharkNClear() {
         SpringAnimator.failShakeAnimation(this, pinLayout)
 
@@ -159,4 +152,7 @@ open class PinCodeActivity : XinActivity() {
 
     }
 
+    fun navBack(view: View){
+        finish()
+    }
 }

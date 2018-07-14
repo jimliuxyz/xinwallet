@@ -90,6 +90,7 @@
     <color name="dialog_button_negative">#b3c0c8</color>
 
     //Xin
+    <color name="transparent">#00000000</color>
     <color name="primary_color">#1a337d</color>
     <color name="loader_ring_color">#1a337d</color>
 

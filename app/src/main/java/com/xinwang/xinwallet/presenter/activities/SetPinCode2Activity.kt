@@ -3,6 +3,7 @@ package com.xinwang.xinwallet.presenter.activities
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.R
@@ -14,16 +15,18 @@ class SetPinCode2Activity : PinCodeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         pincode1 = intent.getStringExtra("pincode")
+
         brkeyboard.setBRKeyboardColor(R.color.white)
+        tvTitle.text = getString(R.string.PinCode_Set2_title)
     }
 
     override fun onPinCodeReady(pincode: String) {
         if (pincode1.equals(pincode)) {
             XinWalletService.instance.setPinCode(pincode)
-            val intent = Intent(this, UnlockAppActivity::class.java)
+            resetPauseTime()
+
+            val intent = Intent(this, SetUsernameActivity::class.java)
             intent.putExtra("backto", HomeActivity::class.java.canonicalName)
 
             startActivity(intent)

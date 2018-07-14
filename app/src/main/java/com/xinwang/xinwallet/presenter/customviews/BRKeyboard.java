@@ -3,6 +3,7 @@ package com.xinwang.xinwallet.presenter.customviews;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -215,6 +216,7 @@ public class BRKeyboard extends LinearLayout implements View.OnClickListener {
         for (OnInsertListener listener : listeners) {
             listener.onClick(v instanceof ImageButton ? "" : ((Button) v).getText().toString());
         }
+//        ((Button) v).setBackgroundColor(Color.RED);
     }
 
     public interface OnInsertListener {
@@ -242,6 +244,7 @@ public class BRKeyboard extends LinearLayout implements View.OnClickListener {
     }
 
     public void setBRButtonBackgroundResId(int resId) {
+
         num0.setBackgroundResource(resId);
         num1.setBackgroundResource(resId);
         num2.setBackgroundResource(resId);

@@ -4,14 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
-import com.hbb20.CountryCodePicker
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
-import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
@@ -19,7 +14,9 @@ import io.michaelrocks.libphonenumber.android.Phonenumber
 import kotlinx.android.synthetic.main.activity_login.*
 import android.text.InputType
 import android.text.method.PasswordTransformationMethod
+import android.widget.Toast
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.tools.animation.SpringAnimator
 
 
 class LoginActivity : XinActivity() {
@@ -55,6 +52,7 @@ class LoginActivity : XinActivity() {
 
         ccp.setOnCountryChangeListener {
             verifyPhoneNumber()
+            showSoftInput(true, etPhoneNumber)
         }
         ccp.showNameCode(false)
     }
@@ -62,10 +60,17 @@ class LoginActivity : XinActivity() {
     override fun onStart() {
         super.onStart()
         ccp.setCountryForNameCode("TW")
-       // etPhoneNumber.setText("0986123456")
-        etPhoneNumber.requestFocus()
+//        etPhoneNumber.setText("")
+        etPhoneNumber.setText("0986123456")
+
         verifyPhoneNumber()
     }
+
+    override fun onResume() {
+        super.onResume()
+        showSoftInput(true, etPhoneNumber)
+    }
+
 
     private fun verifyPhoneNumber(): Phonenumber.PhoneNumber? {
         var phoneUtil = PhoneNumberUtil.createInstance(this)
@@ -89,13 +94,15 @@ class LoginActivity : XinActivity() {
         loader.show(supportFragmentManager, "LoaderDialogFragment")
 
         val phoneNo = "${curPhoneNo!!.countryCode}${curPhoneNo!!.nationalNumber}"
-        XinWalletService.instance.requestSMSVerify(phoneNo){status->
+        XinWalletService.instance.requestSMSVerify(phoneNo) { status, errmsg ->
             runOnUiThread {
                 loader.dismiss()
 
                 val ok = !status.isNullOrBlank() && status.equals("ok")
 
                 if (ok) {
+                    showSoftInput(false, etPhoneNumber) // don't show soft input again, to avoid odd layout on next activity
+
                     val intent = Intent(this, SmsVerifyActivity::class.java)
                     intent.putExtra("countrycode", curPhoneNo!!.countryCode.toString())
                     intent.putExtra("phonenumber", curPhoneNo!!.nationalNumber.toString())
@@ -104,6 +111,10 @@ class LoginActivity : XinActivity() {
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
                 } else {
                     //todo: server may failed, show a message
+                    if (!errmsg.isNullOrBlank()){
+                        SpringAnimator.failShakeAnimation(this, etPhoneNumber)
+                        Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

@@ -14,7 +14,7 @@
     <dimen name="close_dimen">24dp</dimen>
     <dimen name="radius">4dp</dimen>
     <dimen name="paragraph">14sp</dimen>
-    <dimen name="header">18sp</dimen>
+    <dimen name="header">20sp</dimen>
     <dimen name="sub_header">16sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 </resources>

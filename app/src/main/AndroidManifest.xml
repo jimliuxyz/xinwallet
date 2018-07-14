@@ -10,6 +10,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateVisible|adjustResize">
@@ -18,69 +19,50 @@
             android:label="@string/app_name" />
         <activity
             android:name=".presenter.activities.IntroActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".presenter.activities.LoginActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:screenOrientation="portrait">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".presenter.activities.util.XinActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.SmsVerifyActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:launchMode="singleTask">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".presenter.activities.SetPinCode1Activity"
-            android:label="">
+        <activity android:name=".presenter.activities.SetPinCode1Activity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".presenter.activities.SetPinCode2Activity"
-            android:label=""
-            android:parentActivityName=".presenter.activities.SetPinCode1Activity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".presenter.activities.SetPinCode1Activity" />
-        </activity>
+        <activity android:name=".presenter.activities.SetPinCode2Activity"></activity>
         <activity android:name=".presenter.activities.UnlockAppActivity" />
         <activity
             android:name=".presenter.activities.HomeActivity"
-            android:label="@string/title_activity_home" />
-        <activity android:name=".presenter.activities.UserName">
+            android:label="@string/Home.title" />
+        <activity android:name=".presenter.activities.SetUsernameActivity"
+            android:windowSoftInputMode="stateAlwaysVisible">
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 

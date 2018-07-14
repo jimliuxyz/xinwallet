@@ -6,45 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".presenter.activities.PinCodeActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <TextView
-        android:id="@+id/textView"
+    <ImageButton
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/PinCode.title1"
-        android:textSize="22sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="navBack"
+        android:background="@color/transparent"
+        android:tint="@color/primary_color"
+        app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
+
+    <View
+        android:id="@+id/hline"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"
+        android:background="@color/gray_shadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:textSize="@dimen/pin_par_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="tvTitle" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        tools:text="tvDesc" />
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/pinLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginStart="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/brkeyboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textDesc">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.7">
 
         <TextView
             android:id="@+id/pin1"
@@ -54,9 +76,11 @@
             android:maxLength="1"
             android:text="–"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:textStyle="bold" />
-
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/pin2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/pin2"
@@ -66,9 +90,11 @@
             android:maxLength="1"
             android:text="–"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:textStyle="bold" />
-
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/pin3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pin1" />
 
         <TextView
             android:id="@+id/pin3"
@@ -78,9 +104,11 @@
             android:maxLength="1"
             android:text="–"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:textStyle="bold" />
-
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/pin4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pin2" />
 
         <TextView
             android:id="@+id/pin4"
@@ -90,8 +118,11 @@
             android:maxLength="1"
             android:text="–"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/pin5"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pin3" />
 
         <TextView
             android:id="@+id/pin5"
@@ -101,8 +132,11 @@
             android:maxLength="1"
             android:text="–"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/pin6"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pin4" />
 
         <TextView
             android:id="@+id/pin6"
@@ -112,34 +146,13 @@
             android:maxLength="1"
             android:text="–"
             android:textAlignment="center"
-            android:textSize="35sp"
-            android:textStyle="bold" />
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pin5" />
 
-
-    </LinearLayout>
-
-    <com.xinwang.xinwallet.presenter.customviews.BRKeyboard
-        android:id="@+id/brkeyboard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:showAlphabet="false" />
-
-    <TextView
-        android:id="@+id/textDesc"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:gravity="center"
-        android:text="@string/PineCode.body1"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBar" />
+    </android.support.constraint.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView3"
@@ -149,10 +162,35 @@
         android:onClick="pinOptionClick"
         android:text="@string/PinCode.option"
         android:textColor="@color/dark_blue"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/brkeyboard"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/keyboard_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.58" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/keyboard_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1" />
+
+    <com.xinwang.xinwallet.presenter.customviews.BRKeyboard
+        android:id="@+id/brkeyboard"
+        android:layout_width="0dp"
+        android:layout_height="240dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:showAlphabet="false">
+
+    </com.xinwang.xinwallet.presenter.customviews.BRKeyboard>
 
 </android.support.constraint.ConstraintLayout>

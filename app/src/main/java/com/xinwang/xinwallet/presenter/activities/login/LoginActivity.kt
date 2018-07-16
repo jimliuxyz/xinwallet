@@ -60,8 +60,8 @@ class LoginActivity : XinActivity() {
     override fun onStart() {
         super.onStart()
         ccp.setCountryForNameCode("TW")
-//        etPhoneNumber.setText("")
-        etPhoneNumber.setText("0986123456")
+        etPhoneNumber.setText("")
+//        etPhoneNumber.setText("0986123456")
 
         verifyPhoneNumber()
     }

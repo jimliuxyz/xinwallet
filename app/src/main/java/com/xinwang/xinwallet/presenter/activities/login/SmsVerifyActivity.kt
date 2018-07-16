@@ -53,8 +53,8 @@ class SmsVerifyActivity : XinActivity() {
 
     override fun onStart() {
         super.onStart()
-//        etPasscode.setText("")
-        etPasscode.setText("3333")
+        etPasscode.setText("")
+//        etPasscode.setText("3333")
         updatePasscode()
     }
 

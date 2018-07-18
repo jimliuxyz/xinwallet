@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit
  */
 class XinWalletService {
 
-    private val BASE_URL = "https://twilio168.azurewebsites.net/"
+    private val BASE_URL = "https://davidfunc.azurewebsites.net/"
 //    private val AZURE_CODE = ""
 
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
@@ -60,7 +60,7 @@ class XinWalletService {
 
 
     fun requestSMSVerify(phoneNo: String, callback: (status: String?, errmsg: String?) -> Unit) {
-        val AZURE_CODE = "vsBbawBOQg3Ww0o7Mocv2mXOAcVwywv1NvCBGzmEkcGE5x9RXTHHcQ=="
+        val AZURE_CODE = "St0Av0A0PagU18UrTafewYxaZonjdrjnLQnTJVxVk6XhCh1lwUDC1A=="
 
         doNetwork {
             val call = api.requestSMSVerify(AZURE_CODE, URLEncoder.encode(phoneNo, "utf-8"))
@@ -86,7 +86,7 @@ class XinWalletService {
 
 
     fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?, errmsg: String?) -> Unit) {
-        val AZURE_CODE = "G/HlMKjalgY5r0GXahXfaWQ2aVnVypkmowdUXUEsOUEfmheOCcaXLw=="
+        val AZURE_CODE = "lECM7Qzk08hMeMLmqIbosIfqQzHXAmZcialbxsT658huTitp8WUqxQ=="
 
         doNetwork {
             val call = api.verifySMSPasscode(AZURE_CODE
@@ -123,7 +123,7 @@ class XinWalletService {
     }
 
     fun setUserName(username: String, callback: (status: String?, errmsg: String?) -> Unit) {
-        val AZURE_CODE = "32npjc/WSfYFIRnzVtz/F8ezvoalEjc0DMt8Z1ovaiCKUoXkYteSJA=="
+        val AZURE_CODE = "lXyuIVo6awl56MAo2kIBF3NT1e9rMw4X5ybecNHrawksrKOHzC/XuQ=="
         doNetwork {
             val call = api.setUserName(AZURE_CODE, USER_TOKEN
                     , URLEncoder.encode(username, "utf-8")
@@ -155,6 +155,7 @@ class XinWalletService {
     }
 
     fun setPinCode(pincode: String) {
+        setPinCodeDigits(pincode.length)
         val md5 = CryptoHelper.md5((ENCODE_KEY + pincode).toByteArray()).contentToString()
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, md5)
     }
@@ -170,6 +171,13 @@ class XinWalletService {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, "")
     }
 
+    private fun setPinCodeDigits(digits: Int) {
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE_DIGITS, digits)
+    }
+
+    fun getPinCodeDigits(): Int {
+        return XinWalletApp.instance.applicationContext.getPref(R.string.PREF_PINCODE_DIGITS, 4)
+    }
 
     fun setUserToken(token: String) {
         USER_TOKEN = token

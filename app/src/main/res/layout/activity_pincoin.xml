@@ -155,14 +155,15 @@
     </android.support.constraint.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/btnPinOption"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:onClick="pinOptionClick"
-        android:text="@string/PinCode.option"
+        android:text="@string/PinCode.option2"
         android:textColor="@color/dark_blue"
-        android:visibility="gone"
+        android:visibility="visible"
+        android:textSize="@dimen/text_size"
         app:layout_constraintBottom_toTopOf="@+id/brkeyboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

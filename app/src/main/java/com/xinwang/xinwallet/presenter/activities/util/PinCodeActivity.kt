@@ -3,6 +3,7 @@ package com.xinwang.xinwallet.presenter.activities.util
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
@@ -10,6 +11,7 @@ import com.xinwang.xinwallet.presenter.activities.login.LoginActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import com.xinwang.xinwallet.tools.util.doIO
+import kotlinx.android.synthetic.main.activity_pincoin.*
 
 open class PinCodeActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
@@ -33,6 +35,8 @@ open class PinCodeActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pincoin)
+
+        showDigitsOption(false)
 
         pinLayout = findViewById(R.id.pinLayout)
         etPin1 = findViewById(R.id.pin1)
@@ -110,7 +114,7 @@ open class PinCodeActivity : XinActivity() {
     open fun sharkNClear() {
         SpringAnimator.failShakeAnimation(this, pinLayout)
 
-        pinLayout.postOnAnimationDelayed( {
+        pinLayout.postOnAnimationDelayed({
             clearPinCode()
         }, 300)
     }
@@ -128,30 +132,32 @@ open class PinCodeActivity : XinActivity() {
         }
     }
 
-    private fun pinOptionClick(view: View) {
+    fun pinOptionClick(view: View) {
         togglePinDigits()
     }
 
-    private fun togglePinDigits() {
+    fun showDigitsOption(visible: Boolean) {
+        btnPinOption.visibility = if (visible) View.VISIBLE else View.GONE
+    }
+
+    fun togglePinDigits(forceDigits: Int = 0) {
         clearPinCode()
-        if (pinDigits == 4) {
+        if ((forceDigits == 0 && pinDigits == 4) || forceDigits == 6) {
             pinDigits = 6
             etPin5.visibility = View.VISIBLE
             etPin6.visibility = View.VISIBLE
-        } else {
+            btnPinOption.text = getString(R.string.PinCode_option2)
+        } else if ((forceDigits == 0 && pinDigits == 6) || forceDigits == 4) {
             pinDigits = 4
             etPin5.visibility = View.GONE
             etPin6.visibility = View.GONE
+            btnPinOption.text = getString(R.string.PinCode_option1)
         }
-        etPin5.invalidate()
-        etPin6.invalidate()
+
+        pinLayout.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_fade_in))
     }
 
-    fun nextClicked(view: View) {
-
-    }
-
-    fun navBack(view: View){
+    fun navBack(view: View) {
         finish()
     }
 }

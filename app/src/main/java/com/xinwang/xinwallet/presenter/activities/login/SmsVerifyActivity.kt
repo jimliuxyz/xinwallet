@@ -1,6 +1,7 @@
 package com.xinwang.xinwallet.presenter.activities.login
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -18,8 +19,8 @@ import kotlinx.android.synthetic.main.activity_sms_verify.*
 class SmsVerifyActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
 
-    var phonenumber = ""
-    var countrycode = ""
+    var phonenumber: String? = ""
+    var countrycode: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,6 +100,9 @@ class SmsVerifyActivity : XinActivity() {
                     }, 300)
                     if (!errmsg.isNullOrBlank())
                         Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
+
+                    etPasscode.hint = getString(R.string.SMS_Invalid)
+                    etPasscode.setHintTextColor(Color.RED)
                 }
             }
         }

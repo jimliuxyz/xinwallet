@@ -11,6 +11,8 @@ class SetPinCode1Activity : PinCodeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        showDigitsOption(true)
+
         brkeyboard.setBRKeyboardColor(R.color.white)
         tvTitle.text = getString(R.string.PinCode_Set1_title)
         tvDesc.text = getString(R.string.PinCode_Set1_desc)

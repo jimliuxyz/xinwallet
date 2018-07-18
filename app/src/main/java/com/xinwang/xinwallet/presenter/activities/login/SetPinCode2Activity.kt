@@ -16,6 +16,9 @@ class SetPinCode2Activity : PinCodeActivity() {
 
         pincode1 = intent.getStringExtra("pincode")
 
+        showDigitsOption(false)
+        togglePinDigits(pincode1.length)
+
         brkeyboard.setBRKeyboardColor(R.color.white)
         tvTitle.text = getString(R.string.PinCode_Set2_title)
     }

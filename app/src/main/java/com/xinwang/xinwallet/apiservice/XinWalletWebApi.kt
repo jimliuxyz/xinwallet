@@ -11,20 +11,20 @@ import retrofit2.http.Query
  */
 interface XinWalletWebApi {
 
-    @GET("api/HttpTriggerCSharp3")
+    @GET("api/requestSMSVerify")
     fun requestSMSVerify(
             @Query("code") code: String,
             @Query("phoneNo", encoded = true) phoneNo: String)
             : Call<JsonObject>
 
-    @GET("api/HttpTriggerSmsCheck")
+    @GET("api/verifySMSPasscode")
     fun verifySMSPasscode(
             @Query("code") code: String,
             @Query("phoneNo", encoded = true) phoneNo: String,
             @Query("smsCode", encoded = true) smsCode: String)
             : Call<JsonObject>
 
-    @GET("api/HttpTriggerInputName")
+    @GET("api/setUsername")
     fun setUserName(
             @Query("code") code: String,
             @Query("token") token: String,

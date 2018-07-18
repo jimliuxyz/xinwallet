@@ -20,6 +20,10 @@ class UnlockAppActivity : PinCodeActivity() {
         tvDesc.text = getString(R.string.Unlock_desc)
         btnBack.visibility = View.GONE
         hline.visibility = View.GONE
+
+        val digits = XinWalletService.instance.getPinCodeDigits()
+        showDigitsOption(false)
+        togglePinDigits(digits)
     }
 
     override fun onStart() {

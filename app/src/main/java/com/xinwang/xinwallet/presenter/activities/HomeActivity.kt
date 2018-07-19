@@ -48,17 +48,17 @@ class HomeActivity : XinActivity() {
 
     }
 
-//    override fun onResume() {
-//        super.onResume()
-//
-//        val text = "token : ${XinWalletService.instance.getUserToken()}"
-//        tvInfo.setText(text)
-//    }
-//
-//    fun btnResetUserData(view:View){
-//        XinWalletService.instance.delUserToken()
-//        exitApp()
-//    }
+    override fun onResume() {
+        super.onResume()
+
+        val text = "token : ${XinWalletService.instance.getUserToken()}"
+        tvInfo.setText(text)
+    }
+
+    fun btnResetUserData(view:View){
+        XinWalletService.instance.delUserToken()
+        exitApp()
+    }
 
 
 

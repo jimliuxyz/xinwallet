@@ -36,12 +36,9 @@ class XinWalletService {
     }
 
     private constructor() {
-//        delUserToken()
-        println("isPinCodeSetted() : " + this.isPinCodeSetted())
-        println("hasUserToken() : " + this.hasUserToken())
 
         val okHttpClient = OkHttpClient().newBuilder()
-                .connectTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(15, TimeUnit.SECONDS)
                 .addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
                 .build()
 
@@ -82,6 +79,13 @@ class XinWalletService {
             }
             callback(null, errmsg)
         }
+
+        val time = System.currentTimeMillis()
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, time)
+    }
+
+    fun getRequestSMSVerifyTime(): Long {
+        return XinWalletApp.instance.applicationContext.getPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, 0L)
     }
 
 

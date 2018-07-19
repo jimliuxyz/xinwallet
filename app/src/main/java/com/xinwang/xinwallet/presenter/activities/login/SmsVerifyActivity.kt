@@ -8,6 +8,7 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.R
@@ -15,12 +16,18 @@ import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import kotlinx.android.synthetic.main.activity_sms_verify.*
+import java.util.*
+import kotlin.concurrent.timerTask
 
 class SmsVerifyActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
 
     var phonenumber: String? = ""
     var countrycode: String? = ""
+    var startuptime = System.currentTimeMillis()
+    var smstime = System.currentTimeMillis()
+    lateinit var timer: Timer
+    var allowResend = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +57,7 @@ class SmsVerifyActivity : XinActivity() {
             }
         })
 
+        btnResend.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -62,6 +70,43 @@ class SmsVerifyActivity : XinActivity() {
     override fun onResume() {
         super.onResume()
         showSoftInput(true, etPasscode)
+
+        timer = Timer("sms_resend_timer")
+        timer.schedule(timerTask {
+            runOnUiThread {
+                updateResend()
+            }
+        }, 0, 1000L)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.cancel()
+    }
+
+    private fun updateResend() {
+        if (btnResend.visibility == View.GONE) {
+            if (System.currentTimeMillis() - startuptime >= 6 * 1000) {
+                btnResend.visibility = View.VISIBLE
+                btnResend.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_fade_in))
+            } else {
+                return
+            }
+        }
+
+        val timediff = (smstime + 60 * 1000) - System.currentTimeMillis()
+        val waiting = timediff > 0
+        if (allowResend) {
+            btnResend.text = getString(R.string.SMS_resend)
+        } else {
+            if (waiting) {
+                val countdown = Math.ceil(timediff.toDouble() / 1000).toInt()
+                btnResend.text = getString(R.string.SMS_CountdownTimer, String.format("%2d", countdown))
+            } else {
+                allowResend = true
+                updateResend()
+            }
+        }
     }
 
     private fun updatePasscode() {
@@ -113,8 +158,15 @@ class SmsVerifyActivity : XinActivity() {
     }
 
     fun resend(view: View) {
-        //todo : resend
-        super.onBackPressed()
+        if (!allowResend)
+            return
+        XinWalletService.instance.requestSMSVerify("12345") { s: String?, s1: String? -> }
+
+        smstime = XinWalletService.instance.getRequestSMSVerifyTime()
+        allowResend = false
+        updateResend()
+
+        Toast.makeText(this, "resend " + System.currentTimeMillis(), Toast.LENGTH_SHORT).show()
     }
 
 }

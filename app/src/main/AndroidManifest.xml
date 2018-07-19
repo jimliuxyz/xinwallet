@@ -3,8 +3,7 @@
     package="com.xinwang.xinwallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-feature android:name="android.hardware.screen.portrait" />
+    <uses-feature android:name="android.hardware.screen.portrait"/>
 
     <application
         android:name=".XinWalletApp"
@@ -12,7 +11,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateVisible|adjustResize">
@@ -21,10 +19,10 @@
             android:label="@string/app_name" />
         <activity
             android:name=".presenter.activities.IntroActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,34 +31,36 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".presenter.activities.login.SmsVerifyActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".presenter.activities.login.SetPinCode1Activity"
+            android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.login.SetPinCode1Activity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity android:name=".presenter.activities.login.SetPinCode2Activity" />
+        <activity android:name=".presenter.activities.login.SetPinCode2Activity"></activity>
         <activity android:name=".presenter.activities.util.UnlockAppActivity" />
         <activity
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/Home.title" />
-        <activity
-            android:name=".presenter.activities.login.SetUsernameActivity"
+        <activity android:name=".presenter.activities.login.SetUsernameActivity"
             android:windowSoftInputMode="stateAlwaysVisible">
 
             <!-- <intent-filter> -->
@@ -75,7 +75,6 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.PrivacyActivity"></activity>
     </application>
 
 </manifest>

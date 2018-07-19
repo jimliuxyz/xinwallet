@@ -40,4 +40,5 @@
     <string name="SMS.enterOTP">Enter SMS Passcode</string>
     <string name="Splash.desc">welcome</string>
     <string name="SMS.Invalid">Invalid Passcode</string>
+    <string name="SMS.CountdownTimer">Have not received yet? please wait %1$sS</string>
 </resources>

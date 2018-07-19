@@ -26,15 +26,16 @@
     <string name="PinCode.Set2.title">请再次输入PinCode</string>
     <string name="Login.PhoneNumber">手机号码</string>
     <string name="Login.desc">点击“下一步”即表示同意使用授权及隐私权</string>
-    <string name="SMS.resend"><u>重送简讯验证码</u></string>
+    <string name="SMS.resend"><u>重新传送验证码</u></string>
     <string name="PinCode.Set1.desc">您的PinCode将用于登入和确认交易</string>
     <string name="Unlock.title">解锁</string>
     <string name="Unlock.desc">请输入PinCode</string>
-    <string name="SMS.unsentInfo">请输入简讯验证码。 若您未收到简讯，请尝试下列方法：</string>
+    <string name="SMS.unsentInfo">请输入简讯验证码。\n若您未收到简讯，请尝试下列方法：</string>
     <string name="SMS.Checked.done">完成简讯验证</string>
     <string name="SMS.enterOTP">输入验证码</string>
     <string name="SetUsername.title">请输入姓名</string>
     <string name="Splash.desc">欢迎使用电子钱包</string>
     <string name="SMS.Invalid">验证码错误</string>
+    <string name="SMS.CountdownTimer">没收到验证码吗?请等待%1$s秒</string>
 
 </resources>

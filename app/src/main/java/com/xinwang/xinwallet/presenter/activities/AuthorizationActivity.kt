@@ -9,7 +9,7 @@ class AuthorizationActivity : AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authorization)
+        setContentView(R.layout.activity_agreement)
     }
 
     fun navBack(view: View) {

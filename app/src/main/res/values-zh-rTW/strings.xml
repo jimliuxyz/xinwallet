@@ -2,8 +2,8 @@
 <resources>
     <string name="app_name">xinwallet</string>
     <string name="Splash.btn.login">创建钱包</string>
-    <string name="SmsVerify.btn.next">确认</string>
-    <string name="Login.btn.next">下一步</string>
+    <string name="btn.confirm">确定</string>
+    <string name="btn.next">下一步</string>
     <string name="Login.title">您的电话号码</string>
     <string name="SmsVerify.desc1">验证码已发送至您的手机</string>
     <string name="AccessibilityLabels.close">关闭</string>
@@ -12,7 +12,6 @@
     <string name="PinCode.placeholder1">输入%1$d位PIN</string>
     <string name="PinCode.placeholder2">请再次输入PIN</string>
     <string name="PinCode.option">PIN选项</string>
-    <string name="PinCode.next">确认</string>
     <string name="PinCode.option1">六位数PinCode</string>
     <string name="PinCode.option2">四位数PinCode</string>
     <string name="SmsVerify.popup.verified">您已完成简讯验证</string>
@@ -23,18 +22,20 @@
     <string name="RenewWallet.renew">创建新钱包</string>
     <string name="SmsVerify.popup.failure">验证码输入错误\\n请重新操作</string>
     <string name="RenewWallet.balance">钱包余额:</string>
-    <string name="PinCode.Set2.title">请再次输入PinCode</string>
+    <string name="PinCode.Set2.title">请再次确认PinCode</string>
     <string name="Login.PhoneNumber">手机号码</string>
-    <string name="Login.desc"><![CDATA[点击“下一步”即表示同意使用<a href="auth">授权</a>及<a href="privacy">隐私权</a>.]]></string>
-    <string name="SMS.resend"><u>重送简讯验证码</u></string>
+    <string name="Login.desc"><![CDATA[点击「下一步」即表示您同意<a href="auth">使用协议</a>和<a href="privacy">隐私政策</a>]]></string>
+    <string name="SMS.resend"><![CDATA[<u>重送传送验证码</u>]]></string>
     <string name="PinCode.Set1.desc">您的PinCode将用于登入和确认交易</string>
     <string name="Unlock.title">解锁</string>
     <string name="Unlock.desc">请输入PinCode</string>
-    <string name="SMS.unsentInfo">请输入简讯验证码。\n若您未收到简讯，请尝试下列方法：</string>
+    <string name="SMS.unsentInfo">请输入简讯内的验证码。\n若您未收到简讯，请尝试下列方法：</string>
     <string name="SMS.Checked.done">完成简讯验证</string>
     <string name="SMS.enterOTP">输入验证码</string>
     <string name="SetUsername.title">请输入姓名</string>
     <string name="Splash.desc">欢迎使用电子钱包</string>
     <string name="SMS.Invalid">验证码错误</string>
+    <string name="SMS.CountdownTimer">没有收到验证码吗?请等待%1$s秒</string>
+    <string name="PinCode.mismatched">请输入同样的PinCode</string>
 
 </resources>

@@ -75,16 +75,16 @@
         android:id="@+id/tvDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/Login.desc"
-        android:textSize="@dimen/sub_header"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line1" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.xinwang.xinwallet.presenter.customviews.BRButton
         android:id="@+id/btnNext"
@@ -95,7 +95,7 @@
         android:layout_marginTop="160dp"
         android:background="@color/primary_color"
         android:onClick="loginClicked"
-        android:text="@string/Login.btn.next"
+        android:text="@string/btn.next"
         app:buttonType="1"
         app:hasShadow="false"
         app:isBreadButton="true"

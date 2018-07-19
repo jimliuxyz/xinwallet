@@ -2,8 +2,8 @@
 
     <string name="app_name">xinwallet</string>
     <string name="Splash.btn.login">Login</string>
-    <string name="SmsVerify.btn.next">Confirm</string>
-    <string name="Login.btn.next">Next</string>
+    <string name="btn.confirm">Confirm</string>
+    <string name="btn.next">Next</string>
     <string name="Login.title">Phone Number</string>
     <string name="SmsVerify.title">SMS Verification</string>
     <string name="SmsVerify.desc1">your message is sent</string>
@@ -41,4 +41,5 @@
     <string name="Splash.desc">welcome</string>
     <string name="SMS.Invalid">Invalid Passcode</string>
     <string name="SMS.CountdownTimer">Have not received yet? please wait %1$sS</string>
+    <string name="PinCode.mismatched">pincode mismatched</string>
 </resources>

@@ -2,8 +2,9 @@ package com.xinwang.xinwallet.presenter.activities.login
 
 import android.content.Intent
 import android.os.Bundle
-import com.xinwang.xinwallet.apiservice.XinWalletService
+import android.view.View
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.HomeActivity
 import com.xinwang.xinwallet.presenter.activities.util.PinCodeActivity
 import kotlinx.android.synthetic.main.activity_pincoin.*
@@ -35,6 +36,7 @@ class SetPinCode2Activity : PinCodeActivity() {
             overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
         } else {
             sharkNClear()
+            tvInvalidHint.visibility = View.VISIBLE
         }
     }
 }

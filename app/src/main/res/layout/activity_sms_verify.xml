@@ -118,7 +118,7 @@
         android:layout_marginTop="160dp"
         android:background="@color/primary_color"
         android:onClick="nextClicked"
-        android:text="@string/Login.btn.next"
+        android:text="@string/btn.confirm"
         app:buttonType="1"
         app:hasShadow="false"
         app:isBreadButton="true"

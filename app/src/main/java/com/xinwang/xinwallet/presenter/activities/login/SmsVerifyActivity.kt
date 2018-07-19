@@ -4,14 +4,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
@@ -25,7 +26,7 @@ class SmsVerifyActivity : XinActivity() {
     var phonenumber: String? = ""
     var countrycode: String? = ""
     var startuptime = System.currentTimeMillis()
-    var smstime = System.currentTimeMillis()
+    var smstime = 0L
     lateinit var timer: Timer
     var allowResend = true
 
@@ -64,6 +65,13 @@ class SmsVerifyActivity : XinActivity() {
         super.onStart()
         etPasscode.setText("")
 //        etPasscode.setText("3333")
+
+        etPasscode.hint = getString(R.string.SMS_enterOTP)
+        etPasscode.setHintTextColor(Color.GRAY)
+        startuptime = System.currentTimeMillis()
+        smstime = 0L
+        btnResend.visibility = View.GONE
+
         updatePasscode()
     }
 
@@ -97,7 +105,7 @@ class SmsVerifyActivity : XinActivity() {
         val timediff = (smstime + 60 * 1000) - System.currentTimeMillis()
         val waiting = timediff > 0
         if (allowResend) {
-            btnResend.text = getString(R.string.SMS_resend)
+            btnResend.text = Html.fromHtml(getString(R.string.SMS_resend))
         } else {
             if (waiting) {
                 val countdown = Math.ceil(timediff.toDouble() / 1000).toInt()
@@ -160,13 +168,13 @@ class SmsVerifyActivity : XinActivity() {
     fun resend(view: View) {
         if (!allowResend)
             return
-        XinWalletService.instance.requestSMSVerify("12345") { s: String?, s1: String? -> }
+        XinWalletService.instance.requestSMSVerify("${countrycode} ${phonenumber}") { s: String?, s1: String? -> }
 
         smstime = XinWalletService.instance.getRequestSMSVerifyTime()
         allowResend = false
         updateResend()
 
-        Toast.makeText(this, "resend " + System.currentTimeMillis(), Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "resend~", Toast.LENGTH_SHORT).show()
     }
 
 }

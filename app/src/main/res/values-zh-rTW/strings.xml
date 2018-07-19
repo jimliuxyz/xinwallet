@@ -25,7 +25,7 @@
     <string name="RenewWallet.balance">钱包余额:</string>
     <string name="PinCode.Set2.title">请再次输入PinCode</string>
     <string name="Login.PhoneNumber">手机号码</string>
-    <string name="Login.desc">点击“下一步”即表示同意使用授权及隐私权</string>
+    <string name="Login.desc"><![CDATA[点击“下一步”即表示同意使用<a href="auth">授权</a>及<a href="privacy">隐私权</a>.]]></string>
     <string name="SMS.resend"><u>重送简讯验证码</u></string>
     <string name="PinCode.Set1.desc">您的PinCode将用于登入和确认交易</string>
     <string name="Unlock.title">解锁</string>
@@ -36,5 +36,6 @@
     <string name="SetUsername.title">请输入姓名</string>
     <string name="Splash.desc">欢迎使用电子钱包</string>
     <string name="SMS.Invalid">验证码错误</string>
+
 
 </resources>

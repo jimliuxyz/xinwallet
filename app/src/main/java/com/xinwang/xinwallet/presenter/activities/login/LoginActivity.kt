@@ -1,9 +1,9 @@
 package com.xinwang.xinwallet.presenter.activities.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.text.*
 import android.view.View
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
@@ -12,24 +12,32 @@ import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber
 import kotlinx.android.synthetic.main.activity_login.*
-import android.text.InputType
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
+import android.text.method.LinkMovementMethod
+import android.text.Html
+import android.text.Spanned
+import android.text.Spannable
+import android.text.style.URLSpan
+import android.text.SpannableStringBuilder
+import android.widget.TextView
+import android.text.style.ClickableSpan
+import com.xinwang.xinwallet.presenter.activities.AuthorizationActivity
+import com.xinwang.xinwallet.presenter.activities.PrivacyActivity
 
 
 class LoginActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
-
     private var curPhoneNo: Phonenumber.PhoneNumber? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-//        etPasscode.addTextChangedListener(PhoneNumberFormattingTextWatcher())
-
+        privacyLink()
+        //etPasscode.addTextChangedListener(PhoneNumberFormattingTextWatcher())
         //set keyboard style to number only
         etPhoneNumber.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
         etPhoneNumber.transformationMethod = object : PasswordTransformationMethod() {
@@ -61,8 +69,7 @@ class LoginActivity : XinActivity() {
         super.onStart()
         ccp.setCountryForNameCode("TW")
         etPhoneNumber.setText("")
-//        etPhoneNumber.setText("0986123456")
-
+//      etPhoneNumber.setText("0986123456")
         verifyPhoneNumber()
     }
 
@@ -111,7 +118,7 @@ class LoginActivity : XinActivity() {
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
                 } else {
                     //todo: server may failed, show a message
-                    if (!errmsg.isNullOrBlank()){
+                    if (!errmsg.isNullOrBlank()) {
                         SpringAnimator.failShakeAnimation(this, etPhoneNumber)
                         Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
                     }
@@ -120,4 +127,45 @@ class LoginActivity : XinActivity() {
         }
     }
 
+
+    fun privacyLink() {
+
+        tvDesc.setText(Html.fromHtml(getString(R.string.Login_desc)))
+        val sp = Html.fromHtml(getString(R.string.Login_desc))
+        tvDesc.text = sp
+        tvDesc.setMovementMethod(LinkMovementMethod.getInstance());
+        setTextHyperLinkListener(tvDesc, sp)
+    }
+
+
+    private fun setTextHyperLinkListener(textView: TextView, sp: Spanned) {
+        val text = textView.text
+        if (text is Spannable) {
+            val end = text.length
+            val urls = sp.getSpans(0, end, URLSpan::class.java)
+            val style = SpannableStringBuilder(text)
+            style.clearSpans()
+            for (url in urls) {
+                style.setSpan(object : ClickableSpan() {
+                    override fun onClick(p0: View?) {
+                        var intent=Intent()
+
+                        if (url.url.equals("auth")) {
+                            intent.setClass(this@LoginActivity,AuthorizationActivity::class.java)
+                        } else if (url.url.equals("privacy")) {
+                          intent.setClass(this@LoginActivity,PrivacyActivity::class.java)
+                        }
+                        startActivity(intent)
+                    }
+                }, sp.getSpanStart(url), sp.getSpanEnd(url), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+
+            }
+            textView.text = style
+        }
+    }
 }
+
+
+
+

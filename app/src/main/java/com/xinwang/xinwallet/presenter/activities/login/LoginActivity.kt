@@ -1,31 +1,26 @@
 package com.xinwang.xinwallet.presenter.activities.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.*
+import android.text.method.LinkMovementMethod
+import android.text.method.PasswordTransformationMethod
+import android.text.style.ClickableSpan
+import android.text.style.URLSpan
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.presenter.activities.AgreementActivity
+import com.xinwang.xinwallet.presenter.activities.PrivacyActivity
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
+import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber
 import kotlinx.android.synthetic.main.activity_login.*
-import android.text.method.PasswordTransformationMethod
-import android.widget.Toast
-import com.xinwang.xinwallet.apiservice.XinWalletService
-import com.xinwang.xinwallet.tools.animation.SpringAnimator
-import android.text.method.LinkMovementMethod
-import android.text.Html
-import android.text.Spanned
-import android.text.Spannable
-import android.text.style.URLSpan
-import android.text.SpannableStringBuilder
-import android.widget.TextView
-import android.text.style.ClickableSpan
-import com.xinwang.xinwallet.presenter.activities.AuthorizationActivity
-import com.xinwang.xinwallet.presenter.activities.PrivacyActivity
 
 
 class LoginActivity : XinActivity() {
@@ -150,8 +145,8 @@ class LoginActivity : XinActivity() {
                     override fun onClick(p0: View?) {
                         var intent=Intent()
 
-                        if (url.url.equals("auth")) {
-                            intent.setClass(this@LoginActivity,AuthorizationActivity::class.java)
+                        if (url.url.equals("agree")) {
+                            intent.setClass(this@LoginActivity, AgreementActivity::class.java)
                         } else if (url.url.equals("privacy")) {
                           intent.setClass(this@LoginActivity,PrivacyActivity::class.java)
                         }

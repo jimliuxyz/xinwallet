@@ -26,7 +26,7 @@
     <string name="SmsVerify.popup.failure">SMS failure\\ntry again</string>
     <string name="RenewWallet.balance">balance:</string>
     <string name="Login.PhoneNumber">Mobile Number</string>
-    <string name="Login.desc"><![CDATA[By clicking "Next" to agree the use of <a href="auth">authorization</a> and <a href="privacy">privacy</a>.]]></string>
+    <string name="Login.desc"><![CDATA[By clicking "Next" to agree the use of <a href="agree">agreement</a> and <a href="privacy">privacy</a>.]]></string>
     <string name="SMS.resend"><u>resend SMS passcode</u></string>
     <string name="SMS.unsentInfo">Please enter SMS passcode.</string>
     <string name="Home.title" translatable="false">Wallet</string>

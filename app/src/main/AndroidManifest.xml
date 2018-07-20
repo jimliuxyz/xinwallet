@@ -76,7 +76,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
-            android:name=".presenter.activities.AuthorizationActivity"
+            android:name=".presenter.activities.AgreementActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.PrivacyActivity"

@@ -9,7 +9,6 @@ import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
@@ -58,7 +57,7 @@ class SmsVerifyActivity : XinActivity() {
             }
         })
 
-        btnResend.visibility = View.GONE
+//        btnResend.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -68,9 +67,9 @@ class SmsVerifyActivity : XinActivity() {
 
         etPasscode.hint = getString(R.string.SMS_enterOTP)
         etPasscode.setHintTextColor(Color.GRAY)
-        startuptime = System.currentTimeMillis()
-        smstime = 0L
-        btnResend.visibility = View.GONE
+//        startuptime = System.currentTimeMillis()
+//        smstime = 0L
+//        btnResend.visibility = View.GONE
 
         updatePasscode()
     }
@@ -93,14 +92,14 @@ class SmsVerifyActivity : XinActivity() {
     }
 
     private fun updateResend() {
-        if (btnResend.visibility == View.GONE) {
-            if (System.currentTimeMillis() - startuptime >= 6 * 1000) {
-                btnResend.visibility = View.VISIBLE
-                btnResend.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_fade_in))
-            } else {
-                return
-            }
-        }
+//        if (btnResend.visibility == View.GONE) {
+//            if (System.currentTimeMillis() - startuptime >= 6 * 1000) {
+//                btnResend.visibility = View.VISIBLE
+//                btnResend.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_fade_in))
+//            } else {
+//                return
+//            }
+//        }
 
         val timediff = (smstime + 60 * 1000) - System.currentTimeMillis()
         val waiting = timediff > 0

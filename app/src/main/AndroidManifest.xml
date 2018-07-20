@@ -3,6 +3,7 @@
     package="com.xinwang.xinwallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application
@@ -23,6 +24,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,20 +33,20 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".presenter.activities.login.SmsVerifyActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".presenter.activities.login.SetPinCode1Activity"
@@ -57,7 +59,7 @@
         </activity>
         <activity
             android:name=".presenter.activities.login.SetPinCode2Activity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.util.UnlockAppActivity"
             android:screenOrientation="portrait" />
@@ -81,6 +83,7 @@
         <activity
             android:name=".presenter.activities.PrivacyActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".presenter.activities.Home2Activity"></activity>
     </application>
 
 </manifest>

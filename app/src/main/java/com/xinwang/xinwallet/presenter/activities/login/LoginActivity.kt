@@ -143,12 +143,12 @@ class LoginActivity : XinActivity() {
             for (url in urls) {
                 style.setSpan(object : ClickableSpan() {
                     override fun onClick(p0: View?) {
-                        var intent=Intent()
+                        var intent = Intent()
 
                         if (url.url.equals("agree")) {
                             intent.setClass(this@LoginActivity, AgreementActivity::class.java)
                         } else if (url.url.equals("privacy")) {
-                          intent.setClass(this@LoginActivity,PrivacyActivity::class.java)
+                            intent.setClass(this@LoginActivity, PrivacyActivity::class.java)
                         }
                         startActivity(intent)
                     }

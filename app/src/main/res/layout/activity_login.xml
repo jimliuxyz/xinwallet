@@ -32,7 +32,7 @@
         app:ccp_autoDetectLanguage="true"
         app:ccpDialog_showCloseIcon="true"
         app:ccp_textSize="22dp"
-        app:ccpDialog_keyboardAutoPopup="false"
+        app:ccpDialog_keyboardAutoPopup="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline1" />
 

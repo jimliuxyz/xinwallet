@@ -15,7 +15,6 @@ class CurrencyAdapter(private val context: Context) : BaseAdapter() {
 
 
     override fun getItemId(position: Int): Long {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         return position.toLong()
     }
 
@@ -28,19 +27,16 @@ class CurrencyAdapter(private val context: Context) : BaseAdapter() {
     }
 
     override fun getView(position: Int, convertview: View?, parent: ViewGroup?): View {
-       // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
 
         val rowView = inflater.inflate(R.layout.currency_item, parent, false)
         val tvCurrencyName = rowView.findViewById(R.id.tvCurrencyName) as TextView
         val tvUnit = rowView.findViewById(R.id.unit) as TextView
         val tvAmount = rowView.findViewById(R.id.amount) as TextView
         val imageView = rowView.findViewById(R.id.imageView) as ImageView
-        tvAmount.text="88"
-        tvUnit.text="bits"
-        tvCurrencyName.text="比特币"
+        tvAmount.text = "88"
+        tvUnit.text = "bits"
+        tvCurrencyName.text = "比特币"
 
         return rowView
-
-
     }
 }

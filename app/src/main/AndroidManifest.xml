@@ -31,6 +31,7 @@
         <activity
             android:name=".presenter.activities.login.LoginActivity"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->

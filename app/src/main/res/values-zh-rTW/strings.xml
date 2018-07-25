@@ -37,5 +37,6 @@
     <string name="SMS.Invalid">验证码错误</string>
     <string name="SMS.CountdownTimer">没有收到验证码吗?请等待%1$s秒</string>
     <string name="PinCode.mismatched">请输入同样的PinCode</string>
+    <string name="Btn.done">完成</string>
 
 </resources>

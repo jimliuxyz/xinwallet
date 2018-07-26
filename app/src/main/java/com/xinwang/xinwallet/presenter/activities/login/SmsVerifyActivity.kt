@@ -167,7 +167,9 @@ class SmsVerifyActivity : XinActivity() {
     fun resend(view: View) {
         if (!allowResend)
             return
-        XinWalletService.instance.requestSMSVerify("${countrycode} ${phonenumber}") { s: String?, s1: String? -> }
+
+        val phoneNo = "${countrycode}${phonenumber}"
+        XinWalletService.instance.requestSMSVerify(phoneNo) { s: String?, s1: String? -> }
 
         smstime = XinWalletService.instance.getRequestSMSVerifyTime()
         allowResend = false

@@ -42,4 +42,5 @@
     <string name="SMS.Invalid">Invalid Passcode</string>
     <string name="SMS.CountdownTimer">Have not received yet? please wait %1$sS</string>
     <string name="PinCode.mismatched">pincode mismatched</string>
+    <string name="Btn.done">Done</string>
 </resources>

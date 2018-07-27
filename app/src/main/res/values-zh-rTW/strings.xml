@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">xinwallet</string>
+    <string name="app_name">U Wallet</string>
     <string name="Splash.btn.login">创建钱包</string>
     <string name="btn.confirm">确定</string>
     <string name="btn.next">下一步</string>

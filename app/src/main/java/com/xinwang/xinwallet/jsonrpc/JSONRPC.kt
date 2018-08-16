@@ -5,6 +5,8 @@ import java.io.IOException
 
 
 open class JSONRPC {
+
+    val baseUrl="http://uwbackend-asia.azurewebsites.net/api/"
     companion object {
         fun getClinet(): JSONRPC {
             return JSONRPC()

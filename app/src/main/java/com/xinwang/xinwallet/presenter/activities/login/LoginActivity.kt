@@ -11,6 +11,8 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.R.id.ccp
+import com.xinwang.xinwallet.R.id.etPhoneNumber
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.AgreementActivity
 import com.xinwang.xinwallet.presenter.activities.PrivacyActivity

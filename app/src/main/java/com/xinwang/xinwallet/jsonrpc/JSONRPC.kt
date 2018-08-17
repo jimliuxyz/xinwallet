@@ -1,12 +1,16 @@
 package com.xinwang.xinwallet.jsonrpc
 
+import com.google.gson.GsonBuilder
 import okhttp3.*
+import org.json.JSONObject
 import java.io.IOException
+
 
 
 open class JSONRPC {
 
-    val baseUrl="http://uwbackend-asia.azurewebsites.net/api/"
+    val BASE_URL="http://uwbackend-asia.azurewebsites.net/api/"
+
     companion object {
         fun getClinet(): JSONRPC {
             return JSONRPC()
@@ -21,29 +25,68 @@ open class JSONRPC {
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-                cb(response?.body()?.string())
+                var result :JSONObject?=null
+                var jsonObject:JSONObject?= JSONObject(response?.body()?.string())
+                println("onrespon"+jsonObject.toString())
+                if (jsonObject?.get("error").toString() == "null") {
+                    result = jsonObject!!.getJSONObject("result")
+                }
+                cb(result)
             }
         })
     }
 
-    fun send(method: String, requestJSON: String, callback: (result: String) -> Unit) {
+    fun send(domain: String, requestJSON: String, callback: (result: String) -> Unit) {
 
-        println("do posthttp ")
         // do PostHttp
         val JSON = MediaType.parse("application/json; charset=utf-8")
         val body = RequestBody.create(JSON, requestJSON)
 
-        val request = Request.Builder().url("http://uwbackend-asia.azurewebsites.net/api/auth")
+        val request = Request.Builder().url(BASE_URL+domain)
                 .post(body)
                 .build()
         val call = OkHttpClient().newCall(request)
 
-//        myCall(call, { res ->
-//            println(res)
-//        })
-
         getResult(call, { res -> callback(res.toString())})
 
+    }
+
+    fun generateJson(method:String,arg1:Any,arg2:Any):String{
+
+        //GenerateJsonRPCFormat.createJson(method,)
+        return "{\"jsonrpc\":\"2.0\"," +
+                "\"method\":\""+method+"\"," +
+                "\"params\": {" +
+                "\"phoneno\":\"" + "123485429" + "\"," +
+                "\"passcode\":\"" + "8888" + "\"},\"id\":\"99\"}"
+    }
+
+}
+
+class GenerateJsonRPCFormat {
+
+    val jsonrpc = "2.0"
+    var id = ""
+
+    var method: String? = null
+    var params: Map<String, Any?>? = null
+
+    companion object {
+
+        fun createJson(method: String, params: Map<String, Any?>? = mapOf()): GenerateJsonRPCFormat {
+            val jrpc = GenerateJsonRPCFormat()
+            jrpc.method = method
+            jrpc.params = params
+            jrpc.id = Math.round(Math.random() * Short.MAX_VALUE).toString()
+            return jrpc
+        }
+
+
+    }
+
+    fun toJsonString(): String {
+        var gson = GsonBuilder().create()
+        return gson.toJson(this)
     }
 
 

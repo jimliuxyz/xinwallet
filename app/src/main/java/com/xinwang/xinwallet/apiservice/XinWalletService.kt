@@ -55,7 +55,7 @@ class XinWalletService {
         return e.javaClass.simpleName
     }
 
-
+    //發送簡訊驗證碼
     fun requestSMSVerify(phoneNo: String, callback: (status: String?, errmsg: String?) -> Unit) {
         val AZURE_CODE = "St0Av0A0PagU18UrTafewYxaZonjdrjnLQnTJVxVk6XhCh1lwUDC1A=="
 

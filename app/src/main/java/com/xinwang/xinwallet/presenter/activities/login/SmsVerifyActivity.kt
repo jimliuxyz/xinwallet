@@ -121,6 +121,7 @@ class SmsVerifyActivity : XinActivity() {
         btnNext.isEnabled = passcode.length == 4
     }
 
+    //驗證簡訊碼
     fun nextClicked(view: View) {
 
         if (etPasscode.text.length != 4)

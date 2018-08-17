@@ -2,8 +2,15 @@ package com.xinwang.xinwallet.jsonrpc
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
+import com.xinwang.xinwallet.tools.util.doUI
+import kotlinx.android.synthetic.main.activity_jsonrpc.*
 import okhttp3.*
+import okhttp3.internal.cache.DiskLruCache
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -18,13 +25,30 @@ class JSONRPCActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsonrpc)
         loginTest()
-
     }
 
     private fun loginTest() {
-        Login().sendResponse("0943844765","2345")
-    }
+        val loader = LoaderDialogFragment()
+        loader.show(supportFragmentManager, "LoaderDialogFragment")
+        Auth().login("745328901", "8888") { res ->
 
+            var ss: String
+            if (res.equals("null")) {
+                ss = null.toString()
+            } else {
+                var jsonObject: JSONObject? = null
+                jsonObject = JSONObject(res)
+                ss = jsonObject.get("token").toString()
+            }
+
+            doUI {
+                loader.dismiss()
+                textView2.text = ss
+                Toast.makeText(this, res.length.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
 
     fun postOkHttp() {
 
@@ -83,7 +107,6 @@ class JSONRPCActivity : AppCompatActivity() {
 
 
     fun longin(phoneNo: String, passcode: String) {
-
 
         //1.包json字串
 
@@ -149,12 +172,7 @@ class JSONRPCActivity : AppCompatActivity() {
 
     }
 
-
-    fun postHttp(request: Request): Call? {
-
-        return null
-    }
-
-
-
 }
+
+
+

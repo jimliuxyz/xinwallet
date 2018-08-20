@@ -31,20 +31,16 @@ class JSONRPCActivity : AppCompatActivity() {
         val loader = LoaderDialogFragment()
         loader.show(supportFragmentManager, "LoaderDialogFragment")
         Auth().login("745328901", "8888") { res ->
+            val ok = !res.isNullOrBlank() && !res.equals("null")
+            if(ok){
+                 textView2.text =res+"_true"
+            }else{
+                textView2.text =res+"_false"
 
-            var ss: String
-            if (res.equals("null")) {
-                ss = null.toString()
-            } else {
-                var jsonObject: JSONObject? = null
-                jsonObject = JSONObject(res)
-                ss = jsonObject.get("token").toString()
             }
-
+            loader.dismiss()
             doUI {
-                loader.dismiss()
-                textView2.text = ss
-                Toast.makeText(this, res.length.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, res?.length.toString(), Toast.LENGTH_SHORT).show()
             }
 
         }

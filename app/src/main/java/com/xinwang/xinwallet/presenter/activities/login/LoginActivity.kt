@@ -66,7 +66,6 @@ class LoginActivity : XinActivity() {
         super.onStart()
         ccp.setCountryForNameCode("TW")
         etPhoneNumber.setText("")
-//      etPhoneNumber.setText("0986123456")
         verifyPhoneNumber()
     }
 

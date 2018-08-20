@@ -23,8 +23,11 @@ import java.util.concurrent.TimeUnit
  */
 class XinWalletService {
 
-    private val BASE_URL = "https://davidfunc.azurewebsites.net/"
-//    private val AZURE_CODE = ""
+    //Azure server base_Url
+   // private val BASE_URL = "https://davidfunc.azurewebsites.net/"
+    private val BASE_URL = "https://uwfuncapp.azurewebsites.net/"
+
+
 
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
     private var USER_TOKEN = ""
@@ -57,10 +60,10 @@ class XinWalletService {
 
     //發送簡訊驗證碼
     fun requestSMSVerify(phoneNo: String, callback: (status: String?, errmsg: String?) -> Unit) {
-        val AZURE_CODE = "St0Av0A0PagU18UrTafewYxaZonjdrjnLQnTJVxVk6XhCh1lwUDC1A=="
+      //  val AZURE_CODE = "St0Av0A0PagU18UrTafewYxaZonjdrjnLQnTJVxVk6XhCh1lwUDC1A=="
 
         doNetwork {
-            val call = api.requestSMSVerify(AZURE_CODE, URLEncoder.encode(phoneNo, "utf-8"))
+            val call = api.requestSMSVerify(URLEncoder.encode(phoneNo, "utf-8"))
             var res: JsonObject? = null
 
             var errmsg = ""
@@ -83,12 +86,12 @@ class XinWalletService {
         val time = System.currentTimeMillis()
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, time)
     }
-
+    //取得SMS時間
     fun getRequestSMSVerifyTime(): Long {
         return XinWalletApp.instance.applicationContext.getPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, 0L)
     }
 
-
+    // 比對簡訊驗證法是否正確
     fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?, errmsg: String?) -> Unit) {
         val AZURE_CODE = "lECM7Qzk08hMeMLmqIbosIfqQzHXAmZcialbxsT658huTitp8WUqxQ=="
 
@@ -101,13 +104,16 @@ class XinWalletService {
 
             var errmsg = ""
             try {
+                //取得response json檔案
                 res = call.execute().body()
                 println(res)
 
                 var status = res!!.get("status").asString
                 var token = res!!.get("token").asString
 
+
                 val ok = !status.isNullOrBlank() && status.equals("ok")
+                // if(status==ok)將token存放本地端else 刪除token 資料
                 if (ok)
                     setUserToken(token)
                 else

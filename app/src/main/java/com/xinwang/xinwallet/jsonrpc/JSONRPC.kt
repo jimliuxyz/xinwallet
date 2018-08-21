@@ -3,6 +3,7 @@ package com.xinwang.xinwallet.jsonrpc
 import com.google.gson.GsonBuilder
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
+import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.tools.crypto.AESCipher
 import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.*
@@ -31,14 +32,14 @@ open class JSONRPC {
             }
 
             override fun onResponse(call: Call?, response: Response?) {
-                var result :JSONObject?=null
-                var jsonObject:JSONObject?= JSONObject(response?.body()?.string())
-                println("onrespon"+jsonObject.toString())
-                if (jsonObject?.get("error").toString() == "null") {
-                    result = jsonObject!!.getJSONObject("result")
-
-                }
-                cb(result)
+//                var result :JSONObject?=null
+//                var jsonObject:JSONObject?= JSONObject(response?.body()?.string())
+//                println("onrespon"+jsonObject.toString())
+//                if (jsonObject?.get("error").toString() == "null") {
+//                    result = jsonObject!!.getJSONObject("result")
+//
+//                }
+                cb(response?.body()?.string())
             }
         })
     }
@@ -51,7 +52,9 @@ open class JSONRPC {
 
         val request = Request.Builder().url(BASE_URL+domain)
                 .post(body)
+                .addHeader("Authorization","Bearer "+ XinWalletService.instance.getUserToken())
                 .build()
+
         val call = OkHttpClient().newCall(request)
 
         getResult(call, { res -> callback(res.toString())})
@@ -76,15 +79,7 @@ open class JSONRPC {
     private fun delPinCode() {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, "")
     }
-//    fun generateJson(method:String,arg1:Any,arg2:Any):String{
-//
-//        //GenerateJsonRPCFormat.createJson(method,)
-//        return "{\"jsonrpc\":\"2.0\"," +
-//                "\"method\":\""+method+"\"," +
-//                "\"params\": {" +
-//                "\"phoneno\":\"" + "123485429" + "\"," +
-//                "\"passcode\":\"" + "8888" + "\"},\"id\":\"99\"}"
-//    }
+
 
 }
 

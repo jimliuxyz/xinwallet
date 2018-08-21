@@ -147,6 +147,7 @@ class SmsVerifyActivity : XinActivity() {
                     startActivity(intent)
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
                 } else {
+
                     SpringAnimator.failShakeAnimation(this, etPasscode)
                     etPasscode.postOnAnimationDelayed({
                         showSoftInput(true, etPasscode)
@@ -160,36 +161,6 @@ class SmsVerifyActivity : XinActivity() {
                 }
             }
         }
-
-
-//        XinWalletService.instance.verifySMSPasscode(phoneNo, etPasscode.text.toString()) { status, errmsg ->
-//            runOnUiThread {
-//                loader.dismiss()
-//
-//                val ok = !status.isNullOrBlank() && status.equals("ok")
-//
-//                if (ok) {
-//                    showSoftInput(false, etPasscode) // don't show soft input again, to avoid odd layout on next activity
-//
-//                    val intent = Intent(this, SetPinCode1Activity::class.java)
-//
-//                    startActivity(intent)
-//                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-////                    finish()
-//                } else {
-//                    SpringAnimator.failShakeAnimation(this, etPasscode)
-//                    etPasscode.postOnAnimationDelayed({
-//                        showSoftInput(true, etPasscode)
-//                        etPasscode.setText("")
-//                    }, 300)
-//                    if (!errmsg.isNullOrBlank())
-//                        Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
-//
-//                    etPasscode.hint = getString(R.string.SMS_Invalid)
-//                    etPasscode.setHintTextColor(Color.RED)
-//                }
-//            }
-//        }
 
 
     }

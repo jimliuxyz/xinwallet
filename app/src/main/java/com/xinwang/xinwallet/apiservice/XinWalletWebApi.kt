@@ -11,13 +11,14 @@ import retrofit2.http.Query
  */
 interface XinWalletWebApi {
 
-   // @GET("api/requestSMSVerify")
     @GET("api/reqSmsVerify")
     fun requestSMSVerify(
-            //@Query("code") code: String,
             @Query("phoneNo", encoded = true) phoneNo: String)
             : Call<JsonObject>
 
+
+ //===================================================
+ //以下已不使用，改JSON_RPC
     @GET("api/verifySMSPasscode")
     fun verifySMSPasscode(
             @Query("code") code: String,

@@ -1,4 +1,4 @@
-package com.xinwang.xinwallet;
+package com.xinwang.xinwallet
 
 import android.app.Application
 

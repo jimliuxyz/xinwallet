@@ -24,10 +24,7 @@ import java.util.concurrent.TimeUnit
 class XinWalletService {
 
     //Azure server base_Url
-   // private val BASE_URL = "https://davidfunc.azurewebsites.net/"
     private val BASE_URL = "https://uwfuncapp.azurewebsites.net/"
-
-
 
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
     private var USER_TOKEN = ""
@@ -54,6 +51,9 @@ class XinWalletService {
         api = retrofit.create<XinWalletWebApi>(XinWalletWebApi::class.java)
     }
 
+    /**
+     *
+     */
     private fun exceptionToErrMsg(e: Exception): String {
         return e.javaClass.simpleName
     }

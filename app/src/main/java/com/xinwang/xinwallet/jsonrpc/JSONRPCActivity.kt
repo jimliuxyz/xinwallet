@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_jsonrpc.*
@@ -25,6 +26,7 @@ class JSONRPCActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsonrpc)
         loginTest()
+
     }
 
     private fun loginTest() {

@@ -43,4 +43,6 @@
     <string name="SMS.CountdownTimer">Have not received yet? please wait %1$sS</string>
     <string name="PinCode.mismatched">pincode mismatched</string>
     <string name="Btn.done">Done</string>
+    <string name="Balance">Balance</string>
+    <string name="Currency.Setting">CurrencySetting</string>
 </resources>

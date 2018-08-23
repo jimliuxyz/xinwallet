@@ -7,7 +7,7 @@
     tools:context=".jsonrpc.JSONRPCActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/text00123"
         android:layout_width="176dp"
         android:layout_height="132dp"
         android:layout_marginBottom="8dp"

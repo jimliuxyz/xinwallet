@@ -26,6 +26,7 @@ class XinWalletService {
     //Azure server base_Url
     private val BASE_URL = "https://uwfuncapp.azurewebsites.net/"
 
+    //加密參數
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
     private var USER_TOKEN = ""
 
@@ -51,16 +52,13 @@ class XinWalletService {
         api = retrofit.create<XinWalletWebApi>(XinWalletWebApi::class.java)
     }
 
-    /**
-     *
-     */
+
     private fun exceptionToErrMsg(e: Exception): String {
         return e.javaClass.simpleName
     }
 
     //發送簡訊驗證碼
     fun requestSMSVerify(phoneNo: String, callback: (status: String?, errmsg: String?) -> Unit) {
-      //  val AZURE_CODE = "St0Av0A0PagU18UrTafewYxaZonjdrjnLQnTJVxVk6XhCh1lwUDC1A=="
 
         doNetwork {
             val call = api.requestSMSVerify(URLEncoder.encode(phoneNo, "utf-8"))
@@ -91,7 +89,7 @@ class XinWalletService {
         return XinWalletApp.instance.applicationContext.getPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, 0L)
     }
 
-    // 比對簡訊驗證法是否正確
+    // ＸＸＸ比對簡訊驗證法是否正確ＸＸＸ
     fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?, errmsg: String?) -> Unit) {
         val AZURE_CODE = "lECM7Qzk08hMeMLmqIbosIfqQzHXAmZcialbxsT658huTitp8WUqxQ=="
 

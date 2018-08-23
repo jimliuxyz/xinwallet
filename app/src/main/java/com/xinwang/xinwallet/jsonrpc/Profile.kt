@@ -14,7 +14,6 @@ class Profile :JSONRPC(){
         super.send(domaim,ss){res ->
 
             var jsonObject: JSONObject? = JSONObject(res)
-            println("updateprofile_"+res+"_"+jsonObject?.isNull("error"))
             if(jsonObject?.isNull("error")!!){
                callback(jsonObject.getBoolean("result"))
             }else{
@@ -23,4 +22,24 @@ class Profile :JSONRPC(){
         }
 
     }
+
+
+    open fun getProfile(callback: (result: Any?) -> Unit){
+
+        val ss=GenerateJsonRPCFormat.createJson("getProfile",null).toJsonString()
+         super.send(domaim,ss){
+             var jsonObject=JSONObject(it)
+             if(jsonObject?.isNull("error")!!){
+                 callback(jsonObject.getJSONObject("result"))
+             }else{
+
+                 callback(null)
+             }
+         }
+
+
+
+    }
+
+
 }

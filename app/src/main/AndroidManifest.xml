@@ -17,46 +17,28 @@
         android:windowSoftInputMode="stateVisible|adjustResize">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
         <activity
             android:name=".presenter.activities.IntroActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            <!--<intent-filter> -->
+            <!--<action android:name="android.intent.action.MAIN" /> -->
+            <!--<category android:name="android.intent.category.LAUNCHER" /> -->
+            <!--</intent-filter> -->
         </activity>
         <activity
             android:name=".presenter.activities.login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible">
-
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
-        </activity>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".presenter.activities.login.SmsVerifyActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.login.SetPinCode1Activity"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.login.SetPinCode2Activity"
             android:screenOrientation="portrait" />
@@ -66,12 +48,16 @@
         <activity
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/Home.title"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".presenter.activities.login.SetUsernameActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -83,13 +69,15 @@
         <activity
             android:name=".presenter.activities.PrivacyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".jsonrpc.JSONRPCActivity"
+        <activity
+            android:name=".jsonrpc.JSONRPCActivity"
             android:screenOrientation="portrait">
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
-            </activity>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity android:name=".presenter.activities.BalanceListActivity"></activity>
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@ package com.xinwang.xinwallet.jsonrpc
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -22,10 +23,18 @@ import java.io.IOException
  */
 class JSONRPCActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsonrpc)
-        loginTest()
+        //loginTest()
+        Profile().getProfile{
+            var res=JSONObject(it.toString())
+            text00123.text="getprofile_"+res.getString("currencies")
+
+
+            //println("getprofile_"+res.getString("currencies"))
+        }
 
     }
 
@@ -35,9 +44,9 @@ class JSONRPCActivity : AppCompatActivity() {
         Auth().login("745328901", "8888") { res ->
             val ok = !res.isNullOrBlank() && !res.equals("null")
             if(ok){
-                 textView2.text =res+"_true"
+                text00123!!.text =res+"_true"
             }else{
-                textView2.text =res+"_false"
+                text00123!!.text =res+"_false"
 
             }
             loader.dismiss()
@@ -102,7 +111,6 @@ class JSONRPCActivity : AppCompatActivity() {
 
 
     }
-
 
     fun longin(phoneNo: String, passcode: String) {
 

@@ -3,16 +3,27 @@ package com.xinwang.xinwallet.presenter.activities
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.View
-import android.widget.ListView
+import com.bumptech.glide.Glide
 import com.xinwang.xinwallet.R
-import com.xinwang.xinwallet.presenter.customviews.CurrencyAdapter
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
+import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_home.*
+import org.json.JSONObject
+
+
+import com.bumptech.glide.ListPreloader
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+
+import com.bumptech.glide.util.ViewPreloadSizeProvider
+import com.bumptech.glide.request.RequestOptions
+
+
 
 class HomeActivity : XinActivity() {
 
-    private lateinit var listView :ListView
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -34,25 +45,26 @@ class HomeActivity : XinActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.currency_item)
         setContentView(R.layout.activity_home)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        loadingListView()
+        Profile().getProfile{
+            var res= JSONObject(it.toString())
+            balance.text=res.getString("currencies")
+            doUI {
+                Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+            }
+        }
+
+
 
     }
 
-   fun  loadingListView(){
-       listView = findViewById<ListView>(R.id.listView)
-       val adapter = CurrencyAdapter(this)
-       listView.adapter=adapter
-
-    }
 
     override fun onResume() {
         super.onResume()
 
         val text = "token : ${XinWalletService.instance.getUserToken()}"
-        tvInfo.setText(text)
+       // balance.text=text
     }
 
     fun btnResetUserData(view:View){

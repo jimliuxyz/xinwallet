@@ -89,7 +89,7 @@ class XinWalletService {
         return XinWalletApp.instance.applicationContext.getPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, 0L)
     }
 
-    // ＸＸＸ比對簡訊驗證法是否正確ＸＸＸ
+    //Obsolete_比對簡訊驗證法是否正確ＸＸＸ
     fun verifySMSPasscode(phoneNo: String, passcode: String, callback: (status: String?, errmsg: String?) -> Unit) {
         val AZURE_CODE = "lECM7Qzk08hMeMLmqIbosIfqQzHXAmZcialbxsT658huTitp8WUqxQ=="
 

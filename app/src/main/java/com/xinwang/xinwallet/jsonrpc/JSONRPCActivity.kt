@@ -2,17 +2,12 @@ package com.xinwang.xinwallet.jsonrpc
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.xinwang.xinwallet.R
-import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_jsonrpc.*
 import okhttp3.*
-import okhttp3.internal.cache.DiskLruCache
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -27,15 +22,34 @@ class JSONRPCActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsonrpc)
-        //loginTest()
-        Profile().getProfile{
-            var res=JSONObject(it.toString())
-            text00123.text="getprofile_"+res.getString("currencies")
+        getBalances()
+
+//
+//        val w1 = words.indexOf(trc)
+//        println(words[w1].balance.toLong())
+
+    }
+
+    private fun getBalances() {
+        Trading().getBalances {
+            if (it != null && !it.isEmpty()) {
+
+
+//                it!!.forEach {
+//                    // println("{${it.name}=={${it.balance}}}")
+//                }
+            }
+        }
+    }
+
+    private fun getProfile() {
+        Profile().getProfile {
+            var res = JSONObject(it.toString())
+            text00123.text = "getprofile_" + res.getString("currencies")
 
 
             //println("getprofile_"+res.getString("currencies"))
         }
-
     }
 
     private fun loginTest() {
@@ -43,10 +57,10 @@ class JSONRPCActivity : AppCompatActivity() {
         loader.show(supportFragmentManager, "LoaderDialogFragment")
         Auth().login("745328901", "8888") { res ->
             val ok = !res.isNullOrBlank() && !res.equals("null")
-            if(ok){
-                text00123!!.text =res+"_true"
-            }else{
-                text00123!!.text =res+"_false"
+            if (ok) {
+                text00123!!.text = res + "_true"
+            } else {
+                text00123!!.text = res + "_false"
 
             }
             loader.dismiss()

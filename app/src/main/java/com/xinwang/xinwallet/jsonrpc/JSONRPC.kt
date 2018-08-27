@@ -45,8 +45,8 @@ open class JSONRPC {
 
         val request = Request.Builder().url(BASE_URL+domain)
                 .post(body)
-              //.addHeader("Authorization","Bearer "+ XinWalletService.instance.getUserToken())
-                .addHeader("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjM4NzU2MzkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMzg3NTYzOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJ1c2VyaWQiOiI5ODBjM2Q5Yy0yNGY4LTQ3ZTEtYmFhZC1hYzM1Y2Y5MGZlZjQiLCJpc3MiOiJ4aW53YW5nIiwiYXVkIjoidXdhbGxldCJ9.A24Yne2xUN3TQ0-aKfY5XQaDA6mVIV7Nw5YEs-f92LI")
+              .addHeader("Authorization","Bearer "+ XinWalletService.instance.getUserToken())
+               //.addHeader("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjM4NzU2MzkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMzg3NTYzOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJ1c2VyaWQiOiI5ODBjM2Q5Yy0yNGY4LTQ3ZTEtYmFhZC1hYzM1Y2Y5MGZlZjQiLCJpc3MiOiJ4aW53YW5nIiwiYXVkIjoidXdhbGxldCJ9.A24Yne2xUN3TQ0-aKfY5XQaDA6mVIV7Nw5YEs-f92LI")
                 .build()
 
         val call = OkHttpClient().newCall(request)
@@ -63,7 +63,6 @@ open class JSONRPC {
     }
 
 
-
     fun delUserToken() {
         USER_TOKEN = ""
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_USERTOKEN, "")
@@ -72,36 +71,6 @@ open class JSONRPC {
 
     private fun delPinCode() {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, "")
-    }
-
-
-}
-
-//產生jsonRPC類別
-class GenerateJsonRPCFormat {
-
-    val jsonrpc = "2.0"
-    var id = ""
-
-    var method: String? = null
-    var params: Map<String, Any?>? = null
-
-    companion object {
-
-        fun createJson(method: String, params: Map<String, Any?>? = mapOf()): GenerateJsonRPCFormat {
-            val jrpc = GenerateJsonRPCFormat()
-            jrpc.method = method
-            jrpc.params = params
-            jrpc.id = Math.round(Math.random() * Short.MAX_VALUE).toString()
-            return jrpc
-        }
-
-
-    }
-
-    fun toJsonString(): String {
-        var gson = GsonBuilder().create()
-        return gson.toJson(this)
     }
 
 

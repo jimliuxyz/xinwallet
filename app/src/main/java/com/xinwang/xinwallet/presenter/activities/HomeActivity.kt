@@ -1,5 +1,6 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.View
@@ -11,15 +12,7 @@ import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONObject
-
-
-import com.bumptech.glide.ListPreloader
-import com.bumptech.glide.RequestBuilder
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-
-import com.bumptech.glide.util.ViewPreloadSizeProvider
 import com.bumptech.glide.request.RequestOptions
-
 
 
 class HomeActivity : XinActivity() {
@@ -47,31 +40,35 @@ class HomeActivity : XinActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        Profile().getProfile{
-            var res= JSONObject(it.toString())
-            balance.text=res.getString("currencies")
+        Profile().getProfile {
+            var res = JSONObject(it.toString())
+            balance.text = res.getString("currencies")
             doUI {
                 Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
             }
         }
 
 
-
     }
-
 
     override fun onResume() {
         super.onResume()
 
         val text = "token : ${XinWalletService.instance.getUserToken()}"
-       // balance.text=text
+        // balance.text=text
     }
 
-    fun btnResetUserData(view:View){
+    fun btnResetUserData(view: View) {
         XinWalletService.instance.delUserToken()
         exitApp()
     }
 
+    fun balanceBtnClick(view: View) {
 
+       var intent = Intent()
+        intent.setClass(this,BalanceListActivity::class.java)
+        startActivity(intent)
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+    }
 
 }

@@ -45,7 +45,7 @@ open class JSONRPC {
 
         val request = Request.Builder().url(BASE_URL+domain)
                 .post(body)
-              .addHeader("Authorization","Bearer "+ XinWalletService.instance.getUserToken())
+                .addHeader("Authorization","Bearer "+ XinWalletService.instance.getUserToken())
                //.addHeader("Authorization","Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjM4NzU2MzkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiMzg3NTYzOSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJ1c2VyaWQiOiI5ODBjM2Q5Yy0yNGY4LTQ3ZTEtYmFhZC1hYzM1Y2Y5MGZlZjQiLCJpc3MiOiJ4aW53YW5nIiwiYXVkIjoidXdhbGxldCJ9.A24Yne2xUN3TQ0-aKfY5XQaDA6mVIV7Nw5YEs-f92LI")
                 .build()
 

@@ -4,7 +4,7 @@ import org.json.JSONObject
 import java.util.ArrayList
 import javax.security.auth.callback.Callback
 
- class Profile : JSONRPC() {
+class Profile : JSONRPC() {
 
     val domaim = "profile"
 

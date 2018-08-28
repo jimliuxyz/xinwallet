@@ -3,7 +3,6 @@
     package="com.xinwang.xinwallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application

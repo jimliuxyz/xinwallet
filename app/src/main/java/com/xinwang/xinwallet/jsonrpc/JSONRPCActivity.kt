@@ -22,12 +22,13 @@ class JSONRPCActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsonrpc)
-        getBalances()
+        loginTest()
 
-//
-//        val w1 = words.indexOf(trc)
-//        println(words[w1].balance.toLong())
 
+    }
+
+    private fun contacts() {
+        Contacts().getContacts()
     }
 
     private fun getBalances() {
@@ -58,15 +59,10 @@ class JSONRPCActivity : AppCompatActivity() {
         Auth().login("745328901", "8888") { res ->
             val ok = !res.isNullOrBlank() && !res.equals("null")
             if (ok) {
-                text00123!!.text = res + "_true"
-            } else {
-                text00123!!.text = res + "_false"
-
+                text00123!!.text = res
             }
             loader.dismiss()
-            doUI {
-                Toast.makeText(this, res?.length.toString(), Toast.LENGTH_SHORT).show()
-            }
+
 
         }
     }

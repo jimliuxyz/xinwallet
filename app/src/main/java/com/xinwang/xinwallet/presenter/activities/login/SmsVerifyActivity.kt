@@ -64,7 +64,6 @@ class SmsVerifyActivity : XinActivity() {
     override fun onStart() {
         super.onStart()
         etPasscode.setText("")
-//        etPasscode.setText("3333")
 
         etPasscode.hint = getString(R.string.SMS_enterOTP)
         etPasscode.setHintTextColor(Color.GRAY)
@@ -136,18 +135,13 @@ class SmsVerifyActivity : XinActivity() {
         Auth().login(phoneNo, etPasscode.text.toString()) { res ->
             runOnUiThread {
                 loader.dismiss()
-
                 val ok = !res.isNullOrBlank() && !res.equals("null")
-
                 if (ok) {
                     showSoftInput(false, etPasscode) // don't show soft input again, to avoid odd layout on next activity
-
                     val intent = Intent(this, SetPinCode1Activity::class.java)
-
                     startActivity(intent)
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
                 } else {
-
                     SpringAnimator.failShakeAnimation(this, etPasscode)
                     etPasscode.postOnAnimationDelayed({
                         showSoftInput(true, etPasscode)
@@ -155,7 +149,6 @@ class SmsVerifyActivity : XinActivity() {
                     }, 300)
                     // if (!errmsg.isNullOrBlank())
                     //     Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
-
                     etPasscode.hint = getString(R.string.SMS_Invalid)
                     etPasscode.setHintTextColor(Color.RED)
                 }

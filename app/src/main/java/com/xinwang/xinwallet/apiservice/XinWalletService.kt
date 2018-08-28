@@ -68,7 +68,7 @@ class XinWalletService {
             try {
                 res = call.execute().body()
 
-                var status = res!!.get("status").asString
+                var status = res!!.get("statusCode").asString
                 doUI {
                     callback(status, errmsg)
                 }

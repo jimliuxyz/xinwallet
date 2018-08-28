@@ -15,6 +15,7 @@ class Auth : JSONRPC() {
                 var result: JSONObject? = jsonObject.getJSONObject("result")
                 if (!result?.isNull("token")!!) {
                     token = result.getString("token")
+                    println("token_"+token)
                     setUserToken(token)
                 } else {
                     delUserToken()

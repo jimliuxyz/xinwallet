@@ -35,8 +35,7 @@ class SetUsernameActivity : XinActivity() {
         Profile().updateProfile(etUserName.text.trim().toString()) { result ->
             runOnUiThread {
                 loader.dismiss()
-                // var ok = true //todo : api didn't work
-
+                // var ok = true //todo : api didn't workn
                 if (result!!) {
                     showSoftInput(false, etUserName) // don't show soft input again
 
@@ -51,31 +50,5 @@ class SetUsernameActivity : XinActivity() {
                 }
             }
         }
-
-
-//        XinWalletService.instance.setUserName(etUserName.text.trim().toString()) { status, errmsg ->
-//
-//            runOnUiThread {
-//                loader.dismiss()
-////              val ok = !status.isNullOrBlank() && status.equals("ok")
-//                var ok = true //todo : api didn't work
-//
-//                if (ok) {
-//                    showSoftInput(false, etUserName) // don't show soft input again
-//
-//                    val intent = Intent(this, HomeActivity::class.java)
-//
-//                    startActivity(intent)
-//                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-//                    finish()
-//                } else {
-//                    //todo : server may failed.
-//                    if (!errmsg.isNullOrBlank()) {
-//                        SpringAnimator.failShakeAnimation(this, etUserName)
-//                        Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
-//                    }
-//                }
-//            }
-//        }
     }
 }

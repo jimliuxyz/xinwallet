@@ -101,7 +101,7 @@ class LoginActivity : XinActivity() {
             runOnUiThread {
                 loader.dismiss()
 
-                val ok = !status.isNullOrBlank() && status.equals("ok")
+                val ok = !status.isNullOrBlank() && status.equals("200")
 
                 if (ok) {
                     showSoftInput(false, etPhoneNumber) // don't show soft input again, to avoid odd layout on next activity

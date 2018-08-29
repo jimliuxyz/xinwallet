@@ -9,24 +9,23 @@ import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_balance_list.*
 import java.text.NumberFormat
 
+//千位數符號
+val numberFormat = NumberFormat.getNumberInstance()
 
 class BalanceListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_balance_list)
-        getCurrency()
-
+        getCurrencyList()
     }
 
 
-    fun getCurrency() {
+    fun getCurrencyList() {
         val list = ArrayList<Map<String, Any>>()
         val s1 = arrayOf("currencyName", "amount")
         val s2: IntArray = intArrayOf(R.id.text1, R.id.text2)
-
-        Trading().getBalances {
+        Trading().getBalancesList {
             if (it != null && !it.isEmpty()) {
-                val numberFormat = NumberFormat.getNumberInstance()
                 it!!.forEach {
                     var map: MutableMap<String, Any> = HashMap()
                     map["currencyName"] = it.name
@@ -39,7 +38,7 @@ class BalanceListActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
+    }
 
 }

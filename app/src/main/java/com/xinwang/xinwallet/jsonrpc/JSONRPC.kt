@@ -1,13 +1,12 @@
 package com.xinwang.xinwallet.jsonrpc
 
-import com.google.gson.GsonBuilder
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.tools.crypto.AESCipher
+import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.*
-import org.json.JSONObject
 import java.io.IOException
 
 
@@ -74,4 +73,15 @@ open class JSONRPC {
     }
 
 
+    fun getUserToken(): String? {
+        if (!USER_TOKEN.isNullOrBlank())
+            return USER_TOKEN
+
+        val cipher = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_USERTOKEN, "")
+        if (cipher.isNullOrBlank())
+            return null
+
+        USER_TOKEN = AESCipher.decrypt(ENCODE_KEY, cipher)
+        return USER_TOKEN
+    }
 }

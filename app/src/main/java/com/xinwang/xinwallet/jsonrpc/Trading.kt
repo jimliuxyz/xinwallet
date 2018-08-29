@@ -1,45 +1,64 @@
 package com.xinwang.xinwallet.jsonrpc
 
+import com.xinwang.xinwallet.models.Currency
 import org.json.JSONObject
 import java.util.ArrayList
+import javax.security.auth.callback.Callback
 
 class Trading : JSONRPC() {
     val domain: String = "trading"
 
-    open fun getBalances(callback: (result: ArrayList<Currency>?) -> Unit) {
+/*取得所餘額清單
+*
+* */
+    open fun getBalancesList(callback: (result: ArrayList<Currency>?) -> Unit) {
+        val ss = GenerateJsonRPCFormat.createJson("getBalances", null).toJsonString()
+        super.send(domain, ss) { res ->
+            var jsonObject: JSONObject? = JSONObject(res)
+            if (jsonObject?.isNull("error")!!) {
+                var jsonArray = jsonObject.getJSONArray("result")
+                val currencyList: ArrayList<Currency>? = ArrayList<Currency>()
+                for (i in 0..(jsonArray.length() - 1)) {
+                    var obj: JSONObject = jsonArray.get(i) as JSONObject
+                    var currenctItem:Currency=Currency()
+                    currenctItem.name=obj.getString("name")
+                    currenctItem.balance=obj.getDouble("balance")
+                    currencyList!!.add(currenctItem)
+                }
+                callback(currencyList)
+
+            } else {
+                 callback(null)
+            }
+        }
+    }
+
+
+    /*
+    * 取得特定幣別餘額
+    * currencyName:幣別
+    *
+    * */
+    open fun getBalances(currencyName: String,callback: (result: Double?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("getBalances", null).toJsonString()
         super.send(domain, ss) { res ->
             var jsonObject: JSONObject? = JSONObject(res)
             println("result_${jsonObject.toString()}")
             if (jsonObject?.isNull("error")!!) {
                 var jsonArray = jsonObject.getJSONArray("result")
-                val objectCurrency: ArrayList<Currency>? = ArrayList<Currency>()
                 for (i in 0..(jsonArray.length() - 1)) {
                     var obj: JSONObject = jsonArray.get(i) as JSONObject
-                    var obj_name = obj.getString("name")
-                    var obj_balance = obj.getDouble("balance")
-                    // Todo   sort currency
-                    (objectCurrency!! as ArrayList).add(i,Currency(obj_name, obj_balance))
+                    if (obj.getString("name").equals(currencyName)) {
+                        callback(obj.getDouble("balance"))
+                    }
                 }
-                callback(objectCurrency)
 
             } else {
-               // callback(null)
+                // callback(null)
             }
         }
-    }
-}
 
-class Currency(val currencyName: String,
-               var currencyBalance: Double) {
-
-    var name: String = ""
-    var balance: Double = 0.toDouble()
-
-    init {
-        name = this.currencyName
-        balance = this.currencyBalance
     }
 
-
 }
+

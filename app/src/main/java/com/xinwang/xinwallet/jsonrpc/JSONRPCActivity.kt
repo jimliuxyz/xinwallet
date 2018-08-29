@@ -2,10 +2,8 @@ package com.xinwang.xinwallet.jsonrpc
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
-import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_jsonrpc.*
 import okhttp3.*
 import org.json.JSONException
@@ -18,28 +16,16 @@ import java.io.IOException
  */
 class JSONRPCActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jsonrpc)
-        loginTest()
-
+        contacts11()
 
     }
 
-    private fun contacts() {
-        Contacts().getContacts()
-    }
-
-    private fun getBalances() {
-        Trading().getBalances {
-            if (it != null && !it.isEmpty()) {
-
-
-//                it!!.forEach {
-//                    // println("{${it.name}=={${it.balance}}}")
-//                }
-            }
+    private fun contacts11() {
+        Contacts().getContactsList {
+            
         }
     }
 
@@ -48,8 +34,6 @@ class JSONRPCActivity : AppCompatActivity() {
             var res = JSONObject(it.toString())
             text00123.text = "getprofile_" + res.getString("currencies")
 
-
-            //println("getprofile_"+res.getString("currencies"))
         }
     }
 
@@ -62,7 +46,6 @@ class JSONRPCActivity : AppCompatActivity() {
                 text00123!!.text = res
             }
             loader.dismiss()
-
 
         }
     }

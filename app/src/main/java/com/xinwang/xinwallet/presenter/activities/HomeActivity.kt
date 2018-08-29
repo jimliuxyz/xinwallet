@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.View
+import android.widget.SimpleAdapter
 import com.bumptech.glide.Glide
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
@@ -13,14 +14,17 @@ import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONObject
 import com.bumptech.glide.request.RequestOptions
-import com.google.gson.JsonArray
-import com.xinwang.xinwallet.models.currency
-import org.json.JSONArray
+import com.xinwang.xinwallet.jsonrpc.Trading
+import com.xinwang.xinwallet.models.Currency
+import java.text.NumberFormat
+import java.util.*
 
 
 class HomeActivity : XinActivity() {
 
-
+    var currencies = ArrayList<Currency>()
+    //千位數符號
+    val numberFormat = NumberFormat.getNumberInstance()
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -46,32 +50,33 @@ class HomeActivity : XinActivity() {
         getProfileData()
     }
 
-
-
     fun getProfileData() {
         Profile().getProfile {
-            var res = JSONObject(it.toString())
-            var currencies = ArrayList<currency>()
+            if (it != null) {
+                var res = JSONObject(it.toString())
+                val jsonArray = res.getJSONArray("currencies")
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject = jsonArray.get(i) as JSONObject
+                    val currency = Currency(jsonObject.getString("name"), jsonObject.getInt("order"), jsonObject.getBoolean("isDefault"))
+                    if (jsonObject.getBoolean("isDefault")) {
+                        Trading().getBalances(jsonObject.getString("name")) {
+                            doUI {
+                                default_balance.text = numberFormat.format(it)
+                            }
+                        }
 
-            val jsonArray=res.getJSONArray("currencies")
 
-            println("currency_${res.toString()}")
-            for (i in 0 until jsonArray.length()) {
-                val jsonObject = jsonArray.get(i) as JSONObject
-                val currency = currency(jsonObject.getString("name"), jsonObject.getInt("order"),jsonObject.getBoolean("isDefault"))
-                //currencies.add(jsonObject.getInt("order"),currency)
-                currencies.add(currency)
-                if(jsonObject.getBoolean("isDefault")){
-                    doUI {
-                        default_currency.text=jsonObject.getString("name")
-                    //    default_balance.text=jsonObject.getDouble("")
+                        //  currency.balance = Trading().getBalances(jsonObject.getString("name"))
+                        doUI {
+                            default_currency.text = jsonObject.getString("name")
+                        }
                     }
+                    currencies.add(currency)
                 }
-            }
-            val list = currencies .sortedWith(compareBy({ it.order}))
-
-            doUI {
-                Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+                //     val list = currencies .sortedWith(compareBy({ it.order}))
+                doUI {
+                    Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+                }
             }
         }
     }
@@ -91,8 +96,10 @@ class HomeActivity : XinActivity() {
 
         var intent = Intent()
         intent.setClass(this, BalanceListActivity::class.java)
+        //intent.putStringArrayListExtra("list",)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+
     }
 
 }

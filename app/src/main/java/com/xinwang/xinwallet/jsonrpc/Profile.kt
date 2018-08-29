@@ -29,10 +29,10 @@ class Profile : JSONRPC() {
         val ss = GenerateJsonRPCFormat.createJson("getProfile", null).toJsonString()
         super.send(domaim, ss) {
             var jsonObject = JSONObject(it)
+            println(jsonObject)
             if (jsonObject?.isNull("error")!!) {
                 callback(jsonObject.getJSONObject("result"))
             } else {
-
                 callback(null)
             }
         }

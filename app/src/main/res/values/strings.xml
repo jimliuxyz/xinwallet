@@ -30,7 +30,7 @@
     <string name="SMS.resend"><u>resend SMS passcode</u></string>
     <string name="SMS.unsentInfo">Please enter SMS passcode.</string>
     <string name="Home.title" translatable="false">Wallet</string>
-    <string name="Home.tag.home" translatable="false">Home</string>
+    <string name="Home.tag.friends" translatable="false">Friends</string>
     <string name="Home.tag.dashboard" translatable="false">Dashboard</string>
     <string name="Home.tag.notifications" translatable="false">Notifications</string>
     <string name="SetUsername.title">Enter your name</string>

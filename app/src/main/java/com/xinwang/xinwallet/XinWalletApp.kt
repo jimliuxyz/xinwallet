@@ -19,4 +19,5 @@ class XinWalletApp : Application() {
         instance_ = this
     }
 
+
 }

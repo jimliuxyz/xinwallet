@@ -10,15 +10,16 @@ import kotlinx.android.synthetic.main.activity_balance_list.*
 import java.text.NumberFormat
 
 //千位數符號
-val numberFormat = NumberFormat.getNumberInstance()
 
 class BalanceListActivity : AppCompatActivity() {
+
+    val numberFormat = NumberFormat.getNumberInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_balance_list)
         getCurrencyList()
     }
-
 
     fun getCurrencyList() {
         val list = ArrayList<Map<String, Any>>()

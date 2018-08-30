@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.View
 import android.widget.SimpleAdapter
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
@@ -28,7 +29,8 @@ class HomeActivity : XinActivity() {
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                message.setText(R.string.Home_tag_home)
+                message.setText(R.string.Home_tag_friends)
+                friendsActivity()
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
@@ -64,9 +66,6 @@ class HomeActivity : XinActivity() {
                                 default_balance.text = numberFormat.format(it)
                             }
                         }
-
-
-                        //  currency.balance = Trading().getBalances(jsonObject.getString("name"))
                         doUI {
                             default_currency.text = jsonObject.getString("name")
                         }
@@ -79,12 +78,6 @@ class HomeActivity : XinActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val text = "token:${XinWalletService.instance.getUserToken()}"
-        // balance.text = text
     }
 
     fun btnResetUserData(view: View) {
@@ -100,6 +93,13 @@ class HomeActivity : XinActivity() {
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
 
+    }
+
+    fun friendsActivity() {
+
+        var intent = Intent()
+        intent.setClass(this,ContactsActivity::class.java)
+        startActivity(intent)
     }
 
 }

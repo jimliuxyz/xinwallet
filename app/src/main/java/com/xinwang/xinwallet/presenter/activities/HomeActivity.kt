@@ -4,19 +4,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.view.View
-import android.widget.SimpleAdapter
-import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.jsonrpc.Profile
+import com.xinwang.xinwallet.jsonrpc.Trading
+import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONObject
-import com.bumptech.glide.request.RequestOptions
-import com.xinwang.xinwallet.jsonrpc.Trading
-import com.xinwang.xinwallet.models.Currency
 import java.text.NumberFormat
 import java.util.*
 
@@ -88,7 +86,8 @@ class HomeActivity : XinActivity() {
     fun balanceBtnClick(view: View) {
 
         var intent = Intent()
-        intent.setClass(this, BalanceListActivity::class.java)
+//        intent.setClass(this, BalanceListActivity::class.java)
+        intent.setClass(this, EventTestActivity::class.java)
         //intent.putStringArrayListExtra("list",)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)

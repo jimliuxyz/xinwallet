@@ -1,8 +1,8 @@
 package com.xinwang.xinwallet.jsonrpc
 
+import com.xinwang.xinwallet.busevent.ApiDataEvent
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
-import java.util.ArrayList
-import javax.security.auth.callback.Callback
 
 class Profile : JSONRPC() {
 
@@ -35,6 +35,7 @@ class Profile : JSONRPC() {
             } else {
                 callback(null)
             }
+            EventBus.getDefault().post(ApiDataEvent(0, ApiDataEvent.TYPE_PROFILE, jsonObject))
         }
 
 

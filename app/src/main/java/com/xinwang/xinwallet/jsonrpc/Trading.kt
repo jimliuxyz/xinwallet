@@ -1,9 +1,10 @@
 package com.xinwang.xinwallet.jsonrpc
 
+import com.xinwang.xinwallet.busevent.ApiDataEvent
 import com.xinwang.xinwallet.models.Currency
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
-import java.util.ArrayList
-import javax.security.auth.callback.Callback
+import java.util.*
 
 class Trading : JSONRPC() {
     val domain: String = "trading"
@@ -30,6 +31,7 @@ class Trading : JSONRPC() {
             } else {
                  callback(null)
             }
+            EventBus.getDefault().post(ApiDataEvent(0, ApiDataEvent.TYPE_BALANCE, jsonObject))
         }
     }
 

@@ -81,6 +81,7 @@ class XinWalletService {
             callback(null, errmsg)
         }
 
+        //紀錄驗證碼傳送時間
         val time = System.currentTimeMillis()
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_REQ_SMS_PASSCODE_TIME, time)
     }

@@ -39,6 +39,7 @@ class SmsVerifyActivity : XinActivity() {
 
         userPhoneNo.setText("+${countrycode} ${phonenumber}")
 
+        //設定驗證碼欄位屬性
         etPasscode.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
         etPasscode.transformationMethod = object : PasswordTransformationMethod() {
             override fun getTransformation(source: CharSequence, view: View): CharSequence {
@@ -48,17 +49,16 @@ class SmsVerifyActivity : XinActivity() {
 
         etPasscode.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-            }
 
+            }
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
 
+            }
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //檢查驗證碼
                 updatePasscode()
             }
         })
-
-//        btnResend.visibility = View.GONE
     }
 
     override fun onStart() {
@@ -67,10 +67,6 @@ class SmsVerifyActivity : XinActivity() {
 
         etPasscode.hint = getString(R.string.SMS_enterOTP)
         etPasscode.setHintTextColor(Color.GRAY)
-//        startuptime = System.currentTimeMillis()
-//        smstime = 0L
-//        btnResend.visibility = View.GONE
-
         updatePasscode()
     }
 
@@ -78,6 +74,7 @@ class SmsVerifyActivity : XinActivity() {
         super.onResume()
         showSoftInput(true, etPasscode)
 
+        //每秒執行updateResend()
         timer = Timer("sms_resend_timer")
         timer.schedule(timerTask {
             runOnUiThread {
@@ -91,22 +88,16 @@ class SmsVerifyActivity : XinActivity() {
         timer.cancel()
     }
 
+    // 判斷是否可再發簡訊
     private fun updateResend() {
-//        if (btnResend.visibility == View.GONE) {
-//            if (System.currentTimeMillis() - startuptime >= 6 * 1000) {
-//                btnResend.visibility = View.VISIBLE
-//                btnResend.startAnimation(AnimationUtils.loadAnimation(this, R.anim.abc_fade_in))
-//            } else {
-//                return
-//            }
-//        }
 
+        //設定60秒後才能再發簡訊
         val timediff = (smstime + 60 * 1000) - System.currentTimeMillis()
         val waiting = timediff > 0
         if (allowResend) {
             btnResend.text = Html.fromHtml(getString(R.string.SMS_resend))
         } else {
-            if (waiting) {
+            if (waiting) { //簡訊發送未超過60秒，不可再發送
                 val countdown = Math.ceil(timediff.toDouble() / 1000).toInt()
                 btnResend.text = getString(R.string.SMS_CountdownTimer, String.format("%2d", countdown))
             } else {
@@ -162,6 +153,7 @@ class SmsVerifyActivity : XinActivity() {
         finish()
     }
 
+    //重送簡訊
     fun resend(view: View) {
         if (!allowResend)
             return
@@ -172,8 +164,6 @@ class SmsVerifyActivity : XinActivity() {
         smstime = XinWalletService.instance.getRequestSMSVerifyTime()
         allowResend = false
         updateResend()
-
-//        Toast.makeText(this, "resend~", Toast.LENGTH_SHORT).show()
     }
 
 }

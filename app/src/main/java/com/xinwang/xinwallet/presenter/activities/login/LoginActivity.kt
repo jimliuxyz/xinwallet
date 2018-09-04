@@ -34,7 +34,6 @@ class LoginActivity : XinActivity() {
         setContentView(R.layout.activity_login)
 
         privacyLink()
-        //etPasscode.addTextChangedListener(PhoneNumberFormattingTextWatcher())
         //set keyboard style to number only
         etPhoneNumber.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
         etPhoneNumber.transformationMethod = object : PasswordTransformationMethod() {
@@ -51,6 +50,7 @@ class LoginActivity : XinActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                //判別號碼是否正確
                 verifyPhoneNumber()
             }
         })

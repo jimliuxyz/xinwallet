@@ -27,8 +27,9 @@ class ContactsActivity : AppCompatActivity() {
         Contacts().getContactsList {
             it!!.forEach {
                 sste.add(it.name)
+                println(it.name)
             }
-            var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,sste)
+           // var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,sste)
             var adapter1 =ContactsBaseAdapter(this,it)
             doUI {
                 contactsList.adapter=adapter1

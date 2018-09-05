@@ -13,6 +13,12 @@ import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.*
 import com.xinwang.xinwallet.presenter.activities.login.*
 
+//class A : XinActivity(){
+//    override fun customOnEvent(){
+////        super.onEvent(E)
+//    }
+//}
+
 open class XinActivity : AppCompatActivity() {
 
     companion object {
@@ -24,6 +30,14 @@ open class XinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
+
+//    final fun onEvent(E){
+//
+//    }
+//
+//    fun customOnEvent(E){
+//
+//    }
 
     override fun onResume() {
         super.onResume()

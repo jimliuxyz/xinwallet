@@ -1,13 +1,20 @@
 package com.xinwang.xinwallet.jsonrpc
 
+import android.app.Application
+import android.nfc.Tag
+import android.util.Log
+import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.tools.crypto.AESCipher
+import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.*
 import java.io.IOException
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
 
 open class JSONRPC {
@@ -15,36 +22,46 @@ open class JSONRPC {
     val BASE_URL = "https://uwbackend-asia.azurewebsites.net/api/"
     private var USER_TOKEN = ""
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
+    val client = OkHttpClient().newBuilder()
+            .connectTimeout(35, TimeUnit.SECONDS)
+            .build()
 
-//    companion object {
-//        fun getClinet(): JSONRPC {
-//            return JSONRPC()
-//        }
-//    }
+    open var TAG = "JSONRPC"
 
-
-    fun getResult(call: Call, cb: (res: Any?) -> Unit) {
+    fun getResult(call: Call, cb: (status: Boolean, res: Any?) -> Unit) {
         call.enqueue(object : Callback {
+            //system錯誤 status->false
             override fun onFailure(call: Call?, e: IOException?) {
-                cb(null)
+                cb(false, e.toString())
+                Log.i(TAG, "onFailure()_" + e.toString())
             }
 
+            //成功連上並有拋回物件 stats->true
             override fun onResponse(call: Call?, response: Response?) {
-                cb(response?.body()?.string())
+                try {
+                    val result=response?.body()?.string()
+                    cb(true, result)
+                    Log.i(TAG, "onResponse()_$result")
+                } catch (e: Exception) {
+                    //有例外產生 status->false
+                    cb(false, e.toString())
+                    Log.i(TAG, "Exception_onResponse()_$e")
+                }
             }
         })
     }
 
     // do PostHttp
-    fun send(domain: String, requestJSON: String, callback: (result: String) -> Unit) {
+    fun send(domain: String, requestJSON: String, callback: (status: Boolean, result: String) -> Unit) {
         val JSON = MediaType.parse("application/json; charset=utf-8")
         val body = RequestBody.create(JSON, requestJSON)
         val request = Request.Builder().url(BASE_URL + domain)
                 .post(body)
+                //header 加入JWT (Authorization:Bearer JWT)
                 .addHeader("Authorization", "Bearer " + XinWalletService.instance.getUserToken())
                 .build()
-        val call = OkHttpClient().newCall(request)
-        getResult(call) { res -> callback(res.toString()) }
+        val call = client.newCall(request)
+        getResult(call) { status, res -> callback(status, res.toString()) }
     }
 
 
@@ -76,5 +93,11 @@ open class JSONRPC {
 
         USER_TOKEN = AESCipher.decrypt(ENCODE_KEY, cipher)
         return USER_TOKEN
+    }
+
+    fun showToast(message: String) {
+        doUI {
+            Toast.makeText(XinWalletApp.context, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }

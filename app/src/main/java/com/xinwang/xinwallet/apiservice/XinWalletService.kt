@@ -39,7 +39,7 @@ class XinWalletService {
     private constructor() {
 
         val okHttpClient = OkHttpClient().newBuilder()
-                .connectTimeout(15, TimeUnit.SECONDS)
+                .connectTimeout(45, TimeUnit.SECONDS)
                 .addInterceptor(HttpLoggingInterceptor().setLevel(Level.BASIC))
                 .build()
 

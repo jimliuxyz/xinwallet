@@ -36,8 +36,8 @@ class EventTestActivity : AppCompatActivity() {
 
         loader.show(supportFragmentManager, "LoaderDialogFragment")
 
-        Profile().getProfile {}
-        Trading().getBalancesList {}
+//        Profile().getProfile {}
+//        Trading().getBalancesList {}
     }
 
     private var map = mutableMapOf<Int, Int>()

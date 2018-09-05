@@ -51,9 +51,11 @@ class SmsVerifyActivity : XinActivity() {
             override fun afterTextChanged(s: Editable?) {
 
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
+
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 //檢查驗證碼
                 updatePasscode()
@@ -123,11 +125,10 @@ class SmsVerifyActivity : XinActivity() {
 
         val phoneNo = "${countrycode}${phonenumber}"
 
-        Auth().login(phoneNo, etPasscode.text.toString()) { res ->
+        Auth().login(phoneNo, etPasscode.text.toString()) { status, res ->
             runOnUiThread {
                 loader.dismiss()
-                val ok = !res.isNullOrBlank() && !res.equals("null")
-                if (ok) {
+                if (status) {
                     showSoftInput(false, etPasscode) // don't show soft input again, to avoid odd layout on next activity
                     val intent = Intent(this, SetPinCode1Activity::class.java)
                     startActivity(intent)
@@ -138,8 +139,7 @@ class SmsVerifyActivity : XinActivity() {
                         showSoftInput(true, etPasscode)
                         etPasscode.setText("")
                     }, 300)
-                    // if (!errmsg.isNullOrBlank())
-                    //     Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, res, Toast.LENGTH_LONG).show()
                     etPasscode.hint = getString(R.string.SMS_Invalid)
                     etPasscode.setHintTextColor(Color.RED)
                 }
@@ -157,10 +157,8 @@ class SmsVerifyActivity : XinActivity() {
     fun resend(view: View) {
         if (!allowResend)
             return
-
         val phoneNo = "${countrycode}${phonenumber}"
         XinWalletService.instance.requestSMSVerify(phoneNo) { s: String?, s1: String? -> }
-
         smstime = XinWalletService.instance.getRequestSMSVerifyTime()
         allowResend = false
         updateResend()

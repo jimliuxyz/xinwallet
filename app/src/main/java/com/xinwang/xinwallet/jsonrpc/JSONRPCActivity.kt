@@ -16,54 +16,125 @@ import java.io.IOException
  */
 class JSONRPCActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_jsonrpc)
-        contacts11()
-
-    }
-
-    private fun contacts11() {
-        Contacts().getContactsList {
-            
-        }
-    }
-
-    private fun getProfile() {
-        Profile().getProfile {
-            var res = JSONObject(it.toString())
-            text00123.text = "getprofile_" + res.getString("currencies")
-
-        }
-    }
-
-    private fun loginTest() {
-        val loader = LoaderDialogFragment()
-        loader.show(supportFragmentManager, "LoaderDialogFragment")
-        Auth().login("745328901", "8888") { res ->
-            val ok = !res.isNullOrBlank() && !res.equals("null")
-            if (ok) {
-                text00123!!.text = res
-            }
-            loader.dismiss()
-
-        }
-    }
-
-    fun postOkHttp() {
-
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_jsonrpc)
+//        contacts11()
+//
+//    }
+//
+//    private fun contacts11() {
+//        Contacts().getContactsList {
+//
+//        }
+//    }
+//
+//    private fun getProfile() {
+//        Profile().getProfile {
+//            var res = JSONObject(it.toString())
+//            text00123.text = "getprofile_" + res.getString("currencies")
+//
+//        }
+//    }
+//
+//    private fun loginTest() {
+//        val loader = LoaderDialogFragment()
+//        loader.show(supportFragmentManager, "LoaderDialogFragment")
+//        Auth().login("745328901", "8888") { res ->
+//            val ok = !res.isNullOrBlank() && !res.equals("null")
+//            if (ok) {
+//                text00123!!.text = res
+//            }
+//            loader.dismiss()
+//
+//        }
+//    }
+//
+//    fun postOkHttp() {
+//
+////        Thread {
+////
+////
+////            val JSON = MediaType.parse("application/json; charset=utf-8")
+////            val body = RequestBody.create(JSON, json)
+////
+////            val client = OkHttpClient()
+////            val resquest = Request.Builder().url("http://uwbackend-asia.azurewebsites.net/api/auth")
+////                    .post(body)
+////                    .build()
+////            val call = client.newCall(resquest)
+////            call.enqueue(object : Callback {
+////                override fun onFailure(call: Call?, e: IOException?) {
+////                    println("onfailure_" + e.toString())
+////                }
+////
+////                override fun onResponse(call: Call?, response: Response?) {
+////
+////                    var jsonObject: JSONObject? = null
+////                    var result: String? = null
+////                    // System.out.println("output+>" + response.body().string());
+////
+////                    try {
+////                        jsonObject = JSONObject(response?.body()!!.string())
+////                        if (jsonObject.get("error").toString() == "null") {
+////                            result = jsonObject.getJSONObject("result").get("token").toString()
+////                        } else {
+////                            result = jsonObject.getJSONObject("error").get("message").toString()
+////                        }
+////
+////
+////                    } catch (e: JSONException) {
+////                        e.printStackTrace()
+////                    }
+////
+////                    //   Object jsonOb = jsonObject.getJSONObject("result").get("token");
+////
+//////                    final String result =jsonOb.toString();
+//////                    final  String id=jsonObject.getString("id");
+////                    val ss = result
+////
+////
+////                    println("onresponse_" + ss)
+////
+////                }
+////            })
+////
+////
+////        }.start()
+//
+//
+//    }
+//
+//    fun longin(phoneNo: String, passcode: String) {
+//
+//        //1.包json字串
+//
+//        val json = "{\"jsonrpc\":\"2.0\"," +
+//                "\"method\":\"login\"," +
+//                "\"params\": {" +
+//                "\"phoneno\":\"" + phoneNo + "\"," +
+//                "\"passcode\":\"" + passcode + "\"},\"id\":\"99\"}"
+//        println(json)
+//
+//
+//        //2.post()
+//
+//        val JSON = MediaType.parse("application/json; charset=utf-8")
+//        val body = RequestBody.create(JSON, json)
+//
+//        val resquest = Request.Builder().url("http://uwbackend-asia.azurewebsites.net/api/auth")
+//                .post(body)
+//                .build()
+//
+//
+//        val client = OkHttpClient()
+//
+//        val call = client.newCall(resquest)
+//
 //        Thread {
 //
-//
-//            val JSON = MediaType.parse("application/json; charset=utf-8")
-//            val body = RequestBody.create(JSON, json)
-//
-//            val client = OkHttpClient()
-//            val resquest = Request.Builder().url("http://uwbackend-asia.azurewebsites.net/api/auth")
-//                    .post(body)
-//                    .build()
-//            val call = client.newCall(resquest)
 //            call.enqueue(object : Callback {
+//
 //                override fun onFailure(call: Call?, e: IOException?) {
 //                    println("onfailure_" + e.toString())
 //                }
@@ -87,89 +158,18 @@ class JSONRPCActivity : AppCompatActivity() {
 //                        e.printStackTrace()
 //                    }
 //
-//                    //   Object jsonOb = jsonObject.getJSONObject("result").get("token");
-//
+//                    //  Object jsonOb = jsonObject.getJSONObject("result").get("token");
 ////                    final String result =jsonOb.toString();
 ////                    final  String id=jsonObject.getString("id");
 //                    val ss = result
-//
 //
 //                    println("onresponse_" + ss)
 //
 //                }
 //            })
-//
-//
 //        }.start()
-
-
-    }
-
-    fun longin(phoneNo: String, passcode: String) {
-
-        //1.包json字串
-
-        val json = "{\"jsonrpc\":\"2.0\"," +
-                "\"method\":\"login\"," +
-                "\"params\": {" +
-                "\"phoneno\":\"" + phoneNo + "\"," +
-                "\"passcode\":\"" + passcode + "\"},\"id\":\"99\"}"
-        println(json)
-
-
-        //2.post()
-
-        val JSON = MediaType.parse("application/json; charset=utf-8")
-        val body = RequestBody.create(JSON, json)
-
-        val resquest = Request.Builder().url("http://uwbackend-asia.azurewebsites.net/api/auth")
-                .post(body)
-                .build()
-
-
-        val client = OkHttpClient()
-
-        val call = client.newCall(resquest)
-
-        Thread {
-
-            call.enqueue(object : Callback {
-
-                override fun onFailure(call: Call?, e: IOException?) {
-                    println("onfailure_" + e.toString())
-                }
-
-                override fun onResponse(call: Call?, response: Response?) {
-
-                    var jsonObject: JSONObject? = null
-                    var result: String? = null
-                    // System.out.println("output+>" + response.body().string());
-
-                    try {
-                        jsonObject = JSONObject(response?.body()!!.string())
-                        if (jsonObject.get("error").toString() == "null") {
-                            result = jsonObject.getJSONObject("result").get("token").toString()
-                        } else {
-                            result = jsonObject.getJSONObject("error").get("message").toString()
-                        }
-
-
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
-
-                    //  Object jsonOb = jsonObject.getJSONObject("result").get("token");
-//                    final String result =jsonOb.toString();
-//                    final  String id=jsonObject.getString("id");
-                    val ss = result
-
-                    println("onresponse_" + ss)
-
-                }
-            })
-        }.start()
-
-    }
+//
+//    }
 
 }
 

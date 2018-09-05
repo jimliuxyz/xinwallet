@@ -14,6 +14,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.support.design.widget.BottomNavigationView
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
@@ -39,6 +40,7 @@ import java.util.*
 class HomeActivity : XinActivity() {
 
     val loader = LoaderDialogFragment()
+    val TAG = "HomeActivity"
 
     var currencies = ArrayList<Currency>()
     //千位數符號
@@ -68,34 +70,39 @@ class HomeActivity : XinActivity() {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         getProfileData()
         balance.text = JSONRPC().getUserToken()
-        println("token_${JSONRPC().getUserToken()}")
-
+        println("$TAG+token_${JSONRPC().getUserToken()}")
     }
 
     fun getProfileData() {
-        Profile().getProfile {
+        Profile().getProfile { status: Boolean, it ->
             if (it != null) {
-                var res = JSONObject(it.toString())
-                val jsonArray = res.getJSONArray("currencies")
-                for (i in 0 until jsonArray.length()) {
-                    val jsonObject = jsonArray.get(i) as JSONObject
-                    val currency = Currency(jsonObject.getString("name"), jsonObject.getInt("order"), jsonObject.getBoolean("isDefault"))
-                    if (jsonObject.getBoolean("isDefault")) {
-                        Trading().getBalances(jsonObject.getString("name")) {
+                try {
+                    var res = JSONObject(it.toString())
+                    val jsonArray = res.getJSONArray("currencies")
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.get(i) as JSONObject
+                        val currency = Currency(jsonObject.getString("name"), jsonObject.getInt("order"), jsonObject.getBoolean("isDefault"))
+                        if (jsonObject.getBoolean("isDefault")) {
+                            Trading().getBalances(jsonObject.getString("name")) {
+                                doUI {
+                                    default_balance.text = numberFormat.format(it)
+                                }
+                            }
                             doUI {
-                                default_balance.text = numberFormat.format(it)
+                                default_currency.text = jsonObject.getString("name")
                             }
                         }
-                        doUI {
-                            default_currency.text = jsonObject.getString("name")
-                        }
+                        currencies.add(currency)
                     }
-                    currencies.add(currency)
+                    // val list = currencies .sortedWith(compareBy({ it.order}))
+                    doUI {
+                        Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+                    }
+                } catch (e: Exception) {
+                    Log.i(TAG, e.toString())
+
                 }
-                //     val list = currencies .sortedWith(compareBy({ it.order}))
-                doUI {
-                    Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
-                }
+
             }
         }
     }
@@ -106,10 +113,9 @@ class HomeActivity : XinActivity() {
     }
 
     fun balanceBtnClick(view: View) {
-
         var intent = Intent()
         intent.setClass(this, BalanceListActivity::class.java)
-      //  intent.setClass(this, EventTestActivity::class.java)
+        //  intent.setClass(this, EventTestActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
 
@@ -140,24 +146,23 @@ class HomeActivity : XinActivity() {
         if (resultCode != Activity.RESULT_OK) {
             return
         }
+        loader.show(supportFragmentManager,"LoaderDialogFragment")
         when (requestCode) {
             123//相册
             -> {
-
                 val dataUri = data.data
 //                val cr = this.contentResolver
 //                var bitmap = BitmapFactory.decodeStream(cr.openInputStream(dataUri))
-                Profile().uploadAvatar(File(UriUtil().getPath(dataUri))) {
-
+                  Profile().uploadAvatar(File(UriUtil().getPath(dataUri))) {
                     doUI {
                         getProfileData()
                         Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                        loader.dismiss()
                     }
                 }
 
             }
         }
     }
-
 
 }

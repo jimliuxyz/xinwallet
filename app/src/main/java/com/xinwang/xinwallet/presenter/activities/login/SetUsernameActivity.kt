@@ -38,15 +38,12 @@ class SetUsernameActivity : XinActivity() {
                 // var ok = true //todo : api didn't workn
                 if (result!!) {
                     showSoftInput(false, etUserName) // don't show soft input again
-
                     val intent = Intent(this, HomeActivity::class.java)
-
                     startActivity(intent)
                     overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
                     finish()
                 } else {
                     SpringAnimator.failShakeAnimation(this, etUserName)
-                    //todo : server may failed.
                 }
             }
         }

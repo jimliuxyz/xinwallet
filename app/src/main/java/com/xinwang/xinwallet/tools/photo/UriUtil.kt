@@ -1,7 +1,5 @@
 package com.xinwang.xinwallet.tools.photo
 
-import android.app.Activity
-import android.app.Application
 import android.provider.MediaStore
 import android.provider.DocumentsContract
 import android.content.ContentUris
@@ -15,7 +13,7 @@ import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 
 
- class UriUtil:Application() {
+ class UriUtil {
 
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access

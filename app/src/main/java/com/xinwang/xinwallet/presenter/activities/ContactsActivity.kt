@@ -1,8 +1,10 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.xinwang.xinwallet.R
@@ -15,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_contacts.*
 
 class ContactsActivity : AppCompatActivity() {
     val TAG = "ContactsActivity"
-
     val loader = LoaderDialogFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,11 @@ class ContactsActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    fun addFriendBtn(view: View) {
+        var intent = Intent(this@ContactsActivity, AddFriendActivity::class.java)
+        startActivity(intent)
     }
 
 }

@@ -56,7 +56,6 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -73,11 +72,10 @@
         <activity
             android:name=".jsonrpc.JSONRPCActivity"
             android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+             <!--<intent-filter>-->
+             <!--<action android:name="android.intent.action.MAIN" />-->
+             <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
         </activity>
         <activity android:name=".presenter.activities.BalanceListActivity">
 
@@ -94,7 +92,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".presenter.activities.EventTestActivity" />
-        <activity android:name=".presenter.activities.AddFriendActivity"></activity>
+        <activity android:name=".presenter.activities.AddFriendActivity" />
     </application>
 
 </manifest>

@@ -2,9 +2,7 @@ package com.xinwang.xinwallet.jsonrpc
 
 import android.util.Log
 import com.xinwang.xinwallet.apiservice.XinWalletService
-import com.xinwang.xinwallet.busevent.ApiDataEvent
 import okhttp3.*
-import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -45,9 +43,7 @@ class Profile : JSONRPC() {
 
     }
 
-
     open fun getProfile(callback: (status: Boolean, result: Any?) -> Unit) {
-
         val ss = GenerateJsonRPCFormat.createJson("getProfile", null).toJsonString()
         super.send(domaim, ss) { status, res ->
             if (status) {
@@ -70,10 +66,7 @@ class Profile : JSONRPC() {
             }
             //  EventBus.getDefault().post(ApiDataEvent(0, ApiDataEvent.TYPE_PROFILE, jsonObject))
         }
-
-
     }
-
 
     fun uploadAvatar(image: File, callback: (result: String) -> Unit) {
 
@@ -91,7 +84,6 @@ class Profile : JSONRPC() {
         val call = OkHttpClient().newCall(request)
         getResultAvator(call) { res -> callback(res.toString()) }
     }
-
 
     fun getResultAvator(call: Call, cb: (res: Any?) -> Unit) {
         call.enqueue(object : Callback {

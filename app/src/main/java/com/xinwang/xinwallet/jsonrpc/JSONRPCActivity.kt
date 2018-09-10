@@ -16,18 +16,22 @@ import java.io.IOException
  */
 class JSONRPCActivity : AppCompatActivity() {
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_jsonrpc)
-//        contacts11()
-//
-//    }
-//
-//    private fun contacts11() {
-//        Contacts().getContactsList {
-//
-//        }
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_jsonrpc)
+        contacts11()
+
+    }
+
+    private fun contacts11() {
+     FuncApp().reqSmsVerify("886948488375"){status, res ->
+         if(status){
+             println("correct_${res.toString()}")
+         }else{
+             println("wang_${res.toString()}")
+         }
+     }
+    }
 //
 //    private fun getProfile() {
 //        Profile().getProfile {

@@ -1,8 +1,6 @@
 package com.xinwang.xinwallet.jsonrpc
 
-import com.xinwang.xinwallet.busevent.ApiDataEvent
 import com.xinwang.xinwallet.models.Currency
-import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 import java.util.*
 

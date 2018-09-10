@@ -1,7 +1,5 @@
 package com.xinwang.xinwallet.jsonrpc
 
-import android.app.Application
-import android.nfc.Tag
 import android.util.Log
 import android.widget.Toast
 import com.xinwang.xinwallet.R
@@ -19,7 +17,8 @@ import java.util.concurrent.TimeUnit
 
 open class JSONRPC {
 
-    val BASE_URL = "https://uwbackend-asia.azurewebsites.net/api/"
+   //val BASE_URL = "https://uwbackend-asia.azurewebsites.net/api/"
+    val BASE_URL="https://uwbackend-dev.azurewebsites.net/api/"
     private var USER_TOKEN = ""
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
     val client = OkHttpClient().newBuilder()

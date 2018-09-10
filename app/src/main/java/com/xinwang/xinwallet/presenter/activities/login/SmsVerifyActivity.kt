@@ -8,11 +8,13 @@ import android.text.Html
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.jsonrpc.Auth
+import com.xinwang.xinwallet.jsonrpc.FuncApp
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
@@ -145,8 +147,6 @@ class SmsVerifyActivity : XinActivity() {
                 }
             }
         }
-
-
     }
 
     fun navBack(view: View) {
@@ -154,7 +154,7 @@ class SmsVerifyActivity : XinActivity() {
     }
 
     //重送簡訊
-    fun resend(view: View) {
+    fun resend1(view: View) {
         if (!allowResend)
             return
         val phoneNo = "${countrycode}${phonenumber}"
@@ -164,4 +164,25 @@ class SmsVerifyActivity : XinActivity() {
         updateResend()
     }
 
+
+    fun resend(view: View) {
+        if (!allowResend)
+            return
+        val phoneNo = "${countrycode}${phonenumber}"
+        FuncApp().reqSmsVerify(phoneNo) { status, msg ->
+            runOnUiThread {
+                if (status) {
+                    smstime = XinWalletService.instance.getRequestSMSVerifyTime()
+                    allowResend = false
+                    updateResend()
+                } else {
+                    Log.i(TAG, "resend$msg")
+                   // Toast.makeText(this, msg.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+
 }
+

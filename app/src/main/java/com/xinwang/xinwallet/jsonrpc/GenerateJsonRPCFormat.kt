@@ -18,8 +18,6 @@ class GenerateJsonRPCFormat {
             jrpc.id = Math.round(Math.random() * Short.MAX_VALUE).toString()
             return jrpc
         }
-
-
     }
 
     fun toJsonString(): String {

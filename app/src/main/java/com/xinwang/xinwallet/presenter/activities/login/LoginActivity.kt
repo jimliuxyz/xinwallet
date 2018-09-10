@@ -7,6 +7,7 @@ import android.text.method.LinkMovementMethod
 import android.text.method.PasswordTransformationMethod
 import android.text.style.ClickableSpan
 import android.text.style.URLSpan
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.R.id.ccp
 import com.xinwang.xinwallet.R.id.etPhoneNumber
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.jsonrpc.FuncApp
 import com.xinwang.xinwallet.presenter.activities.AgreementActivity
 import com.xinwang.xinwallet.presenter.activities.PrivacyActivity
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
@@ -23,6 +25,7 @@ import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber
 import kotlinx.android.synthetic.main.activity_login.*
+import org.json.JSONObject
 
 
 class LoginActivity : XinActivity() {
@@ -74,7 +77,6 @@ class LoginActivity : XinActivity() {
         showSoftInput(true, etPhoneNumber)
     }
 
-
     private fun verifyPhoneNumber(): Phonenumber.PhoneNumber? {
         var phoneUtil = PhoneNumberUtil.createInstance(this)
 
@@ -91,7 +93,8 @@ class LoginActivity : XinActivity() {
         return curPhoneNo
     }
 
-    fun loginClicked(view: View) {
+    // deprecated
+    fun loginClicked1(view: View) {
 
         val loader = LoaderDialogFragment()
         loader.show(supportFragmentManager, "LoaderDialogFragment")
@@ -123,6 +126,31 @@ class LoginActivity : XinActivity() {
         }
     }
 
+    fun loginClicked(view: View) {
+
+        val loader = LoaderDialogFragment()
+        loader.show(supportFragmentManager, "LoaderDialogFragment")
+
+        val phoneNo = "${curPhoneNo!!.countryCode}${curPhoneNo!!.nationalNumber}"
+        FuncApp().reqSmsVerify(phoneNo) { status, msg ->
+            runOnUiThread {
+                loader.dismiss()
+                if (status) {
+                    showSoftInput(false, etPhoneNumber) // don't show soft input again, to avoid odd layout on next activity
+                    val intent = Intent(this, SmsVerifyActivity::class.java)
+                    intent.putExtra("countrycode", curPhoneNo!!.countryCode.toString())
+                    intent.putExtra("phonenumber", curPhoneNo!!.nationalNumber.toString())
+                    startActivity(intent)
+                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+                }else{
+                    Log.i(TAG,"smsError$msg")
+                    SpringAnimator.failShakeAnimation(this, etPhoneNumber)
+                    showSoftInput(true, etPhoneNumber)
+                   // Toast.makeText(this,msg.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
 
     fun privacyLink() {
 
@@ -132,7 +160,6 @@ class LoginActivity : XinActivity() {
         tvDesc.setMovementMethod(LinkMovementMethod.getInstance());
         setTextHyperLinkListener(tvDesc, sp)
     }
-
 
     private fun setTextHyperLinkListener(textView: TextView, sp: Spanned) {
         val text = textView.text

@@ -1,8 +1,6 @@
 package com.xinwang.xinwallet.jsonrpc
 
 import android.util.Log
-import android.widget.Toast
-import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.models.Contacts
 import org.json.JSONObject
 import java.util.*

@@ -5,6 +5,7 @@ import org.json.JSONObject
 
 class Auth : JSONRPC() {
     override var TAG = "Auth"
+    val domain="auth"
 
 /*
 * ss->建立json字串
@@ -37,7 +38,7 @@ class Auth : JSONRPC() {
         val ss = GenerateJsonRPCFormat.createJson("login",
                 mapOf("phoneno" to phoneno, "passcode" to passcode, "pns" to "gcm", "pnsToken" to "f607a1efa8ec3beb994d810a4b93623b81a257332aff8a9709990ba1611478c1"))
                 .toJsonString()
-        super.send("auth", ss) { status, res ->
+        super.send( domain, ss) { status, res ->
             if (status) {//解析出token
                 try {
                     var token: String? =null
@@ -68,5 +69,14 @@ class Auth : JSONRPC() {
 
     }
 
+    fun isToknAvailable(callback: (status: Boolean, result: String?) -> Unit){
+        val ss=GenerateJsonRPCFormat.createJson("isTokenAvailable",null).toJsonString()
+        super.send(domain,ss){status, result ->
+         callback(status,result)
+        }
+
+
+
+    }
 
 }

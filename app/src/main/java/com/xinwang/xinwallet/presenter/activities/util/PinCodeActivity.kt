@@ -100,8 +100,6 @@ open class PinCodeActivity : XinActivity() {
         pincode[idx] = if (replacer.equals(CHAR_CLEAR)) ' ' else str[0]
 
         var pincodeStr = pincode.joinToString(separator = "").trim()
-//        println(" " + pincodeStr)
-
         if (pincodeStr.length == pinDigits) {
             doIO {
                 runOnUiThread {

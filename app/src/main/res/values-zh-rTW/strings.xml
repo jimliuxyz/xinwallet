@@ -40,5 +40,7 @@
     <string name="Btn.done">完成</string>
     <string name="PinCode.next">确认</string>
     <string name="Balance">余额</string>
+    <string name="Unlock.tokenUnavailable">Token 已失效</string>
+    <string name="Home.changedAvatar">已更改大头照</string>
 
 </resources>

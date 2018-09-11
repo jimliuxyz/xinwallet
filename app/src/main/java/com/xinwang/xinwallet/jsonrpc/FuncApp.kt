@@ -4,12 +4,14 @@ import android.util.Log
 import com.google.gson.JsonObject
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
+import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.tools.util.doNetwork
 import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import org.json.JSONObject
+import java.io.File
 import java.io.IOException
 import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
@@ -17,25 +19,28 @@ import java.util.concurrent.TimeUnit
 class FuncApp {
 
     private val JSON = MediaType.parse("application/json; charset=utf-8")
+    private val formData = MediaType.parse("multipart/form-data")
     private val BASE_URL = "https://uwfuncapp-dev.azurewebsites.net/api/"
     private val TAG = "FuncApp"
 
     private val okHttpClient = OkHttpClient().newBuilder()
-            .connectTimeout(60, TimeUnit.SECONDS)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
             .build()
 
 
+    /*
+    * 寄送簡訊驗證碼
+    * phoneNo:手機號碼
+    * */
     fun reqSmsVerify(phoneNo: String, callback: (status: Boolean, res: Any?) -> Unit) {
         val domain = "reqSmsVerify"
         val requestJSON = GenerateJsonRPCFormat.createJson("reqSmsVerify", mapOf("phoneno" to phoneNo)).toJsonString()
 
         doNetwork {
             val body = RequestBody.create(JSON, requestJSON)
-            val request = Request.Builder().url(BASE_URL + domain)
-                    .post(body)
-                    .addHeader("Authorization", "Bearer " + JSONRPC().getUserToken())
-                    .build()
+            val request = getRequest(domain, body)
             val call = okHttpClient.newCall(request)
             getFuncAppResult(call) { status, res ->
                 if (status) {
@@ -48,10 +53,39 @@ class FuncApp {
                 } else {
                     Log.i(TAG, "reqSmsVerify:$res")
                     JSONRPC().showToast("$res")
-                    callback(false,"$res")
+                    callback(false, "$res")
                 }
             }
         }
+    }
+
+    /*
+    * 上傳大頭照
+    * image:圖片檔
+    * */
+    fun uploadAvatar(image: File, callback: (status: Boolean) -> Unit) {
+        val requestBody = RequestBody.create(formData, image)
+        val multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("image", "image.jpg", requestBody)
+                .build()
+        val request = getRequest("uploadAvatar", multipartBody)
+        val call = okHttpClient.newCall(request)
+        getFuncAppResult(call) { status, res ->
+            if (status) {
+                Log.i(TAG, "uploadAvatar_$res")
+                callback(true)
+            } else {
+                JSONRPC().showToast(res.toString())
+            }
+        }
+    }
+
+    fun getRequest(domain: String, body: RequestBody): Request {
+        return Request.Builder().url(BASE_URL + domain)
+                .post(body)
+                .addHeader("Authorization", "Bearer " + JSONRPC().getUserToken())
+                .build()
+
     }
 
 
@@ -59,8 +93,7 @@ class FuncApp {
         call.enqueue(object : Callback {
             override fun onFailure(call: Call?, e: IOException?) {
                 Log.i(TAG, "getFuncAppResultFailure_$e")
-                JSONRPC().showToast(e.toString())
-                cb(false,e)
+                cb(false, e)
             }
 
             override fun onResponse(call: Call?, response: Response?) {
@@ -75,8 +108,7 @@ class FuncApp {
                     Log.i(TAG, "getFuncAppResultResponse_$res")
                 } catch (e: Exception) {
                     Log.i(TAG, "getFuncAppResultResponse2_$e")
-                    JSONRPC().showToast(e.toString())
-                    cb(false,e)
+                    cb(false, e)
                 }
 
             }

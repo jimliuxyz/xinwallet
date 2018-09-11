@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.jsonrpc.FuncApp
 import com.xinwang.xinwallet.jsonrpc.JSONRPC
 import com.xinwang.xinwallet.tools.photo.UriUtil
 import com.xinwang.xinwallet.jsonrpc.Profile
@@ -94,15 +95,21 @@ class HomeActivity : XinActivity() {
                         }
                         currencies.add(currency)
                     }
+
+                    var tmp = currencies.filter { currency ->
+                        (currency.name == "BTC" ||currency.name == "ETH")
+                    }
+                    for (c in tmp){
+                        println("????"+c.name)
+                    }
+
                     // val list = currencies .sortedWith(compareBy({ it.order}))
                     doUI {
                         Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
                     }
                 } catch (e: Exception) {
-                    Log.i(TAG, e.toString())
-
+                    Log.i(TAG, " getProfileData_$e")
                 }
-
             }
         }
     }
@@ -137,8 +144,6 @@ class HomeActivity : XinActivity() {
         } else {
             EasyPermissions.requestPermissions(this@HomeActivity, "您需要打开读取相册权限", 34316, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -146,19 +151,22 @@ class HomeActivity : XinActivity() {
         if (resultCode != Activity.RESULT_OK) {
             return
         }
-        loader.show(supportFragmentManager,"LoaderDialogFragment")
+        loader.show(supportFragmentManager, "LoaderDialogFragment")
         when (requestCode) {
             123//相册
             -> {
                 val dataUri = data.data
 //                val cr = this.contentResolver
 //                var bitmap = BitmapFactory.decodeStream(cr.openInputStream(dataUri))
-                  Profile().uploadAvatar(File(UriUtil().getPath(dataUri))) {
-                    doUI {
-                        getProfileData()
-                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
-                        loader.dismiss()
+                FuncApp().uploadAvatar(File(UriUtil().getPath(dataUri))) {
+                    if (it) {
+                        doUI {
+                            getProfileData()
+                            Toast.makeText(this, R.string.Home_changedAvatar, Toast.LENGTH_SHORT).show()
+                            loader.dismiss()
+                        }
                     }
+
                 }
 
             }

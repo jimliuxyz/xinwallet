@@ -1,11 +1,13 @@
 package com.xinwang.xinwallet.jsonrpc
 
+import android.util.Log
 import com.xinwang.xinwallet.models.Currency
 import org.json.JSONObject
 import java.util.*
 
 class Trading : JSONRPC() {
-    val domain: String = "trading"
+    private val domain: String = "trading"
+    private val tag: String = "Trading"
 
     /*取得所餘額清單
     *
@@ -35,12 +37,10 @@ class Trading : JSONRPC() {
                 }
             }
         } catch (e: Exception) {
-            println("nate_getBalancesList__$e")
-
+            Log.i(tag, "getBalancesList_$e")
         }
 
     }
-
 
     /*
     * 取得特定幣別餘額
@@ -50,24 +50,26 @@ class Trading : JSONRPC() {
     open fun getBalances(currencyName: String, callback: (result: Double?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("getBalances", null).toJsonString()
         super.send(domain, ss) { status: Boolean, res ->
-            try {
-                var jsonObject: JSONObject? = JSONObject(res)
-                if (jsonObject?.isNull("error")!!) {
-                    var jsonArray = jsonObject.getJSONArray("result")
-                    for (i in 0..(jsonArray.length() - 1)) {
-                        var obj: JSONObject = jsonArray.get(i) as JSONObject
-                        if (obj.getString("name").equals(currencyName)) {
-                            callback(obj.getDouble("balance"))
-                        }
+            if (status) {
+                try {
+                    var jsonObject: JSONObject? = JSONObject(res)
+                    if (jsonObject?.isNull("error")!!) {
+                        var balance = jsonObject.getJSONObject("result")
+                                .getJSONObject("list").getDouble(currencyName)
+                        callback(balance)
+                    } else {
+                        showToast("${jsonObject.get("error")}")
+                        Log.i(tag, "getBalances_${jsonObject.get("error")}")
                     }
-                } else {
-                    // callback(null)
+                } catch (e: Exception) {
+                    showToast("$e")
+                    Log.i(tag, "getBalances2_$e")
                 }
-
-            } catch (e: Exception) {
-                println("nate_getBalances__$e")
+            } else {
+                //系統錯誤
+                showToast("$res")
+                Log.i(tag, "getBalances3_$res")
             }
-
         }
 
     }

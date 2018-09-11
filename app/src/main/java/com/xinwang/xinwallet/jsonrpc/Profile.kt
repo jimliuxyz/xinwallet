@@ -23,19 +23,19 @@ class Profile : JSONRPC() {
                         callback(true)
                     } else {
                         callback(false)
-                        Log.i(TAG,"updateProfile1_${jsonObject.getJSONObject("error")}")
+                        Log.i(TAG, "updateProfile1_${jsonObject.getJSONObject("error")}")
                         showToast(jsonObject.getJSONObject("error").toString())
                     }
-                }catch (e:Exception){
+                } catch (e: Exception) {
                     callback(false)
-                    Log.i(TAG,"updateProfile2_$e")
+                    Log.i(TAG, "updateProfile2_$e")
                     showToast(e.toString())
                 }
 
             } else {
                 //system error
                 callback(false)
-                Log.i(TAG,"updateProfile3_$res")
+                Log.i(TAG, "updateProfile3_$res")
                 showToast(res)
             }
 
@@ -43,6 +43,7 @@ class Profile : JSONRPC() {
 
     }
 
+    //取得個人資料
     open fun getProfile(callback: (status: Boolean, result: Any?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("getProfile", null).toJsonString()
         super.send(domaim, ss) { status, res ->
@@ -53,7 +54,7 @@ class Profile : JSONRPC() {
                         callback(true, jsonObject.getJSONObject("result"))
                     } else {
                         Log.i(TAG, "getProfile1_${jsonObject.getJSONObject("error")}")
-                       // showToast(jsonObject.getJSONObject("error").toString())
+                        // showToast(jsonObject.getJSONObject("error").toString())
                     }
                 } catch (e: Exception) {
                     Log.i(TAG, "getProfile2_${e.toString()}")
@@ -62,42 +63,11 @@ class Profile : JSONRPC() {
             } else {
                 //system error
                 Log.i(TAG, "getProfile3_$res")
-               // showToast(res)
+                // showToast(res)
             }
             //  EventBus.getDefault().post(ApiDataEvent(0, ApiDataEvent.TYPE_PROFILE, jsonObject))
         }
     }
 
-    fun uploadAvatar(image: File, callback: (result: String) -> Unit) {
-
-        // do PostHttp
-        val data = MediaType.parse("multipart/form-data")
-        val requestBody = RequestBody.create(data, image)
-
-        val multipartBody = MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("image", "image.jpg", requestBody)
-                .build()
-        val request = Request.Builder().url("https://uwfuncapp.azurewebsites.net/api/uploadAvatar")
-                .post(multipartBody)
-                .addHeader("Authorization", "Bearer " + XinWalletService.instance.getUserToken())
-                .build()
-        val call = OkHttpClient().newCall(request)
-        getResultAvator(call) { res -> callback(res.toString()) }
-    }
-
-    fun getResultAvator(call: Call, cb: (res: Any?) -> Unit) {
-        call.enqueue(object : Callback {
-            override fun onFailure(call: Call?, e: IOException?) {
-                Log.i(TAG,"getResultAvatoronFailure_$e")
-                cb(null)
-            }
-
-            override fun onResponse(call: Call?, response: Response?) {
-                val res = response?.body()?.string()
-                Log.i(TAG,"getResultAvatorononResponse_$res")
-                cb(res)
-            }
-        })
-    }
 
 }

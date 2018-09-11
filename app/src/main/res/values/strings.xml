@@ -45,4 +45,6 @@
     <string name="Btn.done">Done</string>
     <string name="Balance">Balance</string>
     <string name="Currency.Setting">CurrencySetting</string>
+    <string name="Unlock.tokenUnavailable">Token Unavailable</string>
+    <string name="Home.changedAvatar">Avatar has been changed</string>
 </resources>

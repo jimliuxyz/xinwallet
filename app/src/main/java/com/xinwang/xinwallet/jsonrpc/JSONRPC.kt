@@ -12,13 +12,13 @@ import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.*
 import java.io.IOException
 import okhttp3.OkHttpClient
+import org.json.JSONObject
 import java.util.concurrent.TimeUnit
 
 
 open class JSONRPC {
 
-   //val BASE_URL = "https://uwbackend-asia.azurewebsites.net/api/"
-    val BASE_URL="https://uwbackend-dev.azurewebsites.net/api/"
+    val BASE_URL = "https://uwbackend-dev.azurewebsites.net/api/"
     private var USER_TOKEN = ""
     private val ENCODE_KEY = "ASDFGHJKLASDFGHJ"
     val client = OkHttpClient().newBuilder()
@@ -38,7 +38,7 @@ open class JSONRPC {
             //成功連上並有拋回物件 stats->true
             override fun onResponse(call: Call?, response: Response?) {
                 try {
-                    val result=response?.body()?.string()
+                    val result = response?.body()?.string()
                     cb(true, result)
                     Log.i(TAG, "onResponse()_$result")
                 } catch (e: Exception) {
@@ -81,7 +81,6 @@ open class JSONRPC {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_PINCODE, "")
     }
 
-
     fun getUserToken(): String? {
         if (!USER_TOKEN.isNullOrBlank())
             return USER_TOKEN
@@ -97,6 +96,23 @@ open class JSONRPC {
     fun showToast(message: String) {
         doUI {
             Toast.makeText(XinWalletApp.context, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun JsonerrorIsNull(jsonString: String): Boolean {
+        val jsonObject = JSONObject(jsonString)
+        if (jsonObject.isNull("error")) {
+            try {
+                return true
+            } catch (e: Exception) {
+                Log.i(TAG, "getResultObject2_$e")
+                return false
+            }
+        } else {
+            //system error
+            Log.i(TAG, "getResultObject3_${jsonObject["error"]}")
+            // showToast(res)
+            return false
         }
     }
 }

@@ -25,15 +25,20 @@ class ContactsActivity : AppCompatActivity() {
         getContactsList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getContactsList()
+    }
+
     fun getContactsList() {
-        var sste = ArrayList<String>()
+       // var sste = ArrayList<String>()
         Contacts().getContactsList { status, it ->
             loader.dismiss()
             if (status) {
                 try {
-                    it!!.forEach {
-                        sste.add(it.name)
-                    }
+//                    it!!.forEach {
+//                        sste.add(it.name)
+//                    }
                     // var adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1,sste)
                     var adapter1 = ContactsBaseAdapter(this, it)
                     doUI {

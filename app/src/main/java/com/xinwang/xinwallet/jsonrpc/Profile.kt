@@ -70,4 +70,19 @@ class Profile : JSONRPC() {
     }
 
 
+    fun addFriends11(list: ArrayList<String>, callback: (result: Boolean?) -> Unit) {
+        val ss = GenerateJsonRPCFormat.createJson("addFriends", mapOf("list" to list)).toJsonString()
+        println("++++++__$ss")
+        super.send("contacts", ss) { status, res ->
+            if (status && JsonerrorIsNull(res)) {
+                callback(true)
+
+            } else {
+                showToast(res)
+                Log.i(TAG, "addFriends_$res")
+            }
+
+        }
+    }
+
 }

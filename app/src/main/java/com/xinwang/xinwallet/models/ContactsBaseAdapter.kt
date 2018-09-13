@@ -14,12 +14,12 @@ class ContactsBaseAdapter(context: Context, contactsList: ArrayList<Contacts>?) 
 
     private var context: Context? = null
     private var layoutInflater: LayoutInflater? = null
-    private var contactsList: ArrayList<Contacts>?=null
+    private var contactsList: ArrayList<Contacts>? = null
 
     init {
         this.context = context
         layoutInflater = LayoutInflater.from(context)
-        this.contactsList=contactsList
+        this.contactsList = contactsList
     }
 
     override fun getCount(): Int {
@@ -35,10 +35,8 @@ class ContactsBaseAdapter(context: Context, contactsList: ArrayList<Contacts>?) 
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-
-    val view :View
-        view=layoutInflater!!.inflate(R.layout.contacts_item,parent,false)
-        view.contacts_item_name.text= contactsList!![position].name
+        val view = layoutInflater!!.inflate(R.layout.contacts_item, parent, false)
+        view.contacts_item_name.text = contactsList!![position].name
         Glide.with(view).load(contactsList!![position].avatar).into(view.contacts_item_image)
         return view
     }

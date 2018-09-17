@@ -46,31 +46,13 @@ class HomeActivity : XinActivity() {
     var currencies = ArrayList<Currency>()
     //千位數符號
     val numberFormat = NumberFormat.getNumberInstance()
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.navigation_home -> {
-                message.setText(R.string.Home_tag_friends)
-                friendsActivity()
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_dashboard -> {
-                message.setText(R.string.Home_tag_dashboard)
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.navigation_notifications -> {
-                message.setText(R.string.Home_tag_notifications)
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         getProfileData()
-        balance.text = JSONRPC().getUserToken()
+      //  balance.text = JSONRPC().getUserToken()
         println("$TAG+token_${JSONRPC().getUserToken()}")
     }
 
@@ -105,6 +87,7 @@ class HomeActivity : XinActivity() {
 
                     // val list = currencies .sortedWith(compareBy({ it.order}))
                     doUI {
+                        userName.text=res.getString("name")
                         Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
                     }
                 } catch (e: Exception) {

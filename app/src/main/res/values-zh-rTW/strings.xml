@@ -42,5 +42,8 @@
     <string name="Balance">余额</string>
     <string name="Unlock.tokenUnavailable">Token 已失效</string>
     <string name="Home.changedAvatar">已更改大头照</string>
+    <string name="Balance.setting">币别设定</string>
+    <string name="Balance.DefaultCurrency">预设币别</string>
+    <string name="Balance.OtherCurrency">其他币别</string>
 
 </resources>

@@ -47,4 +47,7 @@
     <string name="Currency.Setting">CurrencySetting</string>
     <string name="Unlock.tokenUnavailable">Token Unavailable</string>
     <string name="Home.changedAvatar">Avatar has been changed</string>
+    <string name="Balance.setting">Setting</string>
+    <string name="Balance.DefaultCurrency">DefaultCurrency</string>
+    <string name="Balance.OtherCurrency">OtherCurrency</string>
 </resources>

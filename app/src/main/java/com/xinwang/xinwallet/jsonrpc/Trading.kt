@@ -5,6 +5,7 @@ import com.xinwang.xinwallet.models.Currency
 import org.json.JSONObject
 import java.util.*
 
+
 class Trading : JSONRPC() {
     private val domain: String = "trading"
     private val tag: String = "Trading"
@@ -19,15 +20,17 @@ class Trading : JSONRPC() {
                 if (status) {
                     var jsonObject: JSONObject? = JSONObject(res)
                     if (jsonObject?.isNull("error")!!) {
-                        var jsonArray = jsonObject.getJSONArray("result")
+                        var jsonList = jsonObject.getJSONObject("result").getJSONObject("list")
                         val currencyList: ArrayList<Currency>? = ArrayList<Currency>()
-                        for (i in 0..(jsonArray.length() - 1)) {
-                            var obj: JSONObject = jsonArray.get(i) as JSONObject
-                            var currenctItem: Currency = Currency()
-                            currenctItem.name = obj.getString("name")
-                            currenctItem.balance = obj.getDouble("balance")
-                            currencyList!!.add(currenctItem)
+                        val keys = jsonList.keys()
+                        keys.forEach {
+                            Log.i(TAG,"getBalancesList_${it}:${jsonList.getString(it)}")
+                            val currencyItem = Currency()
+                            currencyItem.name = it
+                            currencyItem.balance = jsonList.getDouble(it)
+                            currencyList!!.add(currencyItem)
                         }
+
                         callback(currencyList)
 
                     } else {
@@ -37,7 +40,7 @@ class Trading : JSONRPC() {
                 }
             }
         } catch (e: Exception) {
-            Log.i(tag, "getBalancesList_$e")
+            Log.i(tag, "getBalancesList2_$e")
         }
 
     }

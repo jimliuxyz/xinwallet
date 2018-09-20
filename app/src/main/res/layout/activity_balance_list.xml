@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#e8e6e6"
+    android:background="@color/colorMainBackground"
     tools:context=".presenter.activities.BalanceListActivity">
 
     <View
         android:id="@+id/view6"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:background="#c3eeebeb"
+        android:background="@color/colorTitleBarBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,19 +62,21 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/setting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:onClick="settingOnclick"
         android:text="@string/Balance.setting"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/view6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view6" />
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:onClick="back"
         app:layout_constraintBottom_toTopOf="@+id/view6"
         app:layout_constraintTop_toBottomOf="@+id/view6"
@@ -87,6 +89,7 @@
         android:onClick="back"
         android:text="@string/app_name"
         android:textColor="@color/colorAccent"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/view6"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/view6" />

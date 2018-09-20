@@ -1,5 +1,6 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -73,7 +74,13 @@ class BalanceListActivity : AppCompatActivity() {
         }
     }
 
+    fun settingOnclick(view: View) {
+        val intent= Intent(this,CurrencySettingActivity::class.java)
+        startActivity(intent)
+    }
+
     fun back(view: View) {
         finish()
     }
+
 }

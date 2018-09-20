@@ -6,7 +6,6 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-feature android:name="android.hardware.screen.portrait" />
 
     <application
@@ -26,10 +25,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
         <activity
@@ -54,10 +53,10 @@
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/Home.title"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".presenter.activities.login.SetUsernameActivity"
@@ -72,26 +71,36 @@
         <activity
             android:name=".jsonrpc.JSONRPCActivity"
             android:screenOrientation="portrait">
-             <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-        <!--</intent-filter>-->
-        </activity>
-        <activity android:name=".presenter.activities.BalanceListActivity">
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.ContactsActivity">
-
+        <activity android:name=".presenter.activities.BalanceListActivity"
+            android:screenOrientation="portrait">
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+        <activity android:name=".presenter.activities.ContactsActivity"
+            android:screenOrientation="portrait">
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.EventTestActivity" />
-        <activity android:name=".presenter.activities.AddFriendActivity" />
+        <activity android:name=".presenter.activities.EventTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presenter.activities.AddFriendActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".presenter.activities.CurrencySettingActivity"
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

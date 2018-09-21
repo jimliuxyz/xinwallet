@@ -38,7 +38,6 @@ open class XinActivity : AppCompatActivity() {
     }
 
 
-
 //    final fun onEvent(E){
 //
 //    }
@@ -134,5 +133,21 @@ open class XinActivity : AppCompatActivity() {
             }
         }, 100)
     }
+
+    fun back(view: View) {
+        finish()
+    }
+
+
+    fun getCoinIconId(str: String): Int {
+        when (str) {
+            "BTC" -> return (R.drawable.ic_coin_btc)
+            "USD" -> return (R.drawable.ic_coin_usd)
+            "ETH" -> return (R.drawable.ic_coin_eth)
+            else -> return (R.drawable.ic_coin_cny)
+        }
+
+    }
+
 
 }

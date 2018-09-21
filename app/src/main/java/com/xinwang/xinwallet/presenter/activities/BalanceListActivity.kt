@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.xinwang.xinwallet.jsonrpc.Trading
 import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.CurrencyBaseAdapter
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_balance_list.*
 import java.text.NumberFormat
@@ -19,7 +20,7 @@ import java.text.NumberFormat
 
 //千位數符號
 
-class BalanceListActivity : AppCompatActivity() {
+class BalanceListActivity : XinActivity() {
 
     private val numberFormat = NumberFormat.getNumberInstance()
     private var defaultName: TextView? = null
@@ -51,18 +52,10 @@ class BalanceListActivity : AppCompatActivity() {
                     arrayList.add(it)
                 }
                 doUI {
-                    //  arrayList[0].name
                     val firstCurName = arrayList[0].name
                     defaultName!!.text = firstCurName
                     defaultAmount!!.text = numberFormat.format(arrayList[0].balance).toString()
-                    var firstCoin: Int
-                    when (firstCurName) {
-                        "BTC" -> firstCoin = R.drawable.ic_coin_btc
-                        "USD" -> firstCoin = R.drawable.ic_coin_usd
-                        "ETH" -> firstCoin = R.drawable.ic_coin_eth
-                        else -> firstCoin = R.drawable.ic_coin_cny
-                    }
-                    defaultImage!!.setImageResource(firstCoin)
+                    defaultImage!!.setImageResource(getCoinIconId(firstCurName))
                     list.removeAt(0)
                     arrayList.removeAt(0)
 
@@ -79,8 +72,5 @@ class BalanceListActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun back(view: View) {
-        finish()
-    }
 
 }

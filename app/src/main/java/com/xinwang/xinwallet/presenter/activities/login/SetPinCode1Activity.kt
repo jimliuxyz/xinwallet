@@ -4,14 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.presenter.activities.util.PinCodeActivity
-import kotlinx.android.synthetic.main.activity_pincoin.*
+import kotlinx.android.synthetic.main.activity_pincode.*
 
 class SetPinCode1Activity : PinCodeActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        showDigitsOption(true)
+        showDigitsOption(false)
 
         brkeyboard.setBRKeyboardColor(R.color.white)
         tvTitle.text = getString(R.string.PinCode_Set1_title)

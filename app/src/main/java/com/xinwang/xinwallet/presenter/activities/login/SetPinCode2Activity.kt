@@ -7,7 +7,7 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.HomeActivity
 import com.xinwang.xinwallet.presenter.activities.util.PinCodeActivity
-import kotlinx.android.synthetic.main.activity_pincoin.*
+import kotlinx.android.synthetic.main.activity_pincode.*
 
 class SetPinCode2Activity : PinCodeActivity() {
 

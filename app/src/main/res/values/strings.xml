@@ -50,4 +50,8 @@
     <string name="Balance.setting">Setting</string>
     <string name="Balance.DefaultCurrency">DefaultCurrency</string>
     <string name="Balance.OtherCurrency">OtherCurrency</string>
+    <string name="Currency.CNY">CNY</string>
+    <string name="Currency.USD">USD</string>
+    <string name="Currency.BTC">BTC</string>
+    <string name="Currency.ETH">ETH</string>
 </resources>

@@ -2,24 +2,16 @@ package com.xinwang.xinwallet.presenter.activities
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentUris
-import android.content.Context
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.DocumentsContract
-import android.provider.MediaStore
-import android.support.design.widget.BottomNavigationView
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.Gson
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.jsonrpc.FuncApp
 import com.xinwang.xinwallet.jsonrpc.JSONRPC
@@ -30,19 +22,20 @@ import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
+import com.xinwang.xinwallet.tools.util.setPref
 import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class HomeActivity : XinActivity() {
 
     val loader = LoaderDialogFragment()
     val TAG = "HomeActivity"
-
     var currencies = ArrayList<Currency>()
     //千位數符號
     val numberFormat = NumberFormat.getNumberInstance()
@@ -52,7 +45,6 @@ class HomeActivity : XinActivity() {
         setContentView(R.layout.activity_home)
         //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         getProfileData()
-      //  balance.text = JSONRPC().getUserToken()
         println("$TAG+token_${JSONRPC().getUserToken()}")
     }
 
@@ -77,24 +69,23 @@ class HomeActivity : XinActivity() {
                         }
                         currencies.add(currency)
                     }
-
-                    var tmp = currencies.filter { currency ->
-                        (currency.name == "BTC" ||currency.name == "ETH")
-                    }
-                    for (c in tmp){
-                        println("????"+c.name)
-                    }
-
-                    // val list = currencies .sortedWith(compareBy({ it.order}))
                     doUI {
-                        userName.text=res.getString("name")
+                        userName.text = res.getString("name")
                         Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
                     }
                 } catch (e: Exception) {
                     Log.i(TAG, " getProfileData_$e")
                 }
+                saveCurrenciesListInSharedPreference()
             }
         }
+    }
+
+    private fun saveCurrenciesListInSharedPreference() {
+        val gson = Gson()
+        val json = gson.toJson(currencies)
+       XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
+
     }
 
     fun btnResetUserData(view: View) {
@@ -105,10 +96,9 @@ class HomeActivity : XinActivity() {
     fun balanceBtnClick(view: View) {
         var intent = Intent()
         intent.setClass(this, BalanceListActivity::class.java)
-        //  intent.setClass(this, EventTestActivity::class.java)
+        //intent.setClass(this, EventTestActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-
     }
 
     fun friendsActivity() {

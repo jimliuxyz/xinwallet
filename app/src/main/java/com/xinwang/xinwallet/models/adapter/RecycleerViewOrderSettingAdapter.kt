@@ -28,9 +28,11 @@ import android.widget.ImageView
 import android.widget.TextView
 
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.adapter.helper.ItemTouchHelperAdapter
 import com.xinwang.xinwallet.models.adapter.helper.ItemTouchHelperViewHolder
 import com.xinwang.xinwallet.models.adapter.helper.OnStartDragListener
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 
 import java.util.ArrayList
 import java.util.Collections
@@ -41,16 +43,14 @@ import java.util.Collections
  *
  * @author Paul Burke (ipaulpro)
  */
-class RecycleerViewOrderSettingAdapter(context: Context, private val mDragStartListener: OnStartDragListener) : RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
+class RecycleerViewOrderSettingAdapter(context: Context, private val mDragStartListener: OnStartDragListener,data:ArrayList<Currency>) : RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
 
 
-    private val mItems = ArrayList<String>()
+    private var mItems = ArrayList<Currency>()
 
     init {
-        mItems.add("USD")
-        mItems.add("BTC")
-        mItems.add("CYN")
-        mItems.add("ETH")
+        mItems=data
+        mItems.sortWith(compareBy{it.order})
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerListAdapter.ItemViewHolder {
@@ -59,8 +59,17 @@ class RecycleerViewOrderSettingAdapter(context: Context, private val mDragStartL
     }
 
     override fun onBindViewHolder(holder: RecyclerListAdapter.ItemViewHolder, position: Int) {
-        holder.currencyName.text = mItems[position]
-        holder.currencyEnName.text = mItems[position]
+
+        holder.currencyEnName.text = mItems[position].name
+        holder.currencyIcon.setImageResource(XinActivity().getCoinIconId(mItems[position].name))
+        var coinNameId: Int
+        when (mItems[position].name) {
+            "BTC" -> coinNameId = R.string.Currency_BTC
+            "USD" ->coinNameId = R.string.Currency_USD
+            "ETH" ->coinNameId =R.string.Currency_ETH
+            else -> coinNameId = R.string.Currency_CNY
+        }
+        holder.currencyName.setText(coinNameId)
         holder.itemView.setOnTouchListener { v, event ->
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                 mDragStartListener.onStartDrag(holder)

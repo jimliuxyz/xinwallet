@@ -45,5 +45,9 @@
     <string name="Balance.setting">币别设定</string>
     <string name="Balance.DefaultCurrency">预设币别</string>
     <string name="Balance.OtherCurrency">其他币别</string>
+    <string name="Currency.CNY">人民币</string>
+    <string name="Currency.USD">美金</string>
+    <string name="Currency.BTC">比特币</string>
+    <string name="Currency.ETH">以太币</string>
 
 </resources>

@@ -17,7 +17,7 @@ import com.xinwang.xinwallet.presenter.activities.login.SetPinCode2Activity
 import com.xinwang.xinwallet.presenter.activities.login.SmsVerifyActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
-import kotlinx.android.synthetic.main.activity_pincoin.*
+import kotlinx.android.synthetic.main.activity_pincode.*
 
 
 class UnlockAppActivity : PinCodeActivity() {

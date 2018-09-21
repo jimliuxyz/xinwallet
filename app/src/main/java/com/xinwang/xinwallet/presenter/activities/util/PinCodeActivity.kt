@@ -11,7 +11,7 @@ import com.xinwang.xinwallet.presenter.activities.login.LoginActivity
 import com.xinwang.xinwallet.presenter.customviews.BRKeyboard
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import com.xinwang.xinwallet.tools.util.doIO
-import kotlinx.android.synthetic.main.activity_pincoin.*
+import kotlinx.android.synthetic.main.activity_pincode.*
 
 open class PinCodeActivity : XinActivity() {
     private val TAG = LoginActivity::class.java.name
@@ -34,7 +34,7 @@ open class PinCodeActivity : XinActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pincoin)
+        setContentView(R.layout.activity_pincode)
 
         showDigitsOption(false)
 
@@ -50,7 +50,7 @@ open class PinCodeActivity : XinActivity() {
         keypad.setShowDot(false)
         keypad.setBRButtonBackgroundResId(R.drawable.keyboard_trans_button)
         keypad.setBRButtonTextColor(R.color.gray)
-//        keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
+//      keypad.setBreadground(getDrawable(R.drawable.bread_gradient))
         keypad.setBreadground(getDrawable(R.color.white))
 
         keypad.addOnInsertListener { key: String ->

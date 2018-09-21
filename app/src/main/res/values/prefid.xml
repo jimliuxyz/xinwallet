@@ -3,4 +3,5 @@
     <string name="PREF_PINCODE_DIGITS" translatable="false">PREF_PINCODE_DIGITS</string>
     <string name="PREF_USERTOKEN" translatable="false">PREF_USERTOKEN</string>
     <string name="PREF_REQ_SMS_PASSCODE_TIME" translatable="false">PREF_REQ_SMS_PASSCODE_TIME</string>
+    <string name="PREF_CURRENCY_ORDER" translatable="false">PREF_CURRENCY_ORDER</string>
 </resources>

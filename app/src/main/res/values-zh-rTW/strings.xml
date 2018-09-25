@@ -49,5 +49,9 @@
     <string name="Currency.USD">美金</string>
     <string name="Currency.BTC">比特币</string>
     <string name="Currency.ETH">以太币</string>
+    <string name="Exchange">换汇</string>
+    <string name="Save_withdraw">存提</string>
+    <string name="Receipt_Pay">收付款</string>
+    <string name="Historical_Transaction">历史交易</string>
 
 </resources>

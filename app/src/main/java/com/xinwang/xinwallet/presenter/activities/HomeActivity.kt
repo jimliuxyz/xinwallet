@@ -22,6 +22,7 @@ import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
+import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
 import kotlinx.android.synthetic.main.activity_home.*
 import org.json.JSONObject
@@ -35,17 +36,35 @@ import kotlin.collections.ArrayList
 class HomeActivity : XinActivity() {
 
     val loader = LoaderDialogFragment()
+    val loader_order = LoaderDialogFragment()
+    val loader_balance = LoaderDialogFragment()
     val TAG = "HomeActivity"
     var currencies = ArrayList<Currency>()
     //千位數符號
     val numberFormat = NumberFormat.getNumberInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
         //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         getProfileData()
+        saveCurrencyBalanceInSharedPreference()
         println("$TAG+token_${JSONRPC().getUserToken()}")
+    }
+
+    private fun saveCurrencyBalanceInSharedPreference() {
+        loader_balance.show(supportFragmentManager, "LoaderDialogFragment")
+
+        Trading().getBalancesList {
+            val gson = Gson()
+            val json = gson.toJson(it)
+            XinWalletApp.instance.applicationContext.setPref(R.string.REF_CURRENCY_BALANCE, json)
+            val balData = XinWalletApp.instance.applicationContext.getPref(R.string.REF_CURRENCY_BALANCE, "")
+            Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
+            doUI { loader_balance.dismiss() }
+        }
+
     }
 
     fun getProfileData() {
@@ -76,15 +95,17 @@ class HomeActivity : XinActivity() {
                 } catch (e: Exception) {
                     Log.i(TAG, " getProfileData_$e")
                 }
-                saveCurrenciesListInSharedPreference()
+                saveCurrencyOrderInSharedPreference()
             }
         }
     }
 
-    private fun saveCurrenciesListInSharedPreference() {
+    private fun saveCurrencyOrderInSharedPreference() {
         val gson = Gson()
         val json = gson.toJson(currencies)
-       XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
+        val orderData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
+        Log.i(TAG, "saveCurrencyOrderInSharedPreference_$orderData")
 
     }
 

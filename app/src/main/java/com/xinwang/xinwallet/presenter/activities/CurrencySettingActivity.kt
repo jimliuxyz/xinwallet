@@ -20,16 +20,13 @@ import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 
 
-class CurrencySettingActivity :XinActivity(), OnStartDragListener {
+class CurrencySettingActivity : XinActivity(), OnStartDragListener {
 
     private var mItemTouchHelper: ItemTouchHelper? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency_setting)
-        val backText = include.findViewById(R.id.txt_back) as TextView?
-        val titleBarText = include.findViewById(R.id.title_name) as TextView?
-        backText?.text = getString(R.string.Balance)
-        titleBarText?.text = getText(R.string.Balance_setting)
+        titleBarSetting()
         //getList()
         val adapter = RecycleerViewOrderSettingAdapter(this, this, getList())
         cycleViewerSittingOrder.setHasFixedSize(true)
@@ -41,11 +38,18 @@ class CurrencySettingActivity :XinActivity(), OnStartDragListener {
 
     }
 
+    private fun titleBarSetting() {
+        val backText = include.findViewById(R.id.txt_back) as TextView?
+        val titleBarText = include.findViewById(R.id.title_name) as TextView?
+        backText?.text = getString(R.string.Balance)
+        titleBarText?.text = getText(R.string.Balance_setting)
+    }
+
     private fun getList(): ArrayList<Currency> {
         val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
         val type = object : TypeToken<ArrayList<Currency>>() {}.type
         //  val result = Gson().fromJson<ArrayList<Currency>>(obj,type) //解析
-       // println(result.toString())
+        // println(result.toString())
         return Gson().fromJson<ArrayList<Currency>>(obj, type)
     }
 

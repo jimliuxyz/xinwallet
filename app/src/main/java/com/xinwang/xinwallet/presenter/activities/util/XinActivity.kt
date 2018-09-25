@@ -14,9 +14,15 @@ import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.*
 import com.xinwang.xinwallet.presenter.activities.login.*
 import android.content.ComponentName
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.jsonrpc.Auth
 import com.xinwang.xinwallet.jsonrpc.JSONRPC
+import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.tools.util.doUI
+import com.xinwang.xinwallet.tools.util.getPref
+import java.util.ArrayList
 
 
 //class A : XinActivity(){
@@ -149,5 +155,20 @@ open class XinActivity : AppCompatActivity() {
 
     }
 
+
+    fun getPREFCurrencyOrderList(): ArrayList<Currency> {
+        val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
+        val type = object : TypeToken<ArrayList<Currency>>() {}.type
+        return Gson().fromJson<ArrayList<Currency>>(obj, type)
+    }
+
+
+    fun getPREFCurrencyBalance(curName: String): Double {
+        val obj = XinWalletApp.instance.applicationContext.getPref(R.string.REF_CURRENCY_BALANCE, "")
+        val type = object : TypeToken<ArrayList<Currency>>() {}.type
+        val balanceList = Gson().fromJson<ArrayList<Currency>>(obj, type)
+        return balanceList.filter { it.name == curName }[0].balance
+
+    }
 
 }

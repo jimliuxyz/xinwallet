@@ -11,7 +11,7 @@
         android:id="@+id/view6"
         android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:background="@color/colorTitleBarBackground"
+        android:background="@drawable/bg_titlebar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="@+id/currencyList"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/currencyList"
-        app:layout_constraintTop_toBottomOf="@+id/include2" />
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
 
     <TextView
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cxc" />
 
     <include
-        android:id="@+id/include2"
+        android:id="@+id/include"
         layout="@layout/currency_item"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

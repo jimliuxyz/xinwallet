@@ -54,4 +54,8 @@
     <string name="Currency.USD">USD</string>
     <string name="Currency.BTC">BTC</string>
     <string name="Currency.ETH">ETH</string>
+    <string name="Exchange">Exchange</string>
+    <string name="Save_withdraw">Save/Withdraw</string>
+    <string name="Receipt_Pay">Receipt/Pay</string>
+    <string name="Historical_Transaction">Historical Transaction</string>
 </resources>

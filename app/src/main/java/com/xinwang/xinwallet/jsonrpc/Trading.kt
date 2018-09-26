@@ -4,11 +4,33 @@ import android.util.Log
 import com.xinwang.xinwallet.models.Currency
 import org.json.JSONObject
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Trading : JSONRPC() {
     private val domain: String = "trading"
     private val tag: String = "Trading"
+
+
+    /*取得歷史交易紀錄
+    *
+    *
+    * */
+    fun getReceipts(date: Date, callback: (status: Boolean, result:String) -> Unit) {
+        val requestJson = GenerateJsonRPCFormat.createJson("getReceipts", mapOf("fromDatetime" to "2018-09-09")).toJsonString()
+        super.send(domain, requestJson) { status: Boolean, res: String ->
+            if (status) {
+                var jsonObject: JSONObject? = JSONObject(res)
+                var listString = jsonObject?.getJSONObject("result")!!.getString("list")
+
+                callback(true,listString.toString())
+            } else {
+                showToast("$res")
+                Log.i(tag, "getReceipts_$res")
+            }
+
+        }
+    }
 
     /*取得所餘額清單
     *
@@ -24,7 +46,7 @@ class Trading : JSONRPC() {
                         val currencyList: ArrayList<Currency>? = ArrayList<Currency>()
                         val keys = jsonList.keys()
                         keys.forEach {
-                            Log.i(TAG,"getBalancesList_${it}:${jsonList.getString(it)}")
+                            Log.i(TAG, "getBalancesList_${it}:${jsonList.getString(it)}")
                             val currencyItem = Currency()
                             currencyItem.name = it
                             currencyItem.balance = jsonList.getDouble(it)

@@ -2,6 +2,7 @@ package com.xinwang.xinwallet.jsonrpc
 
 import android.util.Log
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.models.Currency
 import okhttp3.*
 import org.json.JSONObject
 import java.io.File
@@ -14,7 +15,6 @@ class Profile : JSONRPC() {
 
     open fun updateProfile(name: String, callback: (result: Boolean?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("updateProfile", mapOf("keys" to arrayOf("name"), "values" to arrayOf(name))).toJsonString()
-
         super.send(domaim, ss) { stauts: Boolean, res ->
             if (stauts) {
                 try {
@@ -40,10 +40,8 @@ class Profile : JSONRPC() {
             }
 
         }
-
     }
 
-    //取得個人資料
     open fun getProfile(callback: (status: Boolean, result: Any?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("getProfile", null).toJsonString()
         super.send(domaim, ss) { status, res ->
@@ -69,19 +67,11 @@ class Profile : JSONRPC() {
         }
     }
 
-
-    fun addFriends11(list: ArrayList<String>, callback: (result: Boolean?) -> Unit) {
-        val ss = GenerateJsonRPCFormat.createJson("addFriends", mapOf("list" to list)).toJsonString()
-        println("++++++__$ss")
-        super.send("contacts", ss) { status, res ->
-            if (status && JsonerrorIsNull(res)) {
-                callback(true)
-
-            } else {
-                showToast(res)
-                Log.i(TAG, "addFriends_$res")
-            }
-
+    fun updateCurrencySetting(parms: ArrayList<Currency>, callback: (result: Boolean?, res: String) -> Unit) {
+        val requestJson = GenerateJsonRPCFormat.createJson("updateCurrencySetting", mapOf("list" to parms)).toJsonString()
+        super.send(domaim, requestJson) { status, result ->
+            callback(status, result)
+            Log.i(TAG, "updateCurrencySetting_$result")
         }
     }
 

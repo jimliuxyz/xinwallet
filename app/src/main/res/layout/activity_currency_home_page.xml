@@ -8,7 +8,7 @@
     tools:context=".presenter.activities.CurrencyHomePage">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/includeTitleBarCurrencyHome"
         layout="@layout/title_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -23,17 +23,16 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintTop_toBottomOf="@+id/includeTitleBarCurrencyHome"
         app:srcCompat="@drawable/ic_coin_btc" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/txtCurrencyAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="28dp"
         android:layout_marginTop="8dp"
-        android:text="123"
+        android:text="0"
         android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="@+id/imgCoin"
         app:layout_constraintEnd_toStartOf="@+id/imageView8"
@@ -47,9 +46,9 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="36dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintBottom_toBottomOf="@+id/txtCurrencyAmount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/txtCurrencyAmount"
         app:srcCompat="@drawable/ic_keyboard_arrow_right_grey" />
 
     <TextView
@@ -107,7 +106,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/btn_pay"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="4dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
@@ -143,7 +142,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/btn_save"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -165,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView"
+            android:text="@string/Save_withdraw"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -178,7 +177,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/btn_exchange"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bg_exchangle_rectangle"
         app:layout_constraintEnd_toEndOf="parent"
@@ -197,7 +196,7 @@
             android:id="@+id/textView22"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            android:text="@string/Exchange"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

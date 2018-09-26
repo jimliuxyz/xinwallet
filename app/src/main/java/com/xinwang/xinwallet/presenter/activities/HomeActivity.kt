@@ -29,6 +29,7 @@ import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,13 +37,11 @@ import kotlin.collections.ArrayList
 class HomeActivity : XinActivity() {
 
     val loader = LoaderDialogFragment()
-    val loader_order = LoaderDialogFragment()
     val loader_balance = LoaderDialogFragment()
     val TAG = "HomeActivity"
     var currencies = ArrayList<Currency>()
     //千位數符號
     val numberFormat = NumberFormat.getNumberInstance()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +50,7 @@ class HomeActivity : XinActivity() {
         getProfileData()
         saveCurrencyBalanceInSharedPreference()
         println("$TAG+token_${JSONRPC().getUserToken()}")
+
     }
 
     private fun saveCurrencyBalanceInSharedPreference() {
@@ -62,7 +62,7 @@ class HomeActivity : XinActivity() {
             XinWalletApp.instance.applicationContext.setPref(R.string.REF_CURRENCY_BALANCE, json)
             val balData = XinWalletApp.instance.applicationContext.getPref(R.string.REF_CURRENCY_BALANCE, "")
             Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
-            doUI { loader_balance.dismiss() }
+            loader_balance.dismiss()
         }
 
     }
@@ -119,7 +119,7 @@ class HomeActivity : XinActivity() {
         intent.setClass(this, BalanceListActivity::class.java)
         //intent.setClass(this, EventTestActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+        overridePendingTransition(R.anim.enter_from_right,R.anim.exit_to_left)
     }
 
     fun friendsActivity() {

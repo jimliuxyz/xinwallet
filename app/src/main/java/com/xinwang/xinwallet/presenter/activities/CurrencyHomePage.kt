@@ -1,18 +1,22 @@
 package com.xinwang.xinwallet.presenter.activities
 
 import android.os.Bundle
-import android.transition.Visibility
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
+import com.google.gson.Gson
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.jsonrpc.Trading
+import com.xinwang.xinwallet.models.TransactionRecord
+import com.xinwang.xinwallet.models.adapter.HistoryTxListAdapter
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
-import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_currency_home_page.*
 import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
+import android.support.v7.widget.LinearLayoutManager
+import com.xinwang.xinwallet.tools.util.doUI
+
+
 
 class CurrencyHomePage : XinActivity() {
 
@@ -30,16 +34,19 @@ class CurrencyHomePage : XinActivity() {
     }
 
     private fun getHistoryList() {
-        Trading().getReceipts(Date()) { state: Boolean, result: String->
-            if(state){
-                var jsonObjectArray = JSONObject(result).getJSONArray("list") as ArrayList<Objects>
-                doUI {
+        val gson = Gson()
+        Trading().getReceipts(Date()) { state: Boolean, result: String ->
+            val jsonArrayString = JSONObject(result).getJSONArray("list").toString()
+            val founderArray = gson.fromJson(jsonArrayString, Array<TransactionRecord>::class.java)
+            showHistoryList(founderArray.toCollection(ArrayList()))
+        }
+    }
 
-                }
-
-                println("size_"+jsonObjectArray.size)
-            }
-
+    private fun showHistoryList(founderArray: ArrayList<TransactionRecord>?) {
+        doUI {
+            recyclerView_HistoryTrx.layoutManager = LinearLayoutManager(this)
+            recyclerView_HistoryTrx.setHasFixedSize(true)
+            recyclerView_HistoryTrx.adapter = HistoryTxListAdapter(founderArray!!, this)
         }
     }
 

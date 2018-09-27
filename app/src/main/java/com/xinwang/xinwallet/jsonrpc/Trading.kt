@@ -21,9 +21,9 @@ class Trading : JSONRPC() {
         super.send(domain, requestJson) { status: Boolean, res: String ->
             if (status) {
                 var jsonObject: JSONObject? = JSONObject(res)
-                var listString = jsonObject?.getJSONObject("result")!!.getString("list")
+                var resultString = jsonObject?.getJSONObject("result")!!
 
-                callback(true,listString.toString())
+                callback(true,resultString.toString())
             } else {
                 showToast("$res")
                 Log.i(tag, "getReceipts_$res")

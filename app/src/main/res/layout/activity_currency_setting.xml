@@ -9,7 +9,7 @@
 
 
     <include
-        android:id="@+id/includeTitleBarCurrencyHome"
+        android:id="@+id/includeTitleBarCurrencySetting"
         layout="@layout/title_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/includeTitleBarCurrencyHome">
+        app:layout_constraintTop_toBottomOf="@+id/includeTitleBarCurrencySetting">
 
     </android.support.v7.widget.RecyclerView>
 

@@ -46,16 +46,12 @@ import java.util.List;
 public class RecyclerListAdapter extends RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>
         implements ItemTouchHelperAdapter {
 
-    private final List<String> mItems = new ArrayList<>();
+    private final List<String> mItems= new ArrayList<>();
 
     private final OnStartDragListener mDragStartListener;
 
     public RecyclerListAdapter(Context context, OnStartDragListener dragStartListener) {
         mDragStartListener = dragStartListener;
-        mItems.add("USD");
-        mItems.add("BTC");
-        mItems.add("CYN");
-        mItems.add("ETH");
     }
 
     @NonNull

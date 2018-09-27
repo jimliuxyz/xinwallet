@@ -32,20 +32,19 @@ class BalanceListActivity : XinActivity() {
     }
 
     private fun defaultCurrencySetting() {
-        defaultName = includeTitleBarCurrencyHome.findViewById(R.id.txtNameCurrItem)
-        defaultAmount = includeTitleBarCurrencyHome.findViewById(R.id.txtAmountCurrItem)
-        defaultImage = includeTitleBarCurrencyHome.findViewById(R.id.ImgCurrItem)
+        defaultName = includeTitleBarCurrencySetting.findViewById(R.id.txtNameCurrItem)
+        defaultAmount = includeTitleBarCurrencySetting.findViewById(R.id.txtAmountCurrItem)
+        defaultImage = includeTitleBarCurrencySetting.findViewById(R.id.ImgCurrItem)
         val firstCurName = getPREFCurrencyOrderList().filter { it.isDefault }[0].name
         defaultName!!.text = firstCurName
         defaultAmount!!.text = numberFormat.format(getPREFCurrencyBalance(firstCurName)).toString()
         defaultImage!!.setImageResource(getCoinIconId(firstCurName))
         // val defaultView: View = includeDefaultCurrencyBalance
-        includeTitleBarCurrencyHome.setOnClickListener {
+        includeTitleBarCurrencySetting.setOnClickListener {
             val intent = Intent(this, CurrencyHomePage::class.java)
             intent.putExtra("currName", firstCurName)
             intent.putExtra("currAmount", defaultAmount!!.text)
             startActivity(intent)
-            Toast.makeText(this, "eeee", Toast.LENGTH_SHORT).show()
         }
 
     }

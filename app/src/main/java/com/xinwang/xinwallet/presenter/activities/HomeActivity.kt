@@ -10,6 +10,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.apiservice.XinWalletService
@@ -18,7 +19,9 @@ import com.xinwang.xinwallet.jsonrpc.JSONRPC
 import com.xinwang.xinwallet.tools.photo.UriUtil
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.jsonrpc.Trading
+import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.Currency
+import com.xinwang.xinwallet.models.TransactionRecord
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
@@ -46,11 +49,9 @@ class HomeActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        //navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         getProfileData()
         saveCurrencyBalanceInSharedPreference()
         println("$TAG+token_${JSONRPC().getUserToken()}")
-
     }
 
     private fun saveCurrencyBalanceInSharedPreference() {
@@ -119,7 +120,7 @@ class HomeActivity : XinActivity() {
         intent.setClass(this, BalanceListActivity::class.java)
         //intent.setClass(this, EventTestActivity::class.java)
         startActivity(intent)
-        overridePendingTransition(R.anim.enter_from_right,R.anim.exit_to_left)
+        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
     }
 
     fun friendsActivity() {

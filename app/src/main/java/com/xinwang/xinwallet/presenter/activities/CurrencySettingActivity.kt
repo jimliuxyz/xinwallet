@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.transition.Visibility
+import android.view.View
 import android.widget.TextView
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.jsonrpc.Profile
@@ -37,8 +39,10 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
     }
 
     private fun titleBarSetting() {
-        val backText = includeTitleBarCurrencyHome.findViewById(R.id.txt_back) as TextView?
-        val titleBarText = includeTitleBarCurrencyHome.findViewById(R.id.title_name) as TextView?
+        val backText = includeTitleBarCurrencySetting.findViewById(R.id.txt_back) as TextView?
+        val titleBarText = includeTitleBarCurrencySetting.findViewById(R.id.title_name) as TextView?
+        val rightText=includeTitleBarCurrencySetting.findViewById(R.id.titleBarRightText) as TextView
+        rightText.visibility = View.INVISIBLE
         backText?.text = getString(R.string.Balance)
         titleBarText?.text = getText(R.string.Balance_setting)
     }

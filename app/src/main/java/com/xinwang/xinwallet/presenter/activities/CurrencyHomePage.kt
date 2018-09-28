@@ -17,11 +17,11 @@ import android.support.v7.widget.LinearLayoutManager
 import com.xinwang.xinwallet.tools.util.doUI
 
 
-
 class CurrencyHomePage : XinActivity() {
 
     var currencyName: String = ""
     var currencyAmount: String = ""
+    val gson = Gson()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency_home_page)
@@ -34,11 +34,13 @@ class CurrencyHomePage : XinActivity() {
     }
 
     private fun getHistoryList() {
-        val gson = Gson()
         Trading().getReceipts(Date()) { state: Boolean, result: String ->
             val jsonArrayString = JSONObject(result).getJSONArray("list").toString()
             val founderArray = gson.fromJson(jsonArrayString, Array<TransactionRecord>::class.java)
-            showHistoryList(founderArray.toCollection(ArrayList()))
+            val theCurrencyTx = founderArray.filter { TransactionRecord ->
+                TransactionRecord.currency == currencyName
+            }.toCollection(ArrayList())
+            showHistoryList(theCurrencyTx)
         }
     }
 

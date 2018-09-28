@@ -33,11 +33,11 @@ class CurrencyBaseAdapter(context: Context, currencyList: ArrayList<Currency>?) 
         val view = layoutInflater!!.inflate(R.layout.currency_item, parent, false)
         var coin: Int
         val curName = currencyList!![postion].name
-        view.txtAmountCurrItem.text = numberFormat.format(XinActivity().getPREFCurrencyBalance(curName))
+        val txtAmtText=XinActivity().getCurySymbol(curName)+numberFormat.format(XinActivity().getPREFCurrencyBalance(curName))
+        view.txtAmountCurrItem.text =txtAmtText
         view.txtNameCurrItem.text = curName
         coin = XinActivity().getCoinIconId(curName)
         view.ImgCurrItem.setImageResource(coin)
-        // Glide.with(view).load(contactsList!![position].avatar).into(view.contacts_item_image)
         return view
     }
 

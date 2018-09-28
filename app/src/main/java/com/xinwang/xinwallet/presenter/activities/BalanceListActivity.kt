@@ -26,9 +26,14 @@ class BalanceListActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_balance_list)
+        settingTitleBar()
+    }
+
+    override fun onStart() {
+        super.onStart()
         defaultCurrencySetting()
         getCurrencyList()
-        settingTitleBar()
+      //  Toast.makeText(this, "onStart()", Toast.LENGTH_SHORT).show()
     }
 
     private fun defaultCurrencySetting() {
@@ -37,7 +42,8 @@ class BalanceListActivity : XinActivity() {
         defaultImage = includeTitleBarCurrencySetting.findViewById(R.id.ImgCurrItem)
         val firstCurName = getPREFCurrencyOrderList().filter { it.isDefault }[0].name
         defaultName!!.text = firstCurName
-        defaultAmount!!.text = numberFormat.format(getPREFCurrencyBalance(firstCurName)).toString()
+        val defaultAmtText = getCurySymbol(firstCurName) + numberFormat.format(getPREFCurrencyBalance(firstCurName)).toString()
+        defaultAmount!!.text = defaultAmtText
         defaultImage!!.setImageResource(getCoinIconId(firstCurName))
         // val defaultView: View = includeDefaultCurrencyBalance
         includeTitleBarCurrencySetting.setOnClickListener {

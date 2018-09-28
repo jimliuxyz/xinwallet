@@ -14,14 +14,20 @@ import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.*
 import com.xinwang.xinwallet.presenter.activities.login.*
 import android.content.ComponentName
+import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.jsonrpc.Auth
 import com.xinwang.xinwallet.jsonrpc.JSONRPC
+import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.models.Currency
+import com.xinwang.xinwallet.models.TransactionRecord
 import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.getPref
+import com.xinwang.xinwallet.tools.util.setPref
+import org.json.JSONObject
 import java.util.ArrayList
 
 
@@ -37,6 +43,7 @@ open class XinActivity : AppCompatActivity() {
         private var LOCKTIME = 20 * 1000
         private var pauseTime = 0L
         private var lastAct: Any? = null
+        private val gson = Gson()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +116,10 @@ open class XinActivity : AppCompatActivity() {
         if (this is HomeActivity
                 || this is LoginActivity
                 || this is UnlockAppActivity
-                || this is SetUsernameActivity) {
+                || this is SetUsernameActivity
+                || this is HistoricalTxActivity
+                || this is BalanceListActivity
+                || this is CurrencyHomePage) {
             if (System.currentTimeMillis() - backPressTime > 2000) {
                 backPressTime = System.currentTimeMillis()
                 Toast.makeText(this, "press again to exit!", Toast.LENGTH_SHORT).show()
@@ -155,6 +165,16 @@ open class XinActivity : AppCompatActivity() {
 
     }
 
+    fun getCurySymbol(str: String): Char {
+        when (str) {//¥$Ξ₿
+            "BTC" -> return '₿'
+            "USD" -> return '$'
+            "ETH" -> return 'Ξ'
+            else -> return '¥'
+        }
+
+    }
+
     fun getPREFCurrencyOrderList(): ArrayList<Currency> {
         val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
         val type = object : TypeToken<ArrayList<Currency>>() {}.type
@@ -166,6 +186,26 @@ open class XinActivity : AppCompatActivity() {
         val type = object : TypeToken<ArrayList<Currency>>() {}.type
         val balanceList = Gson().fromJson<ArrayList<Currency>>(obj, type)
         return balanceList.filter { it.name == curName }[0].balance
+
+    }
+
+
+    fun saveCurrencyOrderInSharedPreference1() {
+        Profile().getProfile { status: Boolean, it ->
+            val jsonObject = JSONObject(it.toString())
+            if (status && jsonObject.isNull("error")) {
+                val currencies = jsonObject.getJSONArray("currencies").toString()
+                //  val jsonArrayString = JSONObject(result).getJSONArray("currencies").toString()
+                val founderArray = gson.fromJson(currencies, Array<Currency>::class.java)
+                val json = gson.toJson(founderArray)
+                XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
+                val orderData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
+                Log.i(this.toString(), "saveCurrencyOrderInSharedPreference1_$orderData")
+            } else {
+                Toast.makeText(this, "尚未更新幣別排序", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
     }
 

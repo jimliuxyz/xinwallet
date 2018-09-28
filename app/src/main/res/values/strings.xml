@@ -58,4 +58,9 @@
     <string name="Save_withdraw">Save/Withdraw</string>
     <string name="Receipt_Pay">Receipt/Pay</string>
     <string name="Historical_Transaction">Historical Transaction</string>
+    <string name="Deposit">Deposit</string>
+    <string name="Withdraw">Withdraw</string>
+    <string name="Transfer">Transfer</string>
+    <string name="HistoricalTx.Filter">Filter</string>
+
 </resources>

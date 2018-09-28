@@ -10,10 +10,14 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.TransactionRecord
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
+import java.text.Format
+import java.text.SimpleDateFormat
 
 
 class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: Context)
@@ -32,26 +36,44 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.txtTitle.text = mItems[position].txType.toString()
-        holder.txtAmount.text = mItems[position].txResult.amount.toString()
-        holder.txtDate.text = mItems[position].datetime.toString()
-        val userId = mItems[position].txParams.receiver
+        var txtAmount: String = ""
+        var sdf: Format = SimpleDateFormat("yyyy-MM-dd")
+        var userId: String = ""
+        when (mItems[position].txType) {
+            3.toShort() -> {
+                if (mItems[position].txResult.outflow!!) {
+                    txtAmount = "- " +
+                            XinActivity().getCurySymbol(mItems[position].currency) + " " +
+                            mItems[position].txResult.amount.toString()
+                    holder.txtAmount.setTextColor(XinWalletApp.instance.getColor(R.color.red_text))
+                    userId = mItems[position].txParams.receiver
+                } else {
+                    txtAmount = "+ " +
+                            XinActivity().getCurySymbol(mItems[position].currency) + " " +
+                            mItems[position].txResult.amount.toString()
+                    holder.txtAmount.setTextColor(XinWalletApp.instance.getColor(R.color.green_text))
+                    userId = mItems[position].txParams.sender
+                }
+            }
+        }
+        holder.txtAmount.text = txtAmount
+        holder.txtDate.text = sdf.format(mItems[position].datetime)
+        val txTypeName = mItems[position].getTxTypeName()
         Profile().getUsersProfile(arrayOf(userId)) { status: Boolean, resultArrayList: ArrayList<Contacts> ->
             if (status) {
                 doUI {
-                    holder.txtTitle.text = resultArrayList[0].name
+                    holder.txtTitle.text = txTypeName + resultArrayList[0].name
                     Glide.with(context).load(resultArrayList[0].avatar).apply(RequestOptions().centerCrop().circleCrop())
                             .into(holder.imgAvatar)
                 }
             }
         }
-
-
     }
 
     override fun getItemCount(): Int {
         return mItems.size
     }
+
 
     class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         internal val txtAmount: TextView = itemView.findViewById(R.id.txt_Amount)
@@ -60,7 +82,6 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
         internal val txtDate: TextView = itemView.findViewById(R.id.txt_date)
 
     }
-
 
 }
 

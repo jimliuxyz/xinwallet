@@ -13,6 +13,7 @@
         android:layout_width="150dp"
         android:layout_height="120dp"
         android:background="@drawable/ic_deal_history"
+        android:onClick="dealHistoryBtnOnClick"
         app:layout_constraintBottom_toBottomOf="@+id/saveBtn"
         app:layout_constraintEnd_toEndOf="@+id/dealBtn"
         app:layout_constraintStart_toStartOf="@+id/dealBtn">
@@ -32,12 +33,13 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:id="@+id/exchangBtn"
+        android:id="@+id/exchangeBtn"
         android:layout_width="150dp"
         android:layout_height="120dp"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/ic_exchange"
+        android:onClick="exchangeBtnOnClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dealBtn"
         app:layout_constraintHorizontal_bias="0.5"
@@ -121,10 +123,11 @@
         android:layout_width="150dp"
         android:layout_height="120dp"
         android:background="@drawable/ic_deal"
-        app:layout_constraintBottom_toBottomOf="@+id/exchangBtn"
+        android:onClick="dealBtnOnClick"
+        app:layout_constraintBottom_toBottomOf="@+id/exchangeBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/exchangBtn">
+        app:layout_constraintStart_toEndOf="@+id/exchangeBtn">
 
         <TextView
             android:id="@+id/view54"
@@ -144,10 +147,11 @@
         android:layout_height="120dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/ic_save"
-        app:layout_constraintBottom_toTopOf="@+id/exchangBtn"
-        app:layout_constraintEnd_toEndOf="@+id/exchangBtn"
+        android:onClick="saveBtnOnClick"
+        app:layout_constraintBottom_toTopOf="@+id/exchangeBtn"
+        app:layout_constraintEnd_toEndOf="@+id/exchangeBtn"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/exchangBtn">
+        app:layout_constraintStart_toStartOf="@+id/exchangeBtn">
 
         <TextView
             android:id="@+id/textView6"

@@ -16,6 +16,7 @@ import com.xinwang.xinwallet.models.adapter.helper.SimpleItemTouchHelperCallback
 import kotlinx.android.synthetic.main.activity_currency_setting.*
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import kotlinx.android.synthetic.main.listitem_currency_order_setting.view.*
+import org.json.JSONObject
 
 
 class CurrencySettingActivity : XinActivity(), OnStartDragListener {
@@ -63,8 +64,10 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
                     currencyDragList.add(Currency(view.cuyEnName.text.toString(), i - 1, false))
                 }
             }
-            Profile().updateCurrencySetting(currencyDragList) { stat: Boolean?, s: String ->
-
+            Profile().updateCurrencySetting(currencyDragList) { status: Boolean?, s: String ->
+                if(status!! && JSONObject(s).isNull("error")){
+                    saveCurrencyOrderInSharedPreference1()
+                }
             }
         }
 

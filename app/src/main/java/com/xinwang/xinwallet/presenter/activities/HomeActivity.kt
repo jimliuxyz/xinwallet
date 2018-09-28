@@ -56,7 +56,6 @@ class HomeActivity : XinActivity() {
 
     private fun saveCurrencyBalanceInSharedPreference() {
         loader_balance.show(supportFragmentManager, "LoaderDialogFragment")
-
         Trading().getBalancesList {
             val gson = Gson()
             val json = gson.toJson(it)
@@ -65,7 +64,6 @@ class HomeActivity : XinActivity() {
             Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
             loader_balance.dismiss()
         }
-
     }
 
     fun getProfileData() {
@@ -107,7 +105,6 @@ class HomeActivity : XinActivity() {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
         val orderData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
         Log.i(TAG, "saveCurrencyOrderInSharedPreference_$orderData")
-
     }
 
     fun btnResetUserData(view: View) {
@@ -140,6 +137,16 @@ class HomeActivity : XinActivity() {
             EasyPermissions.requestPermissions(this@HomeActivity, "您需要打开读取相册权限", 34316, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
     }
+
+    fun dealHistoryBtnOnClick(view: View){
+        val intent=Intent(this,HistoricalTxActivity::class.java)
+        intent.putExtra("from","Home")
+        intent.putExtra("txFilter","")
+        startActivity(intent)
+    }
+    fun saveBtnOnClick(view: View){}
+    fun dealBtnOnClick(view: View){}
+    fun exchangeBtnOnClick(view: View){}
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)

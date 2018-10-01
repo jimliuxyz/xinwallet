@@ -25,11 +25,8 @@
             android:name=".presenter.activities.IntroActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
@@ -55,11 +52,10 @@
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/Home.title"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity
             android:name=".presenter.activities.login.SetUsernameActivity"
@@ -122,7 +118,13 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.HistoricalTxActivity"></activity>
+        <activity android:name=".presenter.activities.HistoricalTxActivity" />
+        <activity android:name=".presenter.activities.TxSortActivity">
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
     </application>
 
 </manifest>

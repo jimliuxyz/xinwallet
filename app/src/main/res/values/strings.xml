@@ -62,5 +62,18 @@
     <string name="Withdraw">Withdraw</string>
     <string name="Transfer">Transfer</string>
     <string name="HistoricalTx.Filter">Filter</string>
+    <string name="TxSort.Sort">Sorting</string>
+    <string name="TxSort.Date">Date</string>
+    <string name="TxSort.highTolow">high to low</string>
+    <string name="TxSort.lowTohigh">low to high</string>
+    <string name="TxSort.Ascending">Ascending</string>
+    <string name="TxSort.Descending">Descending</string>
+    <string name="TxSort.All">All</string>
+    <string name="TxSort.Who">Who</string>
+    <string name="TxSort.WithinAMonth">within a month</string>
+    <string name="TxSort.WithinAWeek">within a Week</string>
+    <string name="Tx.Sort.TxAction">Tx Action</string>
+    <string name="Currency">Currency</string>
+
 
 </resources>

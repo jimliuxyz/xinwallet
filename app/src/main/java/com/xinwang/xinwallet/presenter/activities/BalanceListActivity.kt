@@ -33,7 +33,6 @@ class BalanceListActivity : XinActivity() {
         super.onStart()
         defaultCurrencySetting()
         getCurrencyList()
-      //  Toast.makeText(this, "onStart()", Toast.LENGTH_SHORT).show()
     }
 
     private fun defaultCurrencySetting() {

@@ -119,7 +119,7 @@
             <!-- </intent-filter> -->
         </activity>
         <activity android:name=".presenter.activities.HistoricalTxActivity" />
-        <activity android:name=".presenter.activities.TxSortActivity">
+        <activity android:name=".presenter.activities.TxFilterActivity">
              <intent-filter>
              <action android:name="android.intent.action.MAIN" />
              <category android:name="android.intent.category.LAUNCHER" />

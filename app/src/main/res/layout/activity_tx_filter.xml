@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.activities.TxSortActivity">
+    tools:context=".presenter.activities.TxFilterActivity">
 
     <include
-        android:id="@+id/include"
+        android:id="@+id/includeTitlebarTxFilter"
         layout="@layout/title_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -20,58 +20,128 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/page_indicator_gray"
-        android:paddingLeft="25sp"
+        android:paddingStart="25sp"
         android:text="@string/TxSort.Sort"
-        android:textSize="24sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        app:layout_constraintTop_toBottomOf="@+id/includeTitlebarTxFilter" />
 
-    <ListView
-        android:id="@+id/listSort"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
+    <RadioGroup
+        android:id="@+id/RGOrder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:background="#C0C0C0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+        <RadioButton
+            android:id="@+id/radioButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableRight="@drawable/drawableright_filter_sorting"
+            android:padding="8dp"
+            android:tag="1"
+            android:text="@string/TxSort.Descending"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/cardview_dark_background" />
+
+        <RadioButton
+            android:id="@+id/radioButton7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableRight="@drawable/drawableright_filter_sorting"
+            android:padding="8dp"
+            android:tag="2"
+            android:text="@string/TxSort.Ascending"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/view5"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/cardview_dark_background" />
+
+        <RadioButton
+            android:id="@+id/radioButton14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableRight="@drawable/drawableright_filter_sorting"
+            android:padding="8dp"
+            android:tag="3"
+            android:text="@string/TxSort.highTolow"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+
+        <View
+            android:id="@+id/view8"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/cardview_dark_background" />
+
+        <RadioButton
+            android:id="@+id/radioButton15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableRight="@drawable/drawableright_filter_sorting"
+            android:padding="8dp"
+            android:tag="4"
+            android:text="@string/TxSort.lowTohigh"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
+    </RadioGroup>
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:background="@color/page_indicator_gray"
-        android:paddingLeft="25sp"
+        android:paddingStart="25sp"
         android:text="@string/HistoricalTx.Filter"
-        android:textSize="24sp"
+
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listSort" />
+        app:layout_constraintTop_toBottomOf="@+id/RGOrder" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:background="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="@string/Tx.Sort.TxAction"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -80,56 +150,59 @@
             android:id="@+id/RGTxType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView12">
 
             <RadioButton
-                android:id="@+id/radioButton7"
+                android:id="@+id/radiobutton"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_weight="5"
+                android:layout_height="wrap_content"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="All"
                 android:text="@string/TxSort.All" />
 
             <RadioButton
                 android:id="@+id/radioButton8"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="pay"
                 android:text="@string/Receipt_Pay" />
 
             <RadioButton
                 android:id="@+id/radioButton9"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="Ex"
                 android:text="@string/Exchange" />
 
             <RadioButton
                 android:id="@+id/radioButton10"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="4dp"
-                android:layout_weight="0.3"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:text="@string/Save_withdraw" />
+                android:padding="8dp"
+                android:tag="S"
+                android:text="@string/Save_withdraw"
+                android:textColor="@color/gray" />
         </RadioGroup>
 
         <View
@@ -137,7 +210,7 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="@color/light_gray"
+            android:background="@color/cardview_dark_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/RGTxType" />
@@ -164,33 +237,39 @@
             <RadioButton
                 android:id="@+id/radioButton11"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="W"
                 android:text="@string/TxSort.WithinAWeek" />
 
             <RadioButton
                 android:id="@+id/radioButton81"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="M"
                 android:text="@string/TxSort.WithinAMonth" />
 
             <RadioButton
                 android:id="@+id/radioButton91"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="D"
                 android:text="@string/TxSort.Date" />
 
         </RadioGroup>
@@ -200,7 +279,7 @@
             android:layout_width="wrap_content"
             android:layout_height="1dp"
             android:layout_marginTop="8dp"
-            android:background="@color/light_gray"
+            android:background="@color/cardview_dark_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -226,58 +305,104 @@
 
             <RadioButton
                 android:id="@+id/radioButton13"
-                android:layout_width="70dp"
-                android:layout_height="45dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="0dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:paddingLeft="0dp"
-                android:paddingRight="0dp"
+                android:padding="8dp"
+                android:tag="All"
                 android:text="@string/TxSort.All" />
 
             <RadioButton
                 android:id="@+id/radioButton12"
-                android:layout_width="70dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="CNY"
                 android:text="@string/Currency.CNY" />
 
             <RadioButton
                 android:id="@+id/radioButton112"
-                android:layout_width="70dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="USD"
                 android:text="@string/Currency.USD" />
 
             <RadioButton
                 android:id="@+id/radioButton812"
-                android:layout_width="70dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="BTC"
                 android:text="@string/Currency.BTC" />
 
             <RadioButton
                 android:id="@+id/radioButton912"
-                android:layout_width="70dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:padding="8dp"
+                android:tag="ETH"
                 android:text="@string/Currency.ETH" />
 
         </RadioGroup>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@color/cardview_dark_background"
+            app:layout_constraintEnd_toEndOf="@+id/view1"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/view1"
+            app:layout_constraintTop_toBottomOf="@+id/RGCurrencyType" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/TxSort.Who"
+            app:layout_constraintStart_toStartOf="@+id/textView12"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:srcCompat="@drawable/ic_add_contants" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="305dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     </android.support.constraint.ConstraintLayout>
 

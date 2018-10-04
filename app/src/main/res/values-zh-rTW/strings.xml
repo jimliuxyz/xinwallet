@@ -69,5 +69,7 @@
     <string name="TxSort.WithinAWeek">最近一週</string>
     <string name="Tx.Sort.TxAction">交易方式</string>
     <string name="Currency">币别</string>
+    <string name="Contacts">联络人</string>
+    <string name="Ok">確定</string>
 
 </resources>

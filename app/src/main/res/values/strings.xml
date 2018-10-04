@@ -74,6 +74,7 @@
     <string name="TxSort.WithinAWeek">within a Week</string>
     <string name="Tx.Sort.TxAction">Tx Action</string>
     <string name="Currency">Currency</string>
-
+    <string name="Contacts">Contacts</string>
+    <string name="Ok">Ok</string>
 
 </resources>

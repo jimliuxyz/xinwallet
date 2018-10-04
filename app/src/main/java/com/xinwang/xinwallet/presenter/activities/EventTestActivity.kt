@@ -7,8 +7,6 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.busevent.ApiDataEvent
 import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.busevent.MyDataModel
-import com.xinwang.xinwallet.jsonrpc.Profile
-import com.xinwang.xinwallet.jsonrpc.Trading
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import kotlinx.android.synthetic.main.activity_event_test.*
 import org.greenrobot.eventbus.EventBus
@@ -48,7 +46,7 @@ class EventTestActivity : AppCompatActivity() {
 
         map.put(event.type, event.type)
         if (map.get(ApiDataEvent.TYPE_PROFILE) != null && map.get(ApiDataEvent.TYPE_BALANCE) != null) {
-            tvText.text = "balance:" + data.currency.balance + "\norder:" + data.currency.order
+            tvText00.text = "balance:" + data.currency.balance + "\norder:" + data.currency.order
             Toast.makeText(this, "balance:" + data.currency.balance + "\norder:" + data.currency.order, Toast.LENGTH_LONG).show()
             loader.dismiss()
         }

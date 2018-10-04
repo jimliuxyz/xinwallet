@@ -2,11 +2,11 @@ package com.xinwang.xinwallet.presenter.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.support.v7.widget.LinearLayoutManager
+import android.widget.*
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.models.Contacts
+import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
 import kotlinx.android.synthetic.main.activity_tx_filter.*
 import java.lang.Exception
 
@@ -18,8 +18,26 @@ class TxFilterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tx_filter)
         settingTitleBar()
         radioGroupSetting()
+        recycleViewSetting()
+
     }
 
+    private fun recycleViewSetting() {
+        recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        val data: ArrayList<Contacts> = ArrayList()
+        data.add(Contacts("qwfd"))
+        data.add(Contacts("qdfgw"))
+        data.add(Contacts("qw"))
+        data.add(Contacts("qgfhthw"))
+        data.add(Contacts("qwtry53"))
+        recyclerView1.adapter = ContactsHorizontalAdapter(data,this)
+
+    }
+
+    private fun addTxtargetOnClick() {
+
+
+    }
 
     private fun settingTitleBar() {
         val backText = includeTitlebarTxFilter.findViewById(R.id.txt_back) as TextView?
@@ -39,10 +57,10 @@ class TxFilterActivity : AppCompatActivity() {
             val TxView: RadioButton = findViewById(RGTxType.checkedRadioButtonId)
             val dateView: RadioButton = findViewById(RGDateType.checkedRadioButtonId)
             val currencyView: RadioButton = findViewById(RGCurrencyType.checkedRadioButtonId)
-            val sortingView:RadioButton=findViewById(RGOrder.checkedRadioButtonId)
+            val sortingView: RadioButton = findViewById(RGOrder.checkedRadioButtonId)
 
             println("getTag_${view.getTag()}")
-            Toast.makeText(this, sortingView.getTag().toString()+"/"+
+            Toast.makeText(this, sortingView.getTag().toString() + "/" +
                     TxView.getTag().toString() + "/"
                     + dateView.getTag().toString() + "/"
                     + currencyView.getTag().toString(),

@@ -150,11 +150,6 @@ open class XinActivity : AppCompatActivity() {
         }, 100)
     }
 
-    fun back(view: View) {
-        finish()
-    }
-
-
     fun getCoinIconId(str: String): Int {
         when (str) {
             "BTC" -> return (R.drawable.ic_coin_btc)

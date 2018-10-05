@@ -1,11 +1,16 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import android.widget.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.models.Contacts
+import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
 import kotlinx.android.synthetic.main.activity_tx_filter.*
 import java.lang.Exception
@@ -25,18 +30,13 @@ class TxFilterActivity : AppCompatActivity() {
     private fun recycleViewSetting() {
         recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val data: ArrayList<Contacts> = ArrayList()
-        data.add(Contacts("qwfd"))
-        data.add(Contacts("qdfgw"))
-        data.add(Contacts("qw"))
-        data.add(Contacts("qgfhthw"))
-        data.add(Contacts("qwtry53"))
-        recyclerView1.adapter = ContactsHorizontalAdapter(data,this)
+        recyclerView1.adapter = ContactsHorizontalAdapter(data, this)
 
     }
 
-    private fun addTxtargetOnClick() {
-
-
+    fun addTxtargetOnClick(view: View) {
+        val intent = Intent(this, ContactsCheckBoxActivity::class.java)
+        startActivityForResult(intent, 1)
     }
 
     private fun settingTitleBar() {
@@ -49,7 +49,9 @@ class TxFilterActivity : AppCompatActivity() {
         rightText?.setOnClickListener {
             filterDone()
         }
-
+        backText!!.setOnClickListener {
+            finish()
+        }
     }
 
     private fun filterDone() {
@@ -108,5 +110,17 @@ class TxFilterActivity : AppCompatActivity() {
 
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 10) {
+            val getData = data!!.getStringExtra("selectedTarget")
+            val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type
+            val selectedContacts = Gson().fromJson<java.util.ArrayList<Contacts>>(getData, type)
+            recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            recyclerView1.adapter = ContactsHorizontalAdapter(selectedContacts, this)
+
+        }
     }
 }

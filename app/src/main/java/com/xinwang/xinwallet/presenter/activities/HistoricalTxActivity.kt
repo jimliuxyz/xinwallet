@@ -1,6 +1,7 @@
 package com.xinwang.xinwallet.presenter.activities
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.widget.TextView
@@ -15,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_history_tx.*
 import org.json.JSONObject
 import java.util.*
 
-class HistoricalTxActivity : XinActivity(){
+class HistoricalTxActivity : XinActivity() {
 
     var fromActivity: String? = null
-    val gson =Gson()
+    val gson = Gson()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_tx)
@@ -34,12 +35,11 @@ class HistoricalTxActivity : XinActivity(){
             val jsonArrayString = JSONObject(result).getJSONArray("list").toString()
             val founderArray = gson.fromJson(jsonArrayString, Array<TransactionRecord>::class.java)
             val theCurrencyTx = founderArray.filter {
-               true
+                true
             }.toCollection(ArrayList())
             showHistoryList(theCurrencyTx)
         }
     }
-
 
     private fun showHistoryList(founderArray: ArrayList<TransactionRecord>?) {
         doUI {
@@ -60,6 +60,15 @@ class HistoricalTxActivity : XinActivity(){
         } else {
             backText.text = getText(R.string.app_name)
         }
+        rightText.setOnClickListener {
+            val intent = Intent(this, TxFilterActivity::class.java)
+            startActivityForResult(intent, 0)
+        }
+        backText.setOnClickListener {
+            finish()
+        }
+
+
     }
 }
 

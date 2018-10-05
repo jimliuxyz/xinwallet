@@ -1,5 +1,6 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
@@ -8,52 +9,45 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.gson.Gson
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.adapter.ContactsCheckBoxAdapter
+import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
+import com.xinwang.xinwallet.models.adapter.OnItemCheckBoxListen
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_contacts_check_box.*
+import kotlinx.android.synthetic.main.activity_tx_filter.*
 
 class ContactsCheckBoxActivity : AppCompatActivity() {
+
+    lateinit var totalContactsList: ArrayList<Contacts>
+
+    var selectedContactsList: MutableList<Contacts> = ArrayList<Contacts>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts_check_box)
         titleSetting()
-        //loadContactsList()
         getContactsList()
 
     }
 
-    private fun loadContactsList() {
-        val data: ArrayList<Contacts> = ArrayList()
-        data.add(Contacts("qwfd"))
-        data.add(Contacts("qdfgw"))
-        data.add(Contacts("qw"))
-        data.add(Contacts("qgfhthw"))
-        data.add(Contacts("qwtry53"))
-        data.add(Contacts("qdfgw"))
-        data.add(Contacts("qw"))
-        data.add(Contacts("qgfhthw"))
-        data.add(Contacts("qwtry53"))
-        data.add(Contacts("qdfgw"))
-        data.add(Contacts("qw"))
-        data.add(Contacts("qgfhthw"))
-        data.add(Contacts("qwtry53"))
-        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerView.adapter = ContactsCheckBoxAdapter(data, this)
-
-    }
-
-
     fun getContactsList() {
         com.xinwang.xinwallet.jsonrpc.Contacts().getAllContactsList { status, it ->
-            // loader.dismiss()
             if (status) {
                 try {
+                    totalContactsList = it!!
+                    val ad = ContactsCheckBoxAdapter(it!!, this)
+                    ad.setonItemCheckBoxListen(object : OnItemCheckBoxListen {
+                        override fun onCheckboxChanged(ischecked: Boolean, postion: Int) {
+                            itemChanged(ischecked, postion)
+                        }
+                    })
                     doUI {
                         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                        recyclerView.adapter = ContactsCheckBoxAdapter(it!!, this)
+                        // recyclerView.adapter = ContactsCheckBoxAdapter(it!!, this)
+                        recyclerView.adapter = ad
                     }
                 } catch (e: Exception) {
                     Log.i("8989898", "getContactsList1_$e")
@@ -71,8 +65,34 @@ class ContactsCheckBoxActivity : AppCompatActivity() {
         titleBarText?.text = getText(R.string.HistoricalTx_Filter)
         titleBarRight?.text = getText(R.string.Ok)
         backImage?.setImageResource(R.drawable.ic_coin_btc)
+        backImage?.setOnClickListener {
+            finish()
+        }
         backText?.text = ""
-        recyclerView.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        titleBarRight!!.setOnClickListener {
+            val gson=Gson()
+            val selectedTarget=gson.toJson(selectedContactsList)
+            val intent = Intent().putExtra("selectedTarget", selectedTarget)
+            setResult(10, intent)
+            finish()
+        }
+
+    }
+
+    private fun itemChanged(isChecked: Boolean, position: Int) {
+
+        selectedRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+
+        if (isChecked) {
+            selectedContactsList!!.add(totalContactsList[position])
+        } else {
+            val obj: Contacts = selectedContactsList.filter {
+                it.userId == totalContactsList[position].userId
+            }[0]
+            selectedContactsList.remove(obj)
+        }
+        selectedRecyclerView.adapter = ContactsHorizontalAdapter(selectedContactsList as ArrayList<Contacts>, this)
 
     }
 }

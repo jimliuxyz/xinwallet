@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,22 +17,27 @@ import com.xinwang.xinwallet.models.Contacts
 class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Context) :
         RecyclerView.Adapter<ContactsCheckBoxAdapter.ViewHolder>() {
 
+
     private var mItems = ArrayList<Contacts>()
+    private var onItemCheckBoxListen: OnItemCheckBoxListen? =null
+    fun setonItemCheckBoxListen(listen: OnItemCheckBoxListen){
+        this.onItemCheckBoxListen=listen
+    }
 
     init {
         mItems = data
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem_constacts_checkbox, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view,onItemCheckBoxListen!!)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.textName.text = mItems[position].name
         Glide.with(context).load(mItems[position].avatar).apply(RequestOptions().centerCrop().circleCrop()).into(holder.imageAvatar)
-
     }
 
     override fun getItemCount(): Int {
@@ -39,10 +45,23 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
     }
 
 
-    class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder internal constructor(itemView: View,onItemCheckBoxListen: OnItemCheckBoxListen) : RecyclerView.ViewHolder(itemView) {
         internal val imageAvatar: ImageView = itemView.findViewById(R.id.imageView)
         internal val textName: TextView = itemView.findViewById(R.id.textViewName)
         internal val check_Box: CheckBox = itemView.findViewById(R.id.checkBox)
 
+        init {
+            check_Box.setOnCheckedChangeListener { compoundButton, isChecked ->
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                   onItemCheckBoxListen.onCheckboxChanged(isChecked,adapterPosition)
+                }
+            }
+        }
     }
+}
+
+
+interface OnItemCheckBoxListen {
+    fun onCheckboxChanged(isChecked:Boolean,position: Int)
+
 }

@@ -64,6 +64,9 @@ class BalanceListActivity : XinActivity() {
         rightText?.setOnClickListener {
             settingOnclick()
         }
+        backText!!.setOnClickListener {
+            finish()
+        }
 
     }
 

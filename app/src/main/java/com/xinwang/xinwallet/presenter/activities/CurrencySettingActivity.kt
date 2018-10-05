@@ -42,10 +42,13 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
     private fun titleBarSetting() {
         val backText = includeTitleBarCurrencySetting.findViewById(R.id.txt_back) as TextView?
         val titleBarText = includeTitleBarCurrencySetting.findViewById(R.id.title_name) as TextView?
-        val rightText=includeTitleBarCurrencySetting.findViewById(R.id.titleBarRightText) as TextView
+        val rightText = includeTitleBarCurrencySetting.findViewById(R.id.titleBarRightText) as TextView
         rightText.visibility = View.INVISIBLE
         backText?.text = getString(R.string.Balance)
         titleBarText?.text = getText(R.string.Balance_setting)
+        backText!!.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
@@ -53,7 +56,7 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
         isDragged = true
     }
 
-    fun updateCurrencyOrder(){
+    fun updateCurrencyOrder() {
         var currencyDragList = ArrayList<Currency>()
         if (isDragged) {
             for (i in 1..cycleViewerSittingOrder.adapter.itemCount) {
@@ -65,7 +68,7 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
                 }
             }
             Profile().updateCurrencySetting(currencyDragList) { status: Boolean?, s: String ->
-                if(status!! && JSONObject(s).isNull("error")){
+                if (status!! && JSONObject(s).isNull("error")) {
                     saveCurrencyOrderInSharedPreference1()
                 }
             }

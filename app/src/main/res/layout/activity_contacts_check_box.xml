@@ -21,11 +21,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/includeTitlebarContCheckbox">
 
-        <SearchView
+        <EditText
             android:id="@+id/SearchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -37,8 +39,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:queryHint="wwsdfkldskf"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v7.widget.RecyclerView
@@ -46,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView2"
+        app:layout_constraintBottom_toTopOf="@+id/selectedRecyclerView"
         app:layout_constraintEnd_toEndOf="@+id/view3"
         app:layout_constraintStart_toStartOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -74,9 +76,9 @@
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView2"
+        android:id="@+id/selectedRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="80dp"
+        android:layout_height="75dp"
         android:background="@color/light_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

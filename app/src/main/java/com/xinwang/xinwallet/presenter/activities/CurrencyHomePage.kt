@@ -59,6 +59,9 @@ class CurrencyHomePage : XinActivity() {
         titleBarRight?.visibility = View.INVISIBLE
         backText?.text = getString(R.string.Balance)
         titleBarText?.text = getString(getCurrencyNameStringId(currencyName)) + getString(R.string.Balance)
+        backText!!.setOnClickListener {
+            finish()
+        }
     }
 
     private fun getCurrencyNameStringId(name: String): Int {

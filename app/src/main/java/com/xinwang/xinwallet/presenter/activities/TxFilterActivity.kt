@@ -24,7 +24,10 @@ class TxFilterActivity : AppCompatActivity() {
         settingTitleBar()
         radioGroupSetting()
         recycleViewSetting()
-
+        //預設按鈕
+        TxActionDefault.performClick()
+        TxCurrencyDefault.performClick()
+        TxDateDefault.performClick()
     }
 
     private fun recycleViewSetting() {
@@ -112,15 +115,24 @@ class TxFilterActivity : AppCompatActivity() {
 
     }
 
+    fun customDateOnClick(view: View) {
+        Toast.makeText(this, "customDate", Toast.LENGTH_SHORT).show()
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 10) {
             val getData = data!!.getStringExtra("selectedTarget")
             val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type
             val selectedContacts = Gson().fromJson<java.util.ArrayList<Contacts>>(getData, type)
-            recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            recyclerView1.adapter = ContactsHorizontalAdapter(selectedContacts, this)
-
+            if (selectedContacts.size > 0) {
+                recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recyclerView1.adapter = ContactsHorizontalAdapter(selectedContacts, this)
+                textViewWho.text = ""
+            } else {
+                textViewWho.text = getString(R.string.TxSort_All)
+            }
         }
     }
 }

@@ -4,7 +4,10 @@ package com.xinwang.xinwallet.presenter.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.google.gson.Gson
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.jsonrpc.Trading
@@ -12,6 +15,7 @@ import com.xinwang.xinwallet.models.TransactionRecord
 import com.xinwang.xinwallet.models.adapter.HistoryTxListAdapter
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
+import kotlinx.android.synthetic.main.activity_currency_home_page.*
 import kotlinx.android.synthetic.main.activity_history_tx.*
 import org.json.JSONObject
 import java.util.*
@@ -43,9 +47,23 @@ class HistoricalTxActivity : XinActivity() {
 
     private fun showHistoryList(founderArray: ArrayList<TransactionRecord>?) {
         doUI {
-            recyclerViewHistoryTx.layoutManager = LinearLayoutManager(this)
+            recyclerViewHistoryTx.layoutManager = LinearLayoutManager(this@HistoricalTxActivity)
             recyclerViewHistoryTx.setHasFixedSize(true)
-            recyclerViewHistoryTx.adapter = HistoryTxListAdapter(founderArray!!, this)
+            var historyAdapter = HistoryTxListAdapter(founderArray!!, this@HistoricalTxActivity)
+            historyAdapter.setOnItemClickLisrten(object : HistoryTxListAdapter.OnitemClickListener {
+                override fun onItemClick(poistion: Int,view:View) {
+                    var amount:TextView=view.findViewById(R.id.txt_Amount)
+                    var titletText:TextView=view.findViewById(R.id.txt_title)
+                    val intent = Intent(this@HistoricalTxActivity, TxDetailActivity::class.java)
+                    intent.putExtra("amount",amount.text)
+                    intent.putExtra("target",titletText.text.subSequence(3,titletText.text.length))
+                    intent.putExtra("obj",Gson().toJson(founderArray[poistion]))
+                    startActivity(intent)
+                }
+
+            })
+            recyclerViewHistoryTx.adapter = historyAdapter
+
         }
     }
 

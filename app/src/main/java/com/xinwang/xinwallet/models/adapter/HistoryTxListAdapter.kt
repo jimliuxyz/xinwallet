@@ -1,12 +1,15 @@
 package com.xinwang.xinwallet.models.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
@@ -22,6 +25,11 @@ import java.text.SimpleDateFormat
 
 class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: Context)
     : RecyclerView.Adapter<HistoryTxListAdapter.ViewHolder>() {
+    var listener:OnitemClickListener? = null
+
+    fun setOnItemClickLisrten(onListener: OnitemClickListener){
+        listener=onListener
+    }
 
     private var mItems = ArrayList<TransactionRecord>()
 
@@ -32,7 +40,7 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.listitem_history_deal, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view,listener!!)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -68,21 +76,36 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
                 }
             }
         }
+
     }
 
     override fun getItemCount(): Int {
         return mItems.size
     }
 
-
-    class ViewHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder internal constructor(itemView: View,onitemClickListener: OnitemClickListener) : RecyclerView.ViewHolder(itemView) {
         internal val txtAmount: TextView = itemView.findViewById(R.id.txt_Amount)
         internal val txtTitle: TextView = itemView.findViewById(R.id.txt_title)
         internal val imgAvatar: ImageView = itemView.findViewById(R.id.img_Avatar)
         internal val txtDate: TextView = itemView.findViewById(R.id.txt_date)
+        init {
+            itemView.setOnClickListener(object :View.OnClickListener {
+                override fun onClick(view: View?) {
+                    if (onitemClickListener!=null){
+                        var poistion:Int=adapterPosition
+                        if (poistion!=RecyclerView.NO_POSITION){
+                            onitemClickListener.onItemClick(poistion,view!!)
+                        }
+                    }
+                }
 
+            })
+        }
     }
 
+    interface OnitemClickListener {
+        fun onItemClick(poistion: Int,ItemView:View)
+    }
 }
 
 

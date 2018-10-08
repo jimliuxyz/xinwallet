@@ -59,6 +59,7 @@
     <string name="HistoricalTx.Filter">筛选</string>
     <string name="TxSort.Sort">排序</string>
     <string name="TxSort.Date">日期</string>
+    <string name="TxSort.CustomDate">自订日期</string>
     <string name="TxSort.highTolow">金額(由高到低)</string>
     <string name="TxSort.lowTohigh">金額(由低到高)</string>
     <string name="TxSort.Ascending">時間(由远到近)</string>
@@ -71,5 +72,13 @@
     <string name="Currency">币别</string>
     <string name="Contacts">联络人</string>
     <string name="Ok">確定</string>
+    <string name="TxDetail.Status">狀態</string>
+    <string name="TxDetail.Counterparty">交易對象</string>
+    <string name="TxDetail.Amount">金額</string>
+    <string name="TxDetail.Time">時間</string>
+    <string name="TxDetail">交易明細</string>
+    <string name="TxDetail.Success">成功</string>
+    <string name="TxDetail.Uncompleted">未完成</string>
+
 
 </resources>

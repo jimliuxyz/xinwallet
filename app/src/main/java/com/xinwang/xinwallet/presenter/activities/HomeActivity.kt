@@ -153,7 +153,7 @@ class HomeActivity : XinActivity() {
         if (resultCode != Activity.RESULT_OK) {
             return
         }
-        loader.show(supportFragmentManager, "LoaderDialogFragment")
+       // loader.show(supportFragmentManager, "LoaderDialogFragment")
         when (requestCode) {
             123//相册
             -> {

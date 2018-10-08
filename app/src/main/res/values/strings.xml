@@ -64,6 +64,7 @@
     <string name="HistoricalTx.Filter">Filter</string>
     <string name="TxSort.Sort">Sorting</string>
     <string name="TxSort.Date">Date</string>
+    <string name="TxSort.CustomDate">Custom Date</string>
     <string name="TxSort.highTolow">Amount(high to low)</string>
     <string name="TxSort.lowTohigh">Amount(low to high)</string>
     <string name="TxSort.Ascending">Date(Ascending)</string>
@@ -76,5 +77,13 @@
     <string name="Currency">Currency</string>
     <string name="Contacts">Contacts</string>
     <string name="Ok">Ok</string>
+    <string name="TxDetail.Status">Status</string>
+    <string name="TxDetail.Counterparty">Counterparty</string>
+    <string name="TxDetail.Amount">Amount</string>
+    <string name="TxDetail.Time">Time</string>
+    <string name="TxDetail">Tx Detail</string>
+    <string name="TxDetail.Success">Success</string>
+    <string name="TxDetail.Uncompleted">Uncompleted</string>
+
 
 </resources>

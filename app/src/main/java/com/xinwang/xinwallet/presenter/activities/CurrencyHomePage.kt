@@ -1,5 +1,6 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -15,6 +16,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.support.v7.widget.LinearLayoutManager
 import com.xinwang.xinwallet.tools.util.doUI
+import kotlinx.android.synthetic.main.activity_history_tx.*
 
 
 class CurrencyHomePage : XinActivity() {
@@ -30,10 +32,10 @@ class CurrencyHomePage : XinActivity() {
         titleBarSetting()
         txtCurrencyAmount.text = currencyAmount
         imgCoin.setImageResource(getCoinIconId(currencyName))
-        getHistoryList()
+        getHistoryTxList()
     }
 
-    private fun getHistoryList() {
+    private fun getHistoryTxList() {
         Trading().getReceipts(Date()) { state: Boolean, result: String ->
             val jsonArrayString = JSONObject(result).getJSONArray("list").toString()
             val founderArray = gson.fromJson(jsonArrayString, Array<TransactionRecord>::class.java)
@@ -46,9 +48,26 @@ class CurrencyHomePage : XinActivity() {
 
     private fun showHistoryList(founderArray: ArrayList<TransactionRecord>?) {
         doUI {
-            recyclerView_HistoryTrx.layoutManager = LinearLayoutManager(this)
+            recyclerView_HistoryTrx.layoutManager = LinearLayoutManager(this@CurrencyHomePage)
             recyclerView_HistoryTrx.setHasFixedSize(true)
-            recyclerView_HistoryTrx.adapter = HistoryTxListAdapter(founderArray!!, this)
+            recyclerView_HistoryTrx.adapter = HistoryTxListAdapter(founderArray!!, this@CurrencyHomePage)
+            //to do 改寫至adapter
+            var historyAdapter = HistoryTxListAdapter(founderArray!!, this@CurrencyHomePage)
+            historyAdapter.setOnItemClickLisrten(object : HistoryTxListAdapter.OnitemClickListener {
+                override fun onItemClick(poistion: Int,view:View) {
+                    var amount:TextView=view.findViewById(R.id.txt_Amount)
+                    var titleText:TextView=view.findViewById(R.id.txt_title)
+                    val intent = Intent(this@CurrencyHomePage, TxDetailActivity::class.java)
+                    intent.putExtra("amount",amount.text)
+                    intent.putExtra("target",titleText.text.subSequence(3,titleText.text.length))
+                    intent.putExtra("obj",Gson().toJson(founderArray[poistion]))
+                    startActivity(intent)
+                }
+
+            })
+
+            recyclerView_HistoryTrx.adapter = historyAdapter
+
         }
     }
 

@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@null"
+            android:checked="true"
             android:drawableRight="@drawable/drawableright_filter_sorting"
             android:padding="8dp"
             android:tag="1"
@@ -157,7 +158,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView12">
 
             <RadioButton
-                android:id="@+id/radiobutton"
+                android:id="@+id/TxActionDefault"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_radionbutton_selector"
@@ -165,7 +166,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="All"
-                android:text="@string/TxSort.All" />
+                android:text="@string/TxSort.All"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton8"
@@ -177,7 +179,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="pay"
-                android:text="@string/Receipt_Pay" />
+                android:text="@string/Receipt_Pay"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton9"
@@ -189,7 +192,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="Ex"
-                android:text="@string/Exchange" />
+                android:text="@string/Exchange"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton10"
@@ -235,7 +239,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView24">
 
             <RadioButton
-                android:id="@+id/radioButton11"
+                android:id="@+id/TxDateDefault"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="5"
@@ -244,7 +248,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="W"
-                android:text="@string/TxSort.WithinAWeek" />
+                android:text="@string/TxSort.WithinAWeek"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton81"
@@ -257,7 +262,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="M"
-                android:text="@string/TxSort.WithinAMonth" />
+                android:text="@string/TxSort.WithinAMonth"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton91"
@@ -268,9 +274,11 @@
                 android:background="@drawable/bg_radionbutton_selector"
                 android:button="@null"
                 android:gravity="center"
+                android:onClick="customDateOnClick"
                 android:padding="8dp"
                 android:tag="D"
-                android:text="@string/TxSort.Date" />
+                android:text="@string/TxSort.CustomDate"
+                android:textColor="@color/gray" />
 
         </RadioGroup>
 
@@ -304,7 +312,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView26">
 
             <RadioButton
-                android:id="@+id/radioButton13"
+                android:id="@+id/TxCurrencyDefault"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="0dp"
@@ -314,7 +322,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="All"
-                android:text="@string/TxSort.All" />
+                android:text="@string/TxSort.All"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton12"
@@ -326,7 +335,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="CNY"
-                android:text="@string/Currency.CNY" />
+                android:text="@string/Currency.CNY"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton112"
@@ -338,7 +348,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="USD"
-                android:text="@string/Currency.USD" />
+                android:text="@string/Currency.USD"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton812"
@@ -350,7 +361,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="BTC"
-                android:text="@string/Currency.BTC" />
+                android:text="@string/Currency.BTC"
+                android:textColor="@color/gray" />
 
             <RadioButton
                 android:id="@+id/radioButton912"
@@ -362,7 +374,8 @@
                 android:gravity="center"
                 android:padding="8dp"
                 android:tag="ETH"
-                android:text="@string/Currency.ETH" />
+                android:text="@string/Currency.ETH"
+                android:textColor="@color/gray" />
 
         </RadioGroup>
 
@@ -405,6 +418,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView2"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+        <TextView
+            android:id="@+id/textViewWho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/TxSort.All"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     </android.support.constraint.ConstraintLayout>
 

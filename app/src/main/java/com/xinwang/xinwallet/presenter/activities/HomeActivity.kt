@@ -89,7 +89,10 @@ class HomeActivity : XinActivity() {
                     }
                     doUI {
                         userName.text = res.getString("name")
-                        Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+                        if(res.getString("avatar").trim().isNotEmpty()){
+                            Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+                        }
+                        println("Glide_${res.getString("avatar")}")
                     }
                 } catch (e: Exception) {
                     Log.i(TAG, " getProfileData_$e")

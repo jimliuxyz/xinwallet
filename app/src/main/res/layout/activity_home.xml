@@ -36,7 +36,7 @@
         android:id="@+id/exchangeBtn"
         android:layout_width="150dp"
         android:layout_height="120dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="18dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/ic_exchange"
         android:onClick="exchangeBtnOnClick"
@@ -75,7 +75,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/balanceView"
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="65dp"
         android:layout_marginTop="24dp"
         android:clickable="true"
         android:onClick="balanceBtnClick"

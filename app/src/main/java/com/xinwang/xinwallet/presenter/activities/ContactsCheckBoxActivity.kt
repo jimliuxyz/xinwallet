@@ -15,11 +15,12 @@ import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.adapter.ContactsCheckBoxAdapter
 import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
 import com.xinwang.xinwallet.models.adapter.OnItemCheckBoxListen
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_contacts_check_box.*
 import kotlinx.android.synthetic.main.activity_tx_filter.*
 
-class ContactsCheckBoxActivity : AppCompatActivity() {
+class ContactsCheckBoxActivity : XinActivity() {
 
     lateinit var totalContactsList: ArrayList<Contacts>
 
@@ -46,11 +47,9 @@ class ContactsCheckBoxActivity : AppCompatActivity() {
                     })
                     doUI {
                         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-                        // recyclerView.adapter = ContactsCheckBoxAdapter(it!!, this)
                         recyclerView.adapter = ad
                     }
                 } catch (e: Exception) {
-                    Log.i("8989898", "getContactsList1_$e")
                     doUI { Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show() }
                 }
             }
@@ -71,8 +70,8 @@ class ContactsCheckBoxActivity : AppCompatActivity() {
         backText?.text = ""
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         titleBarRight!!.setOnClickListener {
-            val gson=Gson()
-            val selectedTarget=gson.toJson(selectedContactsList)
+            val gson = Gson()
+            val selectedTarget = gson.toJson(selectedContactsList)
             val intent = Intent().putExtra("selectedTarget", selectedTarget)
             setResult(10, intent)
             finish()

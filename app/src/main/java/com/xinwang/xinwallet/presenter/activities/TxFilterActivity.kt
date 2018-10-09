@@ -9,15 +9,23 @@ import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
+import com.xinwang.xinwallet.tools.util.DatePickerActivity
+import kotlinx.android.synthetic.main.activity_date_picker.*
 import kotlinx.android.synthetic.main.activity_tx_filter.*
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class TxFilterActivity : AppCompatActivity() {
+class TxFilterActivity :XinActivity() {
 
+    private var customDate1: Long = 0
+    private var customDate2: Long = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tx_filter)
@@ -37,7 +45,7 @@ class TxFilterActivity : AppCompatActivity() {
 
     }
 
-    fun addTxtargetOnClick(view: View) {
+    fun addTxTargetOnClick(view: View) {
         val intent = Intent(this, ContactsCheckBoxActivity::class.java)
         startActivityForResult(intent, 1)
     }
@@ -63,8 +71,7 @@ class TxFilterActivity : AppCompatActivity() {
             val dateView: RadioButton = findViewById(RGDateType.checkedRadioButtonId)
             val currencyView: RadioButton = findViewById(RGCurrencyType.checkedRadioButtonId)
             val sortingView: RadioButton = findViewById(RGOrder.checkedRadioButtonId)
-
-            println("getTag_${view.getTag()}")
+            finish()
             Toast.makeText(this, sortingView.getTag().toString() + "/" +
                     TxView.getTag().toString() + "/"
                     + dateView.getTag().toString() + "/"
@@ -109,19 +116,33 @@ class TxFilterActivity : AppCompatActivity() {
                     view.setTextColor(getColor(R.color.gray))
                 }
             }
-
-
         }
 
     }
 
     fun customDateOnClick(view: View) {
-        Toast.makeText(this, "customDate", Toast.LENGTH_SHORT).show()
-
+        val intent = Intent(this@TxFilterActivity, DatePickerActivity::class.java)
+        if(customDate1>0){
+            intent.putExtra("customDate1",customDate1)
+            intent.putExtra("customDate2",customDate2)
+        }
+        startActivityForResult(intent, 2)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        when (resultCode) {
+            20 -> {
+                customDate1 = data!!.getStringExtra("date1").toLong()
+                customDate2 = data!!.getStringExtra("date2").toLong()
+                val sdf = SimpleDateFormat("MMM,dd")
+                val date1 = Date(customDate1)
+                val date2 = Date(customDate2)
+                customDate.text = sdf.format(date1) + "-" + sdf.format(date2)
+            }
+        }
+
         if (resultCode == 10) {
             val getData = data!!.getStringExtra("selectedTarget")
             val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type

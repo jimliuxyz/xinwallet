@@ -45,7 +45,7 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
         val rightText = includeTitleBarCurrencySetting.findViewById(R.id.titleBarRightText) as TextView
         rightText.visibility = View.INVISIBLE
         backText?.text = getString(R.string.Balance)
-        titleBarText?.text = getText(R.string.Balance_setting)
+        titleBarText?.text = getText(R.string.Setting)
         backText!!.setOnClickListener {
             finish()
         }

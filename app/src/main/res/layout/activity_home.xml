@@ -229,11 +229,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imgSetting"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="12dp"
+        android:onClick="settingBtnOnClick"
         app:layout_constraintEnd_toEndOf="@+id/view6"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_setting" />

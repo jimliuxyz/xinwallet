@@ -5,4 +5,5 @@
     <string name="PREF_REQ_SMS_PASSCODE_TIME" translatable="false">PREF_REQ_SMS_PASSCODE_TIME</string>
     <string name="PREF_CURRENCY_ORDER" translatable="false">PREF_CURRENCY_ORDER</string>
     <string name="REF_CURRENCY_BALANCE" translatable="false">REF_CURRENCY_BALANCE</string>
+    <string name="PREF_MYPROFILE" translatable="false">PREF_MYPROFILE</string>
 </resources>

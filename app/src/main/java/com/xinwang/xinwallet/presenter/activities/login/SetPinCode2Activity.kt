@@ -28,15 +28,31 @@ class SetPinCode2Activity : PinCodeActivity() {
         if (pincode1.equals(pincode)) {
             XinWalletService.instance.setPinCode(pincode)
             resetPauseTime()
+            //非初始設定，finish
+            if (intent.getBooleanExtra("NotInitialSetting", false)) {
+                finish()
+                return
+            } else {
+                val intent = Intent(this, SetUsernameActivity::class.java)
+                intent.putExtra("backto", HomeActivity::class.java.canonicalName)
+                startActivity(intent)
+                overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
 
-            val intent = Intent(this, SetUsernameActivity::class.java)
-            intent.putExtra("backto", HomeActivity::class.java.canonicalName)
 
-            startActivity(intent)
-            overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+            }
+            //初始設定，轉到設定ID頁面
         } else {
             sharkNClear()
             tvInvalidHint.visibility = View.VISIBLE
         }
     }
+
+    override fun backBtn() {
+        val intent = Intent(this@SetPinCode2Activity, SetPinCode1Activity::class.java)
+        startActivity(intent)
+        finish()
+
+    }
+
+
 }

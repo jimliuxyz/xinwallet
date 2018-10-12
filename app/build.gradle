@@ -35,7 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.hbb20:ccp:2.2.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
     implementation 'io.michaelrocks:libphonenumber-android:8.9.9'
 
     //retrofit2
@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
     //okhttp3
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'

@@ -40,9 +40,10 @@
     <string name="Btn.done">完成</string>
     <string name="PinCode.next">确认</string>
     <string name="Balance">余额</string>
+    <string name="Currency.Setting">币别设定</string>
     <string name="Unlock.tokenUnavailable">Token 已失效</string>
     <string name="Home.changedAvatar">已更改大头照</string>
-    <string name="Balance.setting">币别设定</string>
+    <string name="Setting">设定</string>
     <string name="Balance.DefaultCurrency">预设币别</string>
     <string name="Balance.OtherCurrency">其他币别</string>
     <string name="Currency.CNY">人民币</string>
@@ -79,6 +80,17 @@
     <string name="TxDetail">交易明細</string>
     <string name="TxDetail.Success">成功</string>
     <string name="TxDetail.Uncompleted">未完成</string>
-
+    <string name="Setting.Language">语言</string>
+    <string name="Setting.ChangePinCode">更改PinCode</string>
+    <string name="Setting.DefaultCurrency">预设币别</string>
+    <string name="Setting.FRQ">常见问题</string>
+    <string name="Setting.Rating">撰写评论</string>
+    <string name="Setting.AboutUs">关于我们</string>
+    <string name="Home.tag.notifications">传送通知</string>
+    <string name="Profile.Avatar">头像</string>
+    <string name="Profile.Name">名字</string>
+    <string name="Profile.Phone">手机号码</string>
+    <string name="Cancel">取消</string>
+    <string name="InvalidInput">輸入錯誤</string>
 
 </resources>

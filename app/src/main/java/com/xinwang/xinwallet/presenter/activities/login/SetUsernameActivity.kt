@@ -25,7 +25,7 @@ class SetUsernameActivity : XinActivity() {
 
         if (etUserName.text.isBlank()) {
             SpringAnimator.failShakeAnimation(this, etUserName)
-            Toast.makeText(this, "Invalid input", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.InvalidInput), Toast.LENGTH_LONG).show()
             return
         }
 

@@ -14,6 +14,7 @@ import com.google.gson.JsonObject
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.FuncApp
 import com.xinwang.xinwallet.jsonrpc.JSONRPC
 import com.xinwang.xinwallet.tools.photo.UriUtil
@@ -28,6 +29,9 @@ import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
 import kotlinx.android.synthetic.main.activity_home.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
@@ -39,30 +43,41 @@ import kotlin.collections.ArrayList
 
 class HomeActivity : XinActivity() {
 
-    val loader = LoaderDialogFragment()
-    val loader_balance = LoaderDialogFragment()
+   private val loader = LoaderDialogFragment()
+   private val loader_balance = LoaderDialogFragment()
     val TAG = "HomeActivity"
     var currencies = ArrayList<Currency>()
     //千位數符號
     val numberFormat = NumberFormat.getNumberInstance()
+    val gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        loader_balance.show(supportFragmentManager, "LoaderDialogFragment")
         getProfileData()
         saveCurrencyBalanceInSharedPreference()
         println("$TAG+token_${JSONRPC().getUserToken()}")
+
+
     }
 
+    override fun onResume() {
+        super.onResume()
+        //EventBus subscriber
+        EventBus.getDefault().register(this)
+
+    }
     private fun saveCurrencyBalanceInSharedPreference() {
-        loader_balance.show(supportFragmentManager, "LoaderDialogFragment")
         Trading().getBalancesList {
             val gson = Gson()
             val json = gson.toJson(it)
             XinWalletApp.instance.applicationContext.setPref(R.string.REF_CURRENCY_BALANCE, json)
             val balData = XinWalletApp.instance.applicationContext.getPref(R.string.REF_CURRENCY_BALANCE, "")
             Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
-            loader_balance.dismiss()
+            doUI {
+                loader_balance.dismiss()
+            }
         }
     }
 
@@ -70,6 +85,7 @@ class HomeActivity : XinActivity() {
         Profile().getProfile { status: Boolean, it ->
             if (it != null) {
                 try {
+                    saveMyProfileInSharedPreference(it.toString())
                     var res = JSONObject(it.toString())
                     val jsonArray = res.getJSONArray("currencies")
                     for (i in 0 until jsonArray.length()) {
@@ -89,10 +105,9 @@ class HomeActivity : XinActivity() {
                     }
                     doUI {
                         userName.text = res.getString("name")
-                        if(res.getString("avatar").trim().isNotEmpty()){
+                        if (res.getString("avatar").trim().isNotEmpty()) {
                             Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
                         }
-                        println("Glide_${res.getString("avatar")}")
                     }
                 } catch (e: Exception) {
                     Log.i(TAG, " getProfileData_$e")
@@ -102,17 +117,19 @@ class HomeActivity : XinActivity() {
         }
     }
 
+    private fun saveMyProfileInSharedPreference(res: String) {
+        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_MYPROFILE, res)
+
+        val profileData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
+        Log.i(TAG, "saveMyProfileInSharedPreference_$profileData")
+
+    }
+
     private fun saveCurrencyOrderInSharedPreference() {
-        val gson = Gson()
         val json = gson.toJson(currencies)
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
         val orderData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
         Log.i(TAG, "saveCurrencyOrderInSharedPreference_$orderData")
-    }
-
-    fun btnResetUserData(view: View) {
-        XinWalletService.instance.delUserToken()
-        exitApp()
     }
 
     fun balanceBtnClick(view: View) {
@@ -141,22 +158,34 @@ class HomeActivity : XinActivity() {
         }
     }
 
-    fun dealHistoryBtnOnClick(view: View){
-        val intent=Intent(this,HistoricalTxActivity::class.java)
-        intent.putExtra("from","Home")
-        intent.putExtra("txFilter","")
+    fun dealHistoryBtnOnClick(view: View) {
+        val intent = Intent(this, HistoricalTxActivity::class.java)
+        intent.putExtra("from", "Home")
+        intent.putExtra("txFilter", "")
         startActivity(intent)
     }
-    fun saveBtnOnClick(view: View){}
-    fun dealBtnOnClick(view: View){}
-    fun exchangeBtnOnClick(view: View){}
+
+    fun saveBtnOnClick(view: View) {}
+    fun dealBtnOnClick(view: View) {}
+    fun exchangeBtnOnClick(view: View) {}
+    fun settingBtnOnClick(view: View) {
+        val intent = Intent(this@HomeActivity, SettingActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    @Subscribe
+    fun onEvent(event:DataUpdateEvent) {
+        Log.i("TAG","yuyuyuyuyuyu")
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
             return
         }
-       // loader.show(supportFragmentManager, "LoaderDialogFragment")
+         loader.show(supportFragmentManager, "LoaderDialogFragment")
         when (requestCode) {
             123//相册
             -> {
@@ -178,4 +207,8 @@ class HomeActivity : XinActivity() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        EventBus.getDefault().unregister(this@HomeActivity)
+    }
 }

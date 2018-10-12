@@ -32,7 +32,7 @@
     <string name="Home.title" translatable="false">Wallet</string>
     <string name="Home.tag.friends" translatable="false">Friends</string>
     <string name="Home.tag.dashboard" translatable="false">Dashboard</string>
-    <string name="Home.tag.notifications" translatable="false">Notifications</string>
+    <string name="Home.tag.notifications">Notifications</string>
     <string name="SetUsername.title">Enter your name</string>
     <string name="Unlock.title">Unlock</string>
     <string name="Unlock.desc">Please enter your PinCode</string>
@@ -47,7 +47,7 @@
     <string name="Currency.Setting">CurrencySetting</string>
     <string name="Unlock.tokenUnavailable">Token Unavailable</string>
     <string name="Home.changedAvatar">Avatar has been changed</string>
-    <string name="Balance.setting">Setting</string>
+    <string name="Setting">Setting</string>
     <string name="Balance.DefaultCurrency">DefaultCurrency</string>
     <string name="Balance.OtherCurrency">OtherCurrency</string>
     <string name="Currency.CNY">CNY</string>
@@ -84,6 +84,17 @@
     <string name="TxDetail">Tx Detail</string>
     <string name="TxDetail.Success">Success</string>
     <string name="TxDetail.Uncompleted">Uncompleted</string>
+    <string name="Setting.Language">Language</string>
+    <string name="Setting.ChangePinCode">ChangePinCode</string>
+    <string name="Setting.FRQ">FRQ</string>
+    <string name="Setting.Rating">Rating</string>
+    <string name="Setting.AboutUs">About us</string>
+    <string name="Profile.Avatar">Avatar</string>
+    <string name="Profile.Name">Name</string>
+    <string name="Profile.Phone">PhoneNo</string>
+    <string name="Profile.ID" translatable="false">UWallet ID</string>
+    <string name="Cancel">Cancel</string>
+    <string name="InvalidInput">Invalid input</string>
 
 
 </resources>

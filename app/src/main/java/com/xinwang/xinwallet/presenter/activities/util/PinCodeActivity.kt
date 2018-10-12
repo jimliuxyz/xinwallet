@@ -156,6 +156,10 @@ open class PinCodeActivity : XinActivity() {
     }
 
     fun navBack(view: View) {
+        backBtn()
+    }
+
+    open fun backBtn() {
         finish()
     }
 }

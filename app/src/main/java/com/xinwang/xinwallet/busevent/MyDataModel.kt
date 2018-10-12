@@ -48,7 +48,7 @@ class MyDataModel private constructor() {
         currency.order = 0
 
         //send a "data update" event to presenter/views
-        EventBus.getDefault().post(DataUpdateEvent(0, ApiDataEvent.TYPE_PROFILE))
+        EventBus.getDefault().post(DataUpdateEvent(true, ApiDataEvent.TYPE_PROFILE))
     }
 
     private fun updateBalance() {
@@ -56,7 +56,7 @@ class MyDataModel private constructor() {
         currency.balance = 100
 
         //send a "data update" event to presenter/views
-        EventBus.getDefault().post(DataUpdateEvent(0, ApiDataEvent.TYPE_BALANCE))
+        EventBus.getDefault().post(DataUpdateEvent(true, ApiDataEvent.TYPE_BALANCE))
     }
 }
 

@@ -60,7 +60,7 @@ class BalanceListActivity : XinActivity() {
         val rightText = includeTitleBarBalanceList.findViewById(R.id.titleBarRightText) as TextView?
         backText?.text = getString(R.string.app_name)
         titleBarText?.text = getString(R.string.Balance)
-        rightText?.text = getString(R.string.Balance_setting)
+        rightText?.text = getString(R.string.Setting)
         rightText?.setOnClickListener {
             settingOnclick()
         }

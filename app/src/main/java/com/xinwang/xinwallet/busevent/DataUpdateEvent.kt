@@ -1,5 +1,5 @@
 package com.xinwang.xinwallet.busevent
 
-class DataUpdateEvent(var errorCode: Int, var type: Int) {
+class DataUpdateEvent(var update: Boolean, var type: Int) {
 
 }

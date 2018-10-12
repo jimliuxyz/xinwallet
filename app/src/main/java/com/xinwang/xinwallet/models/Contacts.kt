@@ -5,6 +5,6 @@ data class Contacts(var userId:String="") {
         get() = field
     var avatar:String=""
         get() = field
-    val phoneno:String = ""
+    var phoneno:String = ""
 
 }

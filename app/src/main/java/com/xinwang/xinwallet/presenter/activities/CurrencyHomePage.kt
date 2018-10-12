@@ -15,8 +15,10 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import android.support.v7.widget.LinearLayoutManager
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_history_tx.*
+import org.greenrobot.eventbus.EventBus
 
 
 class CurrencyHomePage : XinActivity() {
@@ -79,6 +81,7 @@ class CurrencyHomePage : XinActivity() {
         backText?.text = getString(R.string.Balance)
         titleBarText?.text = getString(getCurrencyNameStringId(currencyName)) + getString(R.string.Balance)
         backText!!.setOnClickListener {
+            EventBus.getDefault().post(DataUpdateEvent(true,9))
             finish()
         }
     }

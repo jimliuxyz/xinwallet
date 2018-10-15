@@ -1,17 +1,13 @@
-package com.xinwang.xinwallet.models
+package com.xinwang.xinwallet.models.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import com.bumptech.glide.Glide
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.xinwang.xinwallet.R
-import com.xinwang.xinwallet.XinWalletApp
+import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
-import com.xinwang.xinwallet.tools.util.getPref
 import kotlinx.android.synthetic.main.currency_item.view.*
 import java.text.NumberFormat
 import java.util.ArrayList

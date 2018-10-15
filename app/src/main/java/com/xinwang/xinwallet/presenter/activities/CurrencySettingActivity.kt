@@ -7,7 +7,9 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.transition.Visibility
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.adapter.RecycleerViewOrderSettingAdapter
@@ -15,7 +17,10 @@ import com.xinwang.xinwallet.models.adapter.helper.OnStartDragListener
 import com.xinwang.xinwallet.models.adapter.helper.SimpleItemTouchHelperCallback
 import kotlinx.android.synthetic.main.activity_currency_setting.*
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
+import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
+import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.listitem_currency_order_setting.view.*
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 
 
@@ -23,6 +28,8 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
 
     private var mItemTouchHelper: ItemTouchHelper? = null
     private var isDragged: Boolean = false
+    val loader = LoaderDialogFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency_setting)
@@ -69,18 +76,22 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
             }
             Profile().updateCurrencySetting(currencyDragList) { status: Boolean?, s: String ->
                 if (status!! && JSONObject(s).isNull("error")) {
-                    saveCurrencyOrderInSharedPreference1()
+                    updateCuryOrderFromServer {
+                        if (it!!) {
+                            EventBus.getDefault().post(DataUpdateEvent(true,2))
+                        }else{
+                            Toast.makeText(this,"update_failed",Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
         }
-
     }
 
     override fun onStop() {
-        super.onStop()
         updateCurrencyOrder()
+        super.onStop()
     }
-
 }
 
 

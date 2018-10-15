@@ -6,12 +6,16 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import com.xinwang.xinwallet.R
 import android.widget.TextView
-import android.widget.Toast
-import com.xinwang.xinwallet.models.CurrencyBaseAdapter
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
+import com.xinwang.xinwallet.models.adapter.CurrencyBaseAdapter
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
+import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import kotlinx.android.synthetic.main.activity_balance_list.*
 import java.text.NumberFormat
 import kotlinx.android.synthetic.main.currency_item.view.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 //千位數符號
@@ -27,12 +31,10 @@ class BalanceListActivity : XinActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_balance_list)
         settingTitleBar()
-    }
-
-    override fun onStart() {
-        super.onStart()
         defaultCurrencySetting()
         getCurrencyList()
+        //EventBus subscriber
+        EventBus.getDefault().register(this@BalanceListActivity)
     }
 
     private fun defaultCurrencySetting() {
@@ -44,14 +46,12 @@ class BalanceListActivity : XinActivity() {
         val defaultAmtText = getCurySymbol(firstCurName) + numberFormat.format(getPREFCurrencyBalance(firstCurName)).toString()
         defaultAmount!!.text = defaultAmtText
         defaultImage!!.setImageResource(getCoinIconId(firstCurName))
-        // val defaultView: View = includeDefaultCurrencyBalance
         includeTitleBarCurrencySetting.setOnClickListener {
             val intent = Intent(this, CurrencyHomePage::class.java)
             intent.putExtra("currName", firstCurName)
             intent.putExtra("currAmount", defaultAmount!!.text)
             startActivity(intent)
         }
-
     }
 
     private fun settingTitleBar() {
@@ -65,6 +65,8 @@ class BalanceListActivity : XinActivity() {
             settingOnclick()
         }
         backText!!.setOnClickListener {
+            val ooc = DataUpdateEvent(true, 990)
+            EventBus.getDefault().post(ooc)
             finish()
         }
 
@@ -84,14 +86,27 @@ class BalanceListActivity : XinActivity() {
             startActivity(intent)
             overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
         }
-
     }
 
     private fun settingOnclick() {
         val intent = Intent(this, CurrencySettingActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: DataUpdateEvent) {
+        when (event.type) {
+            2 -> {
+                defaultCurrencySetting()
+                getCurrencyList()
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this@BalanceListActivity)
+    }
 }

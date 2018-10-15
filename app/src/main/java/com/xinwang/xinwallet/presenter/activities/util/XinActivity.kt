@@ -1,6 +1,5 @@
 package com.xinwang.xinwallet.presenter.activities.util
 
-import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
@@ -13,17 +12,12 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.apiservice.XinWalletService
 import com.xinwang.xinwallet.presenter.activities.*
 import com.xinwang.xinwallet.presenter.activities.login.*
-import android.content.ComponentName
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.JsonObject
 import com.google.gson.reflect.TypeToken
 import com.xinwang.xinwallet.XinWalletApp
-import com.xinwang.xinwallet.jsonrpc.Auth
-import com.xinwang.xinwallet.jsonrpc.JSONRPC
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.models.Currency
-import com.xinwang.xinwallet.models.TransactionRecord
 import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
@@ -31,13 +25,8 @@ import org.json.JSONObject
 import java.util.ArrayList
 
 
-//class A : XinActivity(){
-//    override fun customOnEvent(){
-////        super.onEvent(E)
-//    }
-//}
-
 open class XinActivity : AppCompatActivity() {
+    val TAG_XinActivity="XinActivity"
 
     companion object {
         private var LOCKTIME = 20 * 1000
@@ -51,13 +40,6 @@ open class XinActivity : AppCompatActivity() {
     }
 
 
-//    final fun onEvent(E){
-//
-//    }
-//
-//    fun customOnEvent(E){
-//
-//    }
 
     override fun onResume() {
         super.onResume()
@@ -177,31 +159,41 @@ open class XinActivity : AppCompatActivity() {
     }
 
     fun getPREFCurrencyBalance(curName: String): Double {
-        val obj = XinWalletApp.instance.applicationContext.getPref(R.string.REF_CURRENCY_BALANCE, "")
+        val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_BALANCE, "")
         val type = object : TypeToken<ArrayList<Currency>>() {}.type
         val balanceList = Gson().fromJson<ArrayList<Currency>>(obj, type)
         return balanceList.filter { it.name == curName }[0].balance
 
     }
 
-
-    fun saveCurrencyOrderInSharedPreference1() {
+    fun updateCuryOrderFromServer( callback: (result: Boolean?) -> Unit) {
         Profile().getProfile { status: Boolean, it ->
             val jsonObject = JSONObject(it.toString())
             if (status && jsonObject.isNull("error")) {
                 val currencies = jsonObject.getJSONArray("currencies").toString()
-                //  val jsonArrayString = JSONObject(result).getJSONArray("currencies").toString()
                 val founderArray = gson.fromJson(currencies, Array<Currency>::class.java)
                 val json = gson.toJson(founderArray)
                 XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_ORDER, json)
                 val orderData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")
-                Log.i(this.toString(), "saveCurrencyOrderInSharedPreference1_$orderData")
+                Log.i(TAG_XinActivity, "updateCuryOrderFromServer_$orderData")
+                callback(true)
             } else {
-                Toast.makeText(this, "尚未更新幣別排序", Toast.LENGTH_SHORT).show()
+                callback(false)
             }
         }
+    }
 
-
+    fun updateProfileFromServer(callback: (result: Boolean?) -> Unit) {
+        Profile().getProfile { status, result ->
+            if (status) {
+                XinWalletApp.instance.applicationContext.setPref(R.string.PREF_MYPROFILE,result)
+                val profileData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
+                Log.i(TAG_XinActivity, "updateProfileFromServer_$profileData")
+                callback(true)
+            }else{
+                callback(false)
+            }
+        }
     }
 
 }

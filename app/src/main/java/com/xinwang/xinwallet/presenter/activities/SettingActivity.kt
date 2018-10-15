@@ -8,10 +8,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.presenter.activities.login.SetPinCode1Activity
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.getPref
 import kotlinx.android.synthetic.main.activity_setting.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import java.util.*
 
@@ -22,6 +26,8 @@ class SettingActivity : XinActivity() {
         setContentView(R.layout.activity_setting)
         titleSetting()
         getProfile()
+        //EventBus subscriber
+        EventBus.getDefault().register(this@SettingActivity)
     }
 
     private fun getProfile() {
@@ -64,4 +70,15 @@ class SettingActivity : XinActivity() {
         startActivity(intent)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: DataUpdateEvent) {
+        when (event.type) {
+            1 -> getProfile()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this@SettingActivity)
+    }
 }

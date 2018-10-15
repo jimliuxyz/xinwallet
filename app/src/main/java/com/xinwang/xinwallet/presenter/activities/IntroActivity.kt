@@ -14,6 +14,8 @@ class IntroActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
+
+
     }
 
     var timer: Timer? = null

@@ -12,23 +12,30 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.FuncApp
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.photo.UriUtil
 import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.getPref
 import kotlinx.android.synthetic.main.activity_profile.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : XinActivity() {
 
     val loader = LoaderDialogFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
         getProfileDate()
+        //EventBus subscriber
+        EventBus.getDefault().register(this@ProfileActivity)
 
     }
 
@@ -78,7 +85,6 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
@@ -93,6 +99,7 @@ class ProfileActivity : AppCompatActivity() {
 //                var bitmap = BitmapFactory.decodeStream(cr.openInputStream(dataUri))
                 FuncApp().uploadAvatar(File(UriUtil().getPath(dataUri))) {
                     if (it) {
+                        EventBus.getDefault().post(DataUpdateEvent(true, 1))
                         doUI {
                             // getProfileData()
                             Toast.makeText(this, R.string.Home_changedAvatar, Toast.LENGTH_SHORT).show()
@@ -107,4 +114,34 @@ class ProfileActivity : AppCompatActivity() {
     }
 
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: DataUpdateEvent) {
+        when (event.type) {
+            1 -> test()
+
+        }
+    }
+
+
+    fun test() {
+        updateProfileFromServer {
+            if (it!!) {
+                doUI {
+                    getProfileDate()
+                }
+                val profileJson = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
+                println("testetstetstetets_$profileJson")
+            } else {
+                doUI {
+                    Toast.makeText(this, "data_failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this@ProfileActivity)
+    }
 }

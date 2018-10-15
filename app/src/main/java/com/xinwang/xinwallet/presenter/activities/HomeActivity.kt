@@ -43,8 +43,8 @@ import kotlin.collections.ArrayList
 
 class HomeActivity : XinActivity() {
 
-   private val loader = LoaderDialogFragment()
-   private val loader_balance = LoaderDialogFragment()
+    private val loader = LoaderDialogFragment()
+    private val loader_balance = LoaderDialogFragment()
     val TAG = "HomeActivity"
     var currencies = ArrayList<Currency>()
     //千位數符號
@@ -54,72 +54,69 @@ class HomeActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        loader_balance.show(supportFragmentManager, "LoaderDialogFragment")
-        getProfileData()
-        saveCurrencyBalanceInSharedPreference()
+        //loadingDate
+        loadProfileData()
+        loadBalanceData()
         println("$TAG+token_${JSONRPC().getUserToken()}")
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
         //EventBus subscriber
-        EventBus.getDefault().register(this)
-
-    }
-    private fun saveCurrencyBalanceInSharedPreference() {
-        Trading().getBalancesList {
-            val gson = Gson()
-            val json = gson.toJson(it)
-            XinWalletApp.instance.applicationContext.setPref(R.string.REF_CURRENCY_BALANCE, json)
-            val balData = XinWalletApp.instance.applicationContext.getPref(R.string.REF_CURRENCY_BALANCE, "")
-            Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
-            doUI {
-                loader_balance.dismiss()
-            }
-        }
+        EventBus.getDefault().register(this@HomeActivity)
     }
 
-    fun getProfileData() {
-        Profile().getProfile { status: Boolean, it ->
-            if (it != null) {
+
+    fun loadProfileData() {
+        Profile().getProfile { status, result ->
+            if (status) {
                 try {
-                    saveMyProfileInSharedPreference(it.toString())
-                    var res = JSONObject(it.toString())
+                    saveMyProfileInSharedPreference(result.toString())
+                    var res = JSONObject(result.toString())
                     val jsonArray = res.getJSONArray("currencies")
                     for (i in 0 until jsonArray.length()) {
                         val jsonObject = jsonArray.get(i) as JSONObject
                         val currency = Currency(jsonObject.getString("name"), jsonObject.getInt("order"), jsonObject.getBoolean("isDefault"))
-                        if (jsonObject.getBoolean("isDefault")) {
-                            Trading().getBalances(jsonObject.getString("name")) {
-                                doUI {
-                                    default_balance.text = numberFormat.format(it)
-                                }
-                            }
-                            doUI {
-                                default_currency.text = jsonObject.getString("name")
-                            }
-                        }
                         currencies.add(currency)
                     }
-                    doUI {
-                        userName.text = res.getString("name")
-                        if (res.getString("avatar").trim().isNotEmpty()) {
-                            Glide.with(this).load(res.getString("avatar")).apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
-                        }
-                    }
                 } catch (e: Exception) {
-                    Log.i(TAG, " getProfileData_$e")
+                    Log.i(TAG, "loadProfileData_$e")
                 }
                 saveCurrencyOrderInSharedPreference()
+                doUI {
+                    profileViewSetting()
+                }
             }
         }
     }
 
+    fun loadBalanceData() {
+        Trading().getBalancesList {
+            val gson = Gson()
+            val json = gson.toJson(it)
+            XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_BALANCE, json)
+            val balData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_BALANCE, "")
+            Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
+            defaultCurySetting()
+        }
+    }
+
+    fun profileViewSetting() {
+        val profileJson = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
+        var res = JSONObject(profileJson)
+        userName.text = res.getString("name")
+        if (res.getString("avatar").trim().isNotEmpty()) {
+            Glide.with(this).load(res.getString("avatar"))
+                    .apply(RequestOptions().centerCrop().circleCrop()).into(avatar)
+        }
+    }
+
+    fun defaultCurySetting() {
+        val orderList = getPREFCurrencyOrderList()
+        orderList.filter { it.isDefault }
+        val curName = orderList[0].name
+        default_currency.text = curName
+        default_balance.text = numberFormat.format(getPREFCurrencyBalance(curName))
+    }
+
     private fun saveMyProfileInSharedPreference(res: String) {
         XinWalletApp.instance.applicationContext.setPref(R.string.PREF_MYPROFILE, res)
-
         val profileData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
         Log.i(TAG, "saveMyProfileInSharedPreference_$profileData")
 
@@ -135,7 +132,6 @@ class HomeActivity : XinActivity() {
     fun balanceBtnClick(view: View) {
         var intent = Intent()
         intent.setClass(this, BalanceListActivity::class.java)
-        //intent.setClass(this, EventTestActivity::class.java)
         startActivity(intent)
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
     }
@@ -144,18 +140,6 @@ class HomeActivity : XinActivity() {
         var intent = Intent()
         intent.setClass(this, ContactsActivity::class.java)
         startActivity(intent)
-    }
-
-    fun changeAvator(view: View) {
-        if (EasyPermissions.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            var intent = Intent()
-            intent.setAction(Intent.ACTION_OPEN_DOCUMENT)
-            // 设置文件类型
-            intent.setType("image/*")
-            startActivityForResult(intent, 123)
-        } else {
-            EasyPermissions.requestPermissions(this@HomeActivity, "您需要打开读取相册权限", 34316, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
     }
 
     fun dealHistoryBtnOnClick(view: View) {
@@ -168,24 +152,27 @@ class HomeActivity : XinActivity() {
     fun saveBtnOnClick(view: View) {}
     fun dealBtnOnClick(view: View) {}
     fun exchangeBtnOnClick(view: View) {}
+
     fun settingBtnOnClick(view: View) {
         val intent = Intent(this@HomeActivity, SettingActivity::class.java)
         startActivity(intent)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: DataUpdateEvent) {
+        when (event.type) {
+            1 -> profileViewSetting()
+            2 -> defaultCurySetting()
+        }
 
-    @Subscribe
-    fun onEvent(event:DataUpdateEvent) {
-        Log.i("TAG","yuyuyuyuyuyu")
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
             return
         }
-         loader.show(supportFragmentManager, "LoaderDialogFragment")
+        loader.show(supportFragmentManager, "LoaderDialogFragment")
         when (requestCode) {
             123//相册
             -> {
@@ -194,8 +181,9 @@ class HomeActivity : XinActivity() {
 //                var bitmap = BitmapFactory.decodeStream(cr.openInputStream(dataUri))
                 FuncApp().uploadAvatar(File(UriUtil().getPath(dataUri))) {
                     if (it) {
+
                         doUI {
-                            getProfileData()
+                            // getProfileData()
                             Toast.makeText(this, R.string.Home_changedAvatar, Toast.LENGTH_SHORT).show()
                             loader.dismiss()
                         }
@@ -207,8 +195,9 @@ class HomeActivity : XinActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onDestroy() {
+        super.onDestroy()
         EventBus.getDefault().unregister(this@HomeActivity)
     }
+
 }

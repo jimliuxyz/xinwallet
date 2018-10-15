@@ -6,11 +6,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
+import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_change_user_name.*
+import org.greenrobot.eventbus.EventBus
 
 class ChangeUserNameActivity : XinActivity() {
 
@@ -37,19 +40,19 @@ class ChangeUserNameActivity : XinActivity() {
 
     fun btnOnClick(view: View) {
         if (etName.text.trim().isNotEmpty()) {
-
             val loader = LoaderDialogFragment()
             loader.show(supportFragmentManager, "LoaderDialogFragment")
-
             Profile().updateProfile(etName.text.trim().toString()) { result ->
-                runOnUiThread {
-                    loader.dismiss()
-                    // var ok = true //todo : api didn't workn
-                    if (result!!) {
-                        showSoftInput(false, etName) // don't show soft input again
-                        overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-                        finish()
-                    } else {
+                if (result!!) {
+
+
+                    EventBus.getDefault().post(DataUpdateEvent(true, 1))
+                    showSoftInput(false, etName) // don't show soft input again
+                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
+                    finish()
+                } else {
+                    doUI {
+                        loader.dismiss()
                         SpringAnimator.failShakeAnimation(this, etName)
                     }
                 }
@@ -62,3 +65,5 @@ class ChangeUserNameActivity : XinActivity() {
         }
     }
 }
+
+

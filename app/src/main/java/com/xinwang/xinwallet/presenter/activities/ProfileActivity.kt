@@ -3,8 +3,12 @@ package com.xinwang.xinwallet.presenter.activities
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -26,9 +30,18 @@ import org.greenrobot.eventbus.ThreadMode
 import org.json.JSONObject
 import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
+import android.provider.MediaStore
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
+
 
 class ProfileActivity : XinActivity() {
 
+    val REQUEST_CODE_ALBUM = 3498
+    val REQUEST_CODE_CAMER = 8430
+
+    var photoFileName = "photo.jpg"
+    var photoFile = File("")
     val loader = LoaderDialogFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +49,23 @@ class ProfileActivity : XinActivity() {
         getProfileDate()
         //EventBus subscriber
         EventBus.getDefault().register(this@ProfileActivity)
+        tvPhoneNo.setOnClickListener {
+            startCamera()
+        }
+
+    }
+
+    private fun startCamera() {
+        val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+
+        if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1)
+        } else {
+            // photoFile = getPhotoFileUri(photoFileName)
+            //指定相机意图
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, REQUEST_CODE_CAMER)
+        }
 
     }
 
@@ -92,8 +122,7 @@ class ProfileActivity : XinActivity() {
         }
         loader.show(supportFragmentManager, "LoaderDialogFragment")
         when (requestCode) {
-            123//相册
-            -> {
+            123 -> {
                 val dataUri = data.data
 //                val cr = this.contentResolver
 //                var bitmap = BitmapFactory.decodeStream(cr.openInputStream(dataUri))
@@ -108,7 +137,11 @@ class ProfileActivity : XinActivity() {
                     }
 
                 }
-
+            }
+            REQUEST_CODE_CAMER -> {
+                val imageBitmap = data.extras.get("data") as Bitmap
+                println("imageBitmap__${imageBitmap.density}")
+                loader.dismiss()
             }
         }
     }
@@ -117,27 +150,8 @@ class ProfileActivity : XinActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: DataUpdateEvent) {
         when (event.type) {
-            1 -> test()
-
+            DataUpdateEvent.PROFILE -> getProfileDate()
         }
-    }
-
-
-    fun test() {
-        updateProfileFromServer {
-            if (it!!) {
-                doUI {
-                    getProfileDate()
-                }
-                val profileJson = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
-                println("testetstetstetets_$profileJson")
-            } else {
-                doUI {
-                    Toast.makeText(this, "data_failed", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
     }
 
     override fun onDestroy() {

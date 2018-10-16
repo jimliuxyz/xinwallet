@@ -161,10 +161,9 @@ class HomeActivity : XinActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: DataUpdateEvent) {
         when (event.type) {
-            1 -> profileViewSetting()
-            2 -> defaultCurySetting()
+            DataUpdateEvent.PROFILE -> profileViewSetting()
+            DataUpdateEvent.CURY_ORDER -> defaultCurySetting()
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

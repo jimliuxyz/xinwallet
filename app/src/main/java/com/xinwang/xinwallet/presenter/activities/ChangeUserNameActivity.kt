@@ -6,12 +6,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.animation.SpringAnimator
 import com.xinwang.xinwallet.tools.util.doUI
+import com.xinwang.xinwallet.tools.util.getPref
+import com.xinwang.xinwallet.tools.util.setPref
 import kotlinx.android.synthetic.main.activity_change_user_name.*
 import org.greenrobot.eventbus.EventBus
 
@@ -41,29 +44,31 @@ class ChangeUserNameActivity : XinActivity() {
     fun btnOnClick(view: View) {
         if (etName.text.trim().isNotEmpty()) {
             val loader = LoaderDialogFragment()
-            loader.show(supportFragmentManager, "LoaderDialogFragment")
+            // loader.show(supportFragmentManager, "LoaderDialogFragment")
             Profile().updateProfile(etName.text.trim().toString()) { result ->
                 if (result!!) {
-
-
-                    EventBus.getDefault().post(DataUpdateEvent(true, 1))
-                    showSoftInput(false, etName) // don't show soft input again
-                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-                    finish()
+                    doUI {
+                        // don't show soft input again
+                        showSoftInput(false, etName)
+                        finish()
+                    }
                 } else {
                     doUI {
-                        loader.dismiss()
+                        // loader.dismiss()
                         SpringAnimator.failShakeAnimation(this, etName)
                     }
                 }
             }
 
         } else {
+            //user invalid input
             SpringAnimator.failShakeAnimation(this, etName)
             Toast.makeText(this, getString(R.string.InvalidInput), Toast.LENGTH_LONG).show()
             return
         }
     }
+
+
 }
 
 

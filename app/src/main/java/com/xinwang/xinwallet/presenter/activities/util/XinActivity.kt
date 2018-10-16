@@ -26,7 +26,7 @@ import java.util.ArrayList
 
 
 open class XinActivity : AppCompatActivity() {
-    val TAG_XinActivity="XinActivity"
+    val TAG_XinActivity = "XinActivity"
 
     companion object {
         private var LOCKTIME = 20 * 1000
@@ -38,7 +38,6 @@ open class XinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
 
 
     override fun onResume() {
@@ -166,7 +165,7 @@ open class XinActivity : AppCompatActivity() {
 
     }
 
-    fun updateCuryOrderFromServer( callback: (result: Boolean?) -> Unit) {
+    fun updateCuryOrderFromServer(callback: (result: Boolean?) -> Unit) {
         Profile().getProfile { status: Boolean, it ->
             val jsonObject = JSONObject(it.toString())
             if (status && jsonObject.isNull("error")) {
@@ -186,11 +185,13 @@ open class XinActivity : AppCompatActivity() {
     fun updateProfileFromServer(callback: (result: Boolean?) -> Unit) {
         Profile().getProfile { status, result ->
             if (status) {
-                XinWalletApp.instance.applicationContext.setPref(R.string.PREF_MYPROFILE,result)
+                Log.i(TAG_XinActivity, "updatePrver_$result")
+                XinWalletApp.instance.applicationContext.setPref(R.string.PREF_MYPROFILE, result)
                 val profileData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
                 Log.i(TAG_XinActivity, "updateProfileFromServer_$profileData")
                 callback(true)
-            }else{
+
+            } else {
                 callback(false)
             }
         }

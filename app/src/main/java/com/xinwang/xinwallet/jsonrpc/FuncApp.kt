@@ -5,11 +5,13 @@ import com.google.gson.JsonObject
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.apiservice.XinWalletService
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.tools.util.doNetwork
 import com.xinwang.xinwallet.tools.util.doUI
 import com.xinwang.xinwallet.tools.util.setPref
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -62,6 +64,8 @@ class FuncApp {
     /*
     * 上傳大頭照
     * image:圖片檔
+    * P.S 完成此fun 即重新再更新SharedPreferences(PREF_MYPROFILE),
+    * 並post DataUpdateEvent(DataUpdateEvent.PROFILE)
     * */
     fun uploadAvatar(image: File, callback: (status: Boolean) -> Unit) {
         val requestBody = RequestBody.create(formData, image)
@@ -72,8 +76,20 @@ class FuncApp {
         val call = okHttpClient.newCall(request)
         getFuncAppResult(call) { status, res ->
             if (status) {
-                Log.i(TAG, "uploadAvatar_$res")
-                callback(true)
+                //取得遠端Profile資料並更新
+                Profile().getProfile { status, result ->
+                    if (status) {
+                        //update sharedPreferences
+                        XinWalletApp.instance.applicationContext.setPref(R.string.PREF_MYPROFILE, result.toString())
+                        //Publish event
+                        EventBus.getDefault().post(DataUpdateEvent(true, DataUpdateEvent.PROFILE))
+                        callback(true)
+                        Log.i(TAG, "uploadAvatar1_$res")
+                    } else {
+                        callback(false)
+                        Log.i(TAG, "uploadAvatar2_$result")
+                    }
+                }
             } else {
                 JSONRPC().showToast(res.toString())
             }

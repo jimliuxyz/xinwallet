@@ -30,6 +30,8 @@ class SettingActivity : XinActivity() {
         EventBus.getDefault().register(this@SettingActivity)
     }
 
+
+
     private fun getProfile() {
         val profileJson = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
         val orderList = getPREFCurrencyOrderList()
@@ -59,7 +61,6 @@ class SettingActivity : XinActivity() {
     }
 
     fun myProfileOnClick(view: View) {
-
         val intent = Intent(this@SettingActivity, ProfileActivity::class.java)
         startActivity(intent)
     }
@@ -73,7 +74,7 @@ class SettingActivity : XinActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: DataUpdateEvent) {
         when (event.type) {
-            1 -> getProfile()
+            DataUpdateEvent.PROFILE -> getProfile()
         }
     }
 

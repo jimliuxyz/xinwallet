@@ -43,7 +43,7 @@ class SettingActivity : XinActivity() {
         tvProfileName.text = res.getString("name")
         if (res.getString("avatar").trim().isNotEmpty()) {
             Glide.with(this).load(res.getString("avatar"))
-                    .apply(RequestOptions().centerCrop().circleCrop()).into(imageView)
+                    .apply(RequestOptions().centerCrop().circleCrop()).into(imageView007)
         }
         tvLanguage.text = Locale.getDefault().displayLanguage
     }

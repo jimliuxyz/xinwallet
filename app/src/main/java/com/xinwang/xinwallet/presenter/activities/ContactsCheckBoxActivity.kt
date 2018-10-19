@@ -14,6 +14,7 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.adapter.ContactsCheckBoxAdapter
 import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
+import com.xinwang.xinwallet.models.adapter.IOnBtnClickListen
 import com.xinwang.xinwallet.models.adapter.OnItemCheckBoxListen
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
@@ -76,13 +77,11 @@ class ContactsCheckBoxActivity : XinActivity() {
             setResult(10, intent)
             finish()
         }
-
     }
 
     private fun itemChanged(isChecked: Boolean, position: Int) {
 
         selectedRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
         if (isChecked) {
             selectedContactsList!!.add(totalContactsList[position])
         } else {
@@ -91,7 +90,12 @@ class ContactsCheckBoxActivity : XinActivity() {
             }[0]
             selectedContactsList.remove(obj)
         }
-        selectedRecyclerView.adapter = ContactsHorizontalAdapter(selectedContactsList as ArrayList<Contacts>, this)
 
+        var selectedAdapter=ContactsHorizontalAdapter(selectedContactsList as ArrayList<Contacts>, this,true)
+        selectedAdapter.setOnBtnClickListen(object : IOnBtnClickListen {
+            override fun onClickListen(position: Int) {
+            }
+        })
+        selectedRecyclerView.adapter = selectedAdapter
     }
 }

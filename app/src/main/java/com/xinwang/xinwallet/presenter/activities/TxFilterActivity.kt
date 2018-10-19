@@ -13,6 +13,7 @@ import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.models.Contacts
 import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
+import com.xinwang.xinwallet.models.adapter.IOnBtnClickListen
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.DatePickerActivity
 import kotlinx.android.synthetic.main.activity_date_picker.*
@@ -22,10 +23,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class TxFilterActivity :XinActivity() {
+class TxFilterActivity : XinActivity() {
 
     private var customDate1: Long = 0
     private var customDate2: Long = 0
+    private val RESULTCODE_CUSTOMDATE = 23
+    private val RESULTCODE_SELECTEDTARGET = 45
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tx_filter)
@@ -41,13 +45,13 @@ class TxFilterActivity :XinActivity() {
     private fun recycleViewSetting() {
         recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         val data: ArrayList<Contacts> = ArrayList()
-        recyclerView1.adapter = ContactsHorizontalAdapter(data, this)
+        recyclerView1.adapter = ContactsHorizontalAdapter(data, this, false)
 
     }
 
     fun addTxTargetOnClick(view: View) {
         val intent = Intent(this, ContactsCheckBoxActivity::class.java)
-        startActivityForResult(intent, 1)
+        startActivityForResult(intent, RESULTCODE_SELECTEDTARGET)
     }
 
     private fun settingTitleBar() {
@@ -78,7 +82,6 @@ class TxFilterActivity :XinActivity() {
                     + currencyView.getTag().toString(),
                     Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
-
         }
     }
 
@@ -122,18 +125,18 @@ class TxFilterActivity :XinActivity() {
 
     fun customDateOnClick(view: View) {
         val intent = Intent(this@TxFilterActivity, DatePickerActivity::class.java)
-        if(customDate1>0){
-            intent.putExtra("customDate1",customDate1)
-            intent.putExtra("customDate2",customDate2)
+        if (customDate1 > 0) {
+            intent.putExtra("customDate1", customDate1)
+            intent.putExtra("customDate2", customDate2)
         }
-        startActivityForResult(intent, 2)
+        startActivityForResult(intent, RESULTCODE_CUSTOMDATE)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        when (resultCode) {
-            20 -> {
+        when (requestCode) {
+            RESULTCODE_CUSTOMDATE -> {
                 customDate1 = data!!.getStringExtra("date1").toLong()
                 customDate2 = data!!.getStringExtra("date2").toLong()
                 val sdf = SimpleDateFormat("MMM,dd")
@@ -141,19 +144,25 @@ class TxFilterActivity :XinActivity() {
                 val date2 = Date(customDate2)
                 customDate.text = sdf.format(date1) + "-" + sdf.format(date2)
             }
-        }
-
-        if (resultCode == 10) {
-            val getData = data!!.getStringExtra("selectedTarget")
-            val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type
-            val selectedContacts = Gson().fromJson<java.util.ArrayList<Contacts>>(getData, type)
-            if (selectedContacts.size > 0) {
-                recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                recyclerView1.adapter = ContactsHorizontalAdapter(selectedContacts, this)
-                textViewWho.text = ""
-            } else {
-                textViewWho.text = getString(R.string.TxSort_All)
+            RESULTCODE_SELECTEDTARGET -> {
+                val getData = data!!.getStringExtra("selectedTarget")
+                val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type
+                val selectedContacts = Gson().fromJson<java.util.ArrayList<Contacts>>(getData, type)
+                if (selectedContacts.size > 0) {
+                    recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                     var horizontalAdapter=ContactsHorizontalAdapter(selectedContacts, this, false)
+                    horizontalAdapter.setOnBtnClickListen(object :IOnBtnClickListen{
+                        override fun onClickListen(position: Int) {
+                        }
+                    })
+                    recyclerView1.adapter = horizontalAdapter
+                    textViewWho.text = ""
+                } else {
+                    textViewWho.text = getString(R.string.TxSort_All)
+                }
             }
         }
+
+
     }
 }

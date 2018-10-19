@@ -1,6 +1,5 @@
 package com.xinwang.xinwallet.presenter.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import com.google.gson.Gson

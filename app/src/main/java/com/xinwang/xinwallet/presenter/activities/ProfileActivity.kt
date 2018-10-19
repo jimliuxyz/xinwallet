@@ -5,9 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.StrictMode
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -33,15 +36,13 @@ import java.io.File
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-
+import com.davemorrissey.labs.subscaleview.ImageSource
 
 class ProfileActivity : XinActivity() {
 
     val REQUEST_CODE_ALBUM = 3498
     val REQUEST_CODE_CAMER = 8430
 
-    var photoFileName = "photo.jpg"
-    var photoFile = File("")
     val loader = LoaderDialogFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,19 +53,37 @@ class ProfileActivity : XinActivity() {
         tvPhoneNo.setOnClickListener {
             startCamera()
         }
-
+        println("file path=>${cacheDir}")
     }
 
     private fun startCamera() {
-        val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
 
+//
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            takePictureIntent.resolveActivity(packageManager)?.also {
+//                var photoUrl: Uri = Uri.fromFile(File(Environment.getExternalStorageDirectory().path + "/camera_picture.jpg"))
+//                var builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
+//                StrictMode.setVmPolicy(builder.build())
+//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUrl)
+//                startActivityForResult(takePictureIntent, REQUEST_CODE_CAMER)
+//            }
+
+        val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 1)
         } else {
-            // photoFile = getPhotoFileUri(photoFileName)
-            //指定相机意图
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(intent, REQUEST_CODE_CAMER)
+                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                takePictureIntent.resolveActivity(packageManager)?.also {
+                    var photoUrl: Uri = Uri.fromFile(File(Environment.getExternalStorageDirectory().path+"/camera_picture.jpg"))
+                    var builder: StrictMode.VmPolicy.Builder = StrictMode.VmPolicy.Builder()
+                    StrictMode.setVmPolicy(builder.build())
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUrl)
+                    startActivityForResult(takePictureIntent, REQUEST_CODE_CAMER)
+                }
+            }
+//            //指定相机意图
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            startActivityForResult(intent, REQUEST_CODE_CAMER)
         }
 
     }
@@ -72,16 +91,17 @@ class ProfileActivity : XinActivity() {
     private fun getProfileDate() {
         val profileJson = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_MYPROFILE, "")
 
-        var res = JSONObject(profileJson)
-        tvProfileName.text = res.getString("name")
-        if (res.getString("avatar").trim().isNotEmpty()) {
-            Glide.with(this).load(res.getString("avatar"))
-                    .apply(RequestOptions().centerCrop().circleCrop()).into(imgAvatar)
+        if (!profileJson.equals("")) {
+            var res = JSONObject(profileJson)
+            tvProfileName.text = res.getString("name")
+            if (res.getString("avatar").trim().isNotEmpty()) {
+                Glide.with(this).load(res.getString("avatar"))
+                        .apply(RequestOptions().centerCrop().circleCrop()).into(imgAvatar)
+            }
+            tvPhoneNo.text = res.getString("phoneno")
+            tvID.text = res.getString("userId")
+            titleSetting(res.getString("name"))
         }
-        tvPhoneNo.text = res.getString("phoneno")
-        tvID.text = res.getString("userId")
-        titleSetting(res.getString("name"))
-
     }
 
     private fun titleSetting(name: String) {
@@ -115,15 +135,15 @@ class ProfileActivity : XinActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode != Activity.RESULT_OK) {
             return
         }
-        loader.show(supportFragmentManager, "LoaderDialogFragment")
+        // loader.show(supportFragmentManager, "LoaderDialogFragment")
         when (requestCode) {
             123 -> {
-                val dataUri = data.data
+                val dataUri = data!!.data
 //                val cr = this.contentResolver
 //                var bitmap = BitmapFactory.decodeStream(cr.openInputStream(dataUri))
                 FuncApp().uploadAvatar(File(UriUtil().getPath(dataUri))) {
@@ -132,16 +152,16 @@ class ProfileActivity : XinActivity() {
                         doUI {
                             // getProfileData()
                             Toast.makeText(this, R.string.Home_changedAvatar, Toast.LENGTH_SHORT).show()
-                            loader.dismiss()
+                            // loader.dismiss()
                         }
                     }
 
                 }
             }
             REQUEST_CODE_CAMER -> {
-                val imageBitmap = data.extras.get("data") as Bitmap
-                println("imageBitmap__${imageBitmap.density}")
-                loader.dismiss()
+                val uri=Environment.getExternalStorageDirectory().path + "/camera_picture.jpg"
+                imageView007.setImage(ImageSource.uri(uri))
+//                // loader.dismiss()
             }
         }
     }

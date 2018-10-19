@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xinwang.xinwallet">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -55,11 +56,10 @@
             android:name=".presenter.activities.HomeActivity"
             android:label="@string/Home.title"
             android:screenOrientation="portrait">
-
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".presenter.activities.login.SetUsernameActivity"
@@ -87,8 +87,12 @@
         <activity
             android:name=".presenter.activities.CurrencyHomePage"
             android:screenOrientation="portrait" />
-        <activity android:name=".presenter.activities.HistoricalTxActivity" />
-        <activity android:name=".presenter.activities.TxFilterActivity">
+        <activity
+            android:name=".presenter.activities.HistoricalTxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presenter.activities.TxFilterActivity"
+            android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -103,28 +107,34 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".tools.util.DatePickerActivity">
+        <activity
+            android:name=".tools.util.DatePickerActivity"
+            android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.SettingActivity">
+        <activity
+            android:name=".presenter.activities.SettingActivity"
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".presenter.activities.ProfileActivity"
+            android:screenOrientation="portrait">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".presenter.activities.ProfileActivity" >
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-
-
-        <activity android:name=".presenter.activities.ChangeUserNameActivity"></activity>
+        <activity
+            android:name=".presenter.activities.ChangeUserNameActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

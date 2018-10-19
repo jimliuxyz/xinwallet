@@ -23,6 +23,7 @@ import com.xinwang.xinwallet.tools.util.getPref
 import com.xinwang.xinwallet.tools.util.setPref
 import org.json.JSONObject
 import java.util.ArrayList
+import android.net.ConnectivityManager
 
 
 open class XinActivity : AppCompatActivity() {
@@ -37,8 +38,12 @@ open class XinActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //確認是否有網路
+        if (!isNetworkConnect()) {
+            Toast.makeText(this, "沒網路", Toast.LENGTH_LONG).show()
+            exitApp() //關閉ＡＰＰ
+        }
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -87,7 +92,6 @@ open class XinActivity : AppCompatActivity() {
             pauseTime = System.currentTimeMillis()
         }
     }
-
 
     private var backPressTime = 0L
     /*
@@ -195,6 +199,22 @@ open class XinActivity : AppCompatActivity() {
                 callback(false)
             }
         }
+    }
+
+    fun isNetworkConnect(): Boolean {
+        //先取得此CONNECTIVITY_SERVICE
+        val connManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        //取得網路相關資訊
+        val networkInfo = connManager.activeNetworkInfo
+        //判斷是否有網路
+        if (networkInfo == null || !networkInfo.isConnected) {
+            Log.i("INFO", "沒網路")
+            return false
+        } else {
+            Log.i("INFO", "有網路")
+            return true
+        }
+
     }
 
 }

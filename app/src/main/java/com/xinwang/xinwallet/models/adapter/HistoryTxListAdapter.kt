@@ -25,10 +25,10 @@ import java.text.SimpleDateFormat
 
 class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: Context)
     : RecyclerView.Adapter<HistoryTxListAdapter.ViewHolder>() {
-    var listener:OnitemClickListener? = null
+    var listener: OnitemClickListener? = null
 
-    fun setOnItemClickLisrten(onListener: OnitemClickListener){
-        listener=onListener
+    fun setOnItemClickLisrten(onListener: OnitemClickListener) {
+        listener = onListener
     }
 
     private var mItems = ArrayList<TransactionRecord>()
@@ -40,7 +40,7 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.listitem_history_deal, parent, false)
-        return ViewHolder(view,listener!!)
+        return ViewHolder(view, listener!!)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -83,18 +83,19 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
         return mItems.size
     }
 
-    class ViewHolder internal constructor(itemView: View,onitemClickListener: OnitemClickListener) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder internal constructor(itemView: View, onitemClickListener: OnitemClickListener) : RecyclerView.ViewHolder(itemView) {
         internal val txtAmount: TextView = itemView.findViewById(R.id.txt_Amount)
         internal val txtTitle: TextView = itemView.findViewById(R.id.txt_title)
         internal val imgAvatar: ImageView = itemView.findViewById(R.id.img_Avatar)
         internal val txtDate: TextView = itemView.findViewById(R.id.txt_date)
+
         init {
-            itemView.setOnClickListener(object :View.OnClickListener {
+            itemView.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View?) {
-                    if (onitemClickListener!=null){
-                        var poistion:Int=adapterPosition
-                        if (poistion!=RecyclerView.NO_POSITION){
-                            onitemClickListener.onItemClick(poistion,view!!)
+                    if (onitemClickListener != null) {
+                        var poistion: Int = adapterPosition
+                        if (poistion != RecyclerView.NO_POSITION) {
+                            onitemClickListener.onItemClick(poistion, view!!)
                         }
                     }
                 }
@@ -104,7 +105,7 @@ class HistoryTxListAdapter(val data: ArrayList<TransactionRecord>, val context: 
     }
 
     interface OnitemClickListener {
-        fun onItemClick(poistion: Int,ItemView:View)
+        fun onItemClick(poistion: Int, ItemView: View)
     }
 }
 

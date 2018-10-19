@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +19,7 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
 
     private var mItems = ArrayList<Contacts>()
     private var onItemCheckBoxListen: OnItemCheckBoxListen? =null
+
     fun setonItemCheckBoxListen(listen: OnItemCheckBoxListen){
         this.onItemCheckBoxListen=listen
     }
@@ -35,7 +35,6 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         holder.textName.text = mItems[position].name
         Glide.with(context).load(mItems[position].avatar).apply(RequestOptions().centerCrop().circleCrop()).into(holder.imageAvatar)
     }
@@ -44,14 +43,13 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
         return mItems.size
     }
 
-
     class ViewHolder internal constructor(itemView: View,onItemCheckBoxListen: OnItemCheckBoxListen) : RecyclerView.ViewHolder(itemView) {
-        internal val imageAvatar: ImageView = itemView.findViewById(R.id.imageView)
+        internal val imageAvatar: ImageView = itemView.findViewById(R.id.imageView007)
         internal val textName: TextView = itemView.findViewById(R.id.textViewName)
-        internal val check_Box: CheckBox = itemView.findViewById(R.id.checkBox)
+        internal val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
 
         init {
-            check_Box.setOnCheckedChangeListener { compoundButton, isChecked ->
+            checkBox.setOnCheckedChangeListener { compoundButton, isChecked ->
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                    onItemCheckBoxListen.onCheckboxChanged(isChecked,adapterPosition)
                 }
@@ -60,8 +58,6 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
     }
 }
 
-
 interface OnItemCheckBoxListen {
     fun onCheckboxChanged(isChecked:Boolean,position: Int)
-
 }

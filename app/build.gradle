@@ -41,7 +41,6 @@ dependencies {
     //retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-
     //okhttp3
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
@@ -56,6 +55,8 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     //timesSquare
     implementation 'com.squareup:android-times-square:1.6.5@aar'
+    //Subsampling Scale Image View
+    implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
 
 }

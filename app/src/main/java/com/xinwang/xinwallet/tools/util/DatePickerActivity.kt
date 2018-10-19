@@ -1,36 +1,32 @@
 package com.xinwang.xinwallet.tools.util
 
 import android.content.Intent
-import android.media.session.PlaybackState
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import com.google.gson.Gson
 import com.squareup.timessquare.CalendarPickerView
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import kotlinx.android.synthetic.main.activity_date_picker.*
 import java.text.DateFormat
 import java.util.*
 
 
-class DatePickerActivity : AppCompatActivity() {
+class DatePickerActivity : XinActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_date_picker)
         titleSetting()
-        val customDate1=intent.getLongExtra("customDate1",0)
-        val today = Calendar.getInstance()
-        today.add(Calendar.DATE, -1)
+        val maxDate = Calendar.getInstance()
+        val selectDay = Calendar.getInstance()
+        maxDate.add(Calendar.DATE, +1)
+        selectDay.add(Calendar.DATE, 0)
         val lastYear = Calendar.getInstance()
         lastYear.add(Calendar.YEAR, -1)
-        datePicker.init(lastYear.time, Date())
+        datePicker.init(lastYear.time, maxDate.time)
                 .inMode(CalendarPickerView.SelectionMode.RANGE)
-                .withSelectedDate(today.time)
-
-
-
+                .withSelectedDate(selectDay.time)
         datePicker.setOnDateSelectedListener(object : CalendarPickerView.OnDateSelectedListener {
             override fun onDateSelected(date: Date) {
                 val dates = datePicker.selectedDates

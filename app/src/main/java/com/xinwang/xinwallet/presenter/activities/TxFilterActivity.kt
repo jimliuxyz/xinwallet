@@ -162,7 +162,5 @@ class TxFilterActivity : XinActivity() {
                 }
             }
         }
-
-
     }
 }

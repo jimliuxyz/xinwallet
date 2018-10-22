@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -90,12 +91,27 @@ class ContactsCheckBoxActivity : XinActivity() {
             }[0]
             selectedContactsList.remove(obj)
         }
-
-        var selectedAdapter=ContactsHorizontalAdapter(selectedContactsList as ArrayList<Contacts>, this,true)
+        var selectedAdapter = ContactsHorizontalAdapter(selectedContactsList as ArrayList<Contacts>, this, true)
         selectedAdapter.setOnBtnClickListen(object : IOnBtnClickListen {
             override fun onClickListen(position: Int) {
+                uncheckBox(position)
             }
         })
         selectedRecyclerView.adapter = selectedAdapter
+    }
+
+    /* uncheckBox
+    ＊刪除已選聯絡人
+    * selectedPosition:selectedRecyclerView中的位置
+    *
+    * */
+    private fun uncheckBox(selectedPosition: Int) {
+        val obj: Contacts = totalContactsList.filter {
+            it.userId == selectedContactsList[selectedPosition].userId
+        }[0]
+        val checkBoxIndex = totalContactsList.indexOf(obj)
+        val view = recyclerView.getChildAt(checkBoxIndex)
+        val checkBox: CheckBox = view.findViewById(R.id.checkBox)
+        checkBox.isChecked = false
     }
 }

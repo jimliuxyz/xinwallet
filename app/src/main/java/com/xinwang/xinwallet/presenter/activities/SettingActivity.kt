@@ -26,10 +26,14 @@ class SettingActivity : XinActivity() {
         setContentView(R.layout.activity_setting)
         titleSetting()
         getProfile()
+        listViewSetting()
         //EventBus subscriber
         EventBus.getDefault().register(this@SettingActivity)
     }
 
+    private fun listViewSetting() {
+
+    }
 
 
     private fun getProfile() {
@@ -65,9 +69,9 @@ class SettingActivity : XinActivity() {
         startActivity(intent)
     }
 
-    fun changePinCodeOnClick(view:View){
-        val intent=Intent(this,SetPinCode1Activity::class.java)
-        intent.putExtra("NotInitialSetting",true)
+    fun changePinCodeOnClick(view: View) {
+        val intent = Intent(this, SetPinCode1Activity::class.java)
+        intent.putExtra("NotInitialSetting", true)
         startActivity(intent)
     }
 

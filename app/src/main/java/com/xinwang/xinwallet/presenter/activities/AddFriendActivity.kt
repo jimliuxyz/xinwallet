@@ -33,7 +33,6 @@ class AddFriendActivity : AppCompatActivity() {
                 } else {
                     resultView.visibility = View.GONE
                 }
-
             }
         } else {
             resultView.visibility = View.GONE

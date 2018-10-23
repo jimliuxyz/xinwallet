@@ -1,4 +1,4 @@
-package com.xinwang.xinwallet.models
+package com.xinwang.xinwallet.models.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.models.Contacts
 import kotlinx.android.synthetic.main.contacts_item.view.*
 import java.util.ArrayList
 
-class ContactsBaseAdapter(context: Context, contactsList: ArrayList<Contacts>?) : BaseAdapter() {
+class ContactsAdapter111(context: Context, contactsList: ArrayList<Contacts>?) : BaseAdapter() {
 
     private var context: Context? = null
     private var layoutInflater: LayoutInflater? = null

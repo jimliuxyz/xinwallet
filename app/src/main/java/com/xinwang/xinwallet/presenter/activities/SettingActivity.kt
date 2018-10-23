@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
@@ -26,13 +27,16 @@ class SettingActivity : XinActivity() {
         setContentView(R.layout.activity_setting)
         titleSetting()
         getProfile()
-        listViewSetting()
+        onClickListenSetting()
         //EventBus subscriber
         EventBus.getDefault().register(this@SettingActivity)
     }
 
-    private fun listViewSetting() {
-
+    private fun onClickListenSetting() {
+        block1.setOnClickListener {
+            val intent=Intent(this@SettingActivity,ContactsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 

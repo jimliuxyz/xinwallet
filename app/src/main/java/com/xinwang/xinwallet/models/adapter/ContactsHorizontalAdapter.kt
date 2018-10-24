@@ -2,13 +2,11 @@ package com.xinwang.xinwallet.models.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
-import android.transition.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
@@ -29,7 +27,7 @@ class ContactsHorizontalAdapter(val data: ArrayList<Contacts>, val context: Cont
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.listitem_constacts_horizontal, parent, false)
+        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.listitem_contacts_horizontal, parent, false)
         return ViewHolder(view,onBtnClickListen!!)
     }
 

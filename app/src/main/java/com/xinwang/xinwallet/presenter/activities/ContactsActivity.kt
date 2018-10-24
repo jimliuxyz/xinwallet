@@ -1,21 +1,25 @@
 package com.xinwang.xinwallet.presenter.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.jsonrpc.Contacts
-import com.xinwang.xinwallet.models.adapter.ContactsListAdapter
+import com.xinwang.xinwallet.models.adapter.ContactsCheckBoxAdapter
+import com.xinwang.xinwallet.models.adapter.OnItemCheckBoxListen
+import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_contacts.*
 
 
-class ContactsActivity : AppCompatActivity() {
+class ContactsActivity : XinActivity() {
     val TAG = "ContactsActivity"
     val loader = LoaderDialogFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,9 +34,17 @@ class ContactsActivity : AppCompatActivity() {
         val titleBarText = include_Contacts.findViewById(R.id.title_name) as TextView
         val rightText = include_Contacts.findViewById(R.id.titleBarRightText) as TextView
 
-        backText.text=getText(R.string.Cancel)
-        titleBarText.text=getText(R.string.Contacts)
-        //rightText.d
+        backText.text = getText(R.string.Cancel)
+        backText.setOnClickListener {
+            finish()
+        }
+        titleBarText.text = getText(R.string.Contacts)
+        rightText.text = "+"
+        rightText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 45f)
+        rightText.setTextColor(Color.BLUE)
+        rightText.setOnClickListener {
+            addFriendBtn()
+        }
     }
 
     fun getContactsList() {
@@ -41,9 +53,19 @@ class ContactsActivity : AppCompatActivity() {
             loader.dismiss()
             if (status) {
                 try {
-                    var adapter = ContactsListAdapter(this,it!!)
+                    var adapter = ContactsCheckBoxAdapter(it!!, this, false)
+                    adapter.setOnItemCheckBoxListen(object : OnItemCheckBoxListen {
+                        override fun onCheckboxChanged(isChecked: Boolean, position: Int) {
+                        }
+                    })
                     doUI {
-                        recyclerViewContactsList.adapter =adapter
+                        if (it!!.size > 0) {
+                            imgEmpty.visibility = View.GONE
+                        } else {
+                            imgEmpty.visibility = View.VISIBLE
+                        }
+                        recyclerViewContactsList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+                        recyclerViewContactsList.adapter = adapter
                     }
                 } catch (e: Exception) {
                     Log.i(TAG, "getContactsList1_$e")
@@ -54,10 +76,12 @@ class ContactsActivity : AppCompatActivity() {
         }
     }
 
-    fun addFriendBtn(view: View) {
+    fun addFriendBtn() {
         var intent = Intent(this@ContactsActivity, AddFriendActivity::class.java)
         startActivity(intent)
     }
+
+
 
 }
 

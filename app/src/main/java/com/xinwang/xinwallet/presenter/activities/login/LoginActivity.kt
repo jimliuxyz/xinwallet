@@ -93,38 +93,6 @@ class LoginActivity : XinActivity() {
         return curPhoneNo
     }
 
-    // deprecated
-    fun loginClicked1(view: View) {
-
-        val loader = LoaderDialogFragment()
-        loader.show(supportFragmentManager, "LoaderDialogFragment")
-
-        val phoneNo = "${curPhoneNo!!.countryCode}${curPhoneNo!!.nationalNumber}"
-        XinWalletService.instance.requestSMSVerify(phoneNo) { status, errmsg ->
-            runOnUiThread {
-                loader.dismiss()
-
-                val ok = !status.isNullOrBlank() && status.equals("200")
-
-                if (ok) {
-                    showSoftInput(false, etPhoneNumber) // don't show soft input again, to avoid odd layout on next activity
-
-                    val intent = Intent(this, SmsVerifyActivity::class.java)
-                    intent.putExtra("countrycode", curPhoneNo!!.countryCode.toString())
-                    intent.putExtra("phonenumber", curPhoneNo!!.nationalNumber.toString())
-
-                    startActivity(intent)
-                    overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
-                } else {
-                    //todo: server may failed, show a message
-                    if (!errmsg.isNullOrBlank()) {
-                        SpringAnimator.failShakeAnimation(this, etPhoneNumber)
-                        Toast.makeText(this, errmsg, Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
-    }
 
     fun loginClicked(view: View) {
 

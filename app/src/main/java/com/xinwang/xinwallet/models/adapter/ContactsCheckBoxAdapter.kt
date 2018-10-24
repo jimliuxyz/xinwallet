@@ -13,7 +13,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.models.Contacts
 
-class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Context) :
+class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Context,val showCheckBox:Boolean) :
         RecyclerView.Adapter<ContactsCheckBoxAdapter.ViewHolder>() {
 
 
@@ -30,11 +30,15 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem_constacts_checkbox, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem_contacts_checkbox, parent, false)
         return ViewHolder(view, onItemCheckBoxListen!!)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+       //不顯示checkBox
+        if (!showCheckBox){
+            holder.checkBox.visibility=View.GONE
+        }
         holder.textName.text = mItems[position].name
         Glide.with(context).load(mItems[position].avatar).apply(RequestOptions().centerCrop().circleCrop()).into(holder.imageAvatar)
     }

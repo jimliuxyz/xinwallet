@@ -41,7 +41,7 @@ class ContactsCheckBoxActivity : XinActivity() {
             if (status) {
                 try {
                     totalContactsList = it!!
-                    val ad = ContactsCheckBoxAdapter(it!!, this)
+                    val ad = ContactsCheckBoxAdapter(it!!, this,true)
                     ad.setOnItemCheckBoxListen(object : OnItemCheckBoxListen {
                         override fun onCheckboxChanged(ischecked: Boolean, postion: Int) {
                             itemChanged(ischecked, postion)

@@ -80,7 +80,8 @@
 
         <activity
             android:name=".presenter.activities.AddFriendActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".presenter.activities.CurrencySettingActivity"
             android:screenOrientation="portrait" />
@@ -99,8 +100,10 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".presenter.activities.ContactsCheckBoxActivity" />
-        <activity android:name=".presenter.activities.TxDetailActivity">
+        <activity android:name=".presenter.activities.ContactsCheckBoxActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".presenter.activities.TxDetailActivity"
+            android:screenOrientation="portrait">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->

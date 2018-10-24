@@ -6,21 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".presenter.activities.AddFriendActivity">
 
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryCodePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        app:ccpDialog_keyboardAutoPopup="true"
+        app:ccpDialog_showCloseIcon="true"
+        app:ccp_autoDetectCountry="true"
+        app:ccp_autoDetectLanguage="true"
+        app:ccp_countryAutoDetectionPref="SIM_NETWORK_LOCALE"
+        app:ccp_countryPreference="cn,us,tw"
+        app:ccp_textSize="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/includeAddFriend">
+
+
+    </com.hbb20.CountryCodePicker>
+
+
     <EditText
         android:id="@+id/number"
         android:layout_width="259dp"
         android:layout_height="56dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/Login.PhoneNumber"
         android:inputType="numberDecimal"
         android:text="886978768913"
         android:textSize="25sp"
         app:layout_constraintEnd_toStartOf="@+id/search_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintStart_toStartOf="@+id/countryCodePicker"
+        app:layout_constraintTop_toBottomOf="@+id/countryCodePicker"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/search_btn"
@@ -32,31 +53,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/number" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Add Friend"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="35sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/resultView"
         android:layout_width="354dp"
         android:layout_height="305dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/number">
 
@@ -91,4 +98,13 @@
             android:textSize="15sp" />
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/includeAddFriend"
+        layout="@layout/title_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

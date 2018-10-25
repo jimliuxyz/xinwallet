@@ -92,5 +92,9 @@
     <string name="Profile.Phone">手机号码</string>
     <string name="Cancel">取消</string>
     <string name="InvalidInput">輸入錯誤</string>
+    <string name="AddContacts">新增联络人</string>
+    <string name="Contact.AddFavorite">加入常用联络人</string>
+    <string name="Contact.Delete">删除联络人</string>
+
 
 </resources>

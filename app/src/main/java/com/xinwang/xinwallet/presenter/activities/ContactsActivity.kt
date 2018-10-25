@@ -10,13 +10,18 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.Contacts
 import com.xinwang.xinwallet.models.adapter.ContactsCheckBoxAdapter
 import com.xinwang.xinwallet.models.adapter.OnItemCheckBoxListen
+import com.xinwang.xinwallet.models.adapter.OnItemClickListen
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_contacts.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 class ContactsActivity : XinActivity() {
@@ -25,8 +30,11 @@ class ContactsActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
+        loader.show(supportFragmentManager, "LoaderDialogFragment")
         titleSetting()
         getContactsList()
+        //EventBus subscriber
+        EventBus.getDefault().register(this@ContactsActivity)
     }
 
     private fun titleSetting() {
@@ -48,15 +56,28 @@ class ContactsActivity : XinActivity() {
     }
 
     fun getContactsList() {
-        loader.show(supportFragmentManager, "LoaderDialogFragment")
         Contacts().getContactsList { status, it ->
-            loader.dismiss()
+            doUI {
+                loader.dismiss()
+            }
             if (status) {
                 try {
                     var adapter = ContactsCheckBoxAdapter(it!!, this, false)
                     adapter.setOnItemCheckBoxListen(object : OnItemCheckBoxListen {
                         override fun onCheckboxChanged(isChecked: Boolean, position: Int) {
                         }
+                    })
+                    adapter.setOnItemClickListen(object : OnItemClickListen {
+                        override fun onItemClick(position: Int) {
+                            val intent=Intent(this@ContactsActivity,ContactDetailActivity::class.java)
+                            intent.putExtra("avatar",it[position].avatar)
+                            intent.putExtra("userId",it[position].userId)
+                            intent.putExtra("name",it[position].name)
+                            intent.putExtra("phone",it[position].phoneno)
+                            Toast.makeText(this@ContactsActivity, it[position].userId, Toast.LENGTH_SHORT).show()
+                            startActivity(intent)
+                        }
+
                     })
                     doUI {
                         if (it!!.size > 0) {
@@ -72,7 +93,6 @@ class ContactsActivity : XinActivity() {
                     doUI { Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show() }
                 }
             }
-
         }
     }
 
@@ -81,7 +101,17 @@ class ContactsActivity : XinActivity() {
         startActivity(intent)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: DataUpdateEvent) {
+        when (event.type) {
+            DataUpdateEvent.FRIENDS_LIST -> getContactsList()
+        }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this@ContactsActivity)
+    }
 
 }
 

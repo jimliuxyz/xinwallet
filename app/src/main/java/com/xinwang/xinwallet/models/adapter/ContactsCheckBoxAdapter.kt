@@ -19,9 +19,13 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
 
     private var mItems = ArrayList<Contacts>()
     private var onItemCheckBoxListen: OnItemCheckBoxListen? = null
+    private var onItemClickListen:OnItemClickListen?=null
 
     fun setOnItemCheckBoxListen(listen: OnItemCheckBoxListen) {
         this.onItemCheckBoxListen = listen
+    }
+    fun setOnItemClickListen(listen:OnItemClickListen){
+        this.onItemClickListen=listen
     }
 
     init {
@@ -31,7 +35,7 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem_contacts_checkbox, parent, false)
-        return ViewHolder(view, onItemCheckBoxListen!!)
+        return ViewHolder(view, onItemCheckBoxListen!!,onItemClickListen!!)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -47,10 +51,13 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
         return mItems.size
     }
 
-    class ViewHolder internal constructor(itemView: View, onItemCheckBoxListen: OnItemCheckBoxListen) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder internal constructor(itemView: View, onItemCheckBoxListen: OnItemCheckBoxListen,
+                                          onItemClickListen: OnItemClickListen)
+        : RecyclerView.ViewHolder(itemView) {
         internal val imageAvatar: ImageView = itemView.findViewById(R.id.imageView007)
         internal val textName: TextView = itemView.findViewById(R.id.textViewName)
         internal val checkBox: CheckBox = itemView.findViewById(R.id.checkBox)
+
 
         init {
             checkBox.setOnCheckedChangeListener { compoundButton, isChecked ->
@@ -58,10 +65,21 @@ class ContactsCheckBoxAdapter(val data: ArrayList<Contacts>, val context: Contex
                     onItemCheckBoxListen.onCheckboxChanged(isChecked, adapterPosition)
                 }
             }
+
+            itemView.setOnClickListener {
+                if (adapterPosition!=RecyclerView.NO_POSITION){
+                    onItemClickListen.onItemClick(adapterPosition)
+                }
+            }
+
         }
     }
 }
 
 interface OnItemCheckBoxListen {
     fun onCheckboxChanged(isChecked: Boolean, position: Int)
+}
+
+interface OnItemClickListen{
+    fun onItemClick(position: Int)
 }

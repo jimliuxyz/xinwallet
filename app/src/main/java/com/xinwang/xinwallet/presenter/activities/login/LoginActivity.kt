@@ -93,7 +93,6 @@ class LoginActivity : XinActivity() {
         return curPhoneNo
     }
 
-
     fun loginClicked(view: View) {
 
         val loader = LoaderDialogFragment()

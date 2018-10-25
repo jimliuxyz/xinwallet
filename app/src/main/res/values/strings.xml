@@ -95,6 +95,9 @@
     <string name="Profile.ID" translatable="false">UWallet ID</string>
     <string name="Cancel">Cancel</string>
     <string name="InvalidInput">Invalid input</string>
+    <string name="AddContacts">Add Contacts</string>
+    <string name="Contact.AddFavorite">Add my favorite</string>
+    <string name="Contact.Delete">Delete Contact</string>
 
 
 </resources>

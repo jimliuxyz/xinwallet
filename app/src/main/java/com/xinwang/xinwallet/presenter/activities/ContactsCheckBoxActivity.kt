@@ -13,10 +13,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.models.Contacts
-import com.xinwang.xinwallet.models.adapter.ContactsCheckBoxAdapter
-import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
-import com.xinwang.xinwallet.models.adapter.IOnBtnClickListen
-import com.xinwang.xinwallet.models.adapter.OnItemCheckBoxListen
+import com.xinwang.xinwallet.models.adapter.*
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.doUI
 import kotlinx.android.synthetic.main.activity_contacts_check_box.*
@@ -41,10 +38,14 @@ class ContactsCheckBoxActivity : XinActivity() {
             if (status) {
                 try {
                     totalContactsList = it!!
-                    val ad = ContactsCheckBoxAdapter(it!!, this,true)
+                    val ad = ContactsCheckBoxAdapter(it!!, this, true)
                     ad.setOnItemCheckBoxListen(object : OnItemCheckBoxListen {
                         override fun onCheckboxChanged(ischecked: Boolean, postion: Int) {
                             itemChanged(ischecked, postion)
+                        }
+                    })
+                    ad.setOnItemClickListen(object : OnItemClickListen {
+                        override fun onItemClick(position: Int) {
                         }
                     })
                     doUI {

@@ -10,7 +10,6 @@
 
     <uses-feature android:name="android.hardware.screen.portrait" />
 
-
     <application
         android:name=".XinWalletApp"
         android:allowBackup="true"
@@ -20,8 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateVisible|adjustResize">
-
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" />
@@ -29,6 +26,7 @@
             android:name=".presenter.activities.IntroActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -57,8 +55,9 @@
             android:label="@string/Home.title"
             android:screenOrientation="portrait">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -76,8 +75,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.ContactsActivity"
-            android:screenOrientation="portrait" />
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".presenter.activities.AddFriendActivity"
             android:screenOrientation="portrait"
@@ -93,51 +91,38 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.TxFilterActivity"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity android:name=".presenter.activities.ContactsCheckBoxActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".presenter.activities.TxDetailActivity"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity
+            android:name=".presenter.activities.ContactsCheckBoxActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".presenter.activities.TxDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".tools.util.DatePickerActivity"
-            android:screenOrientation="portrait">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.SettingActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".presenter.activities.ProfileActivity"
             android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".presenter.activities.ChangeUserNameActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".presenter.activities.ContactDetailActivity"></activity>
     </application>
 
 </manifest>

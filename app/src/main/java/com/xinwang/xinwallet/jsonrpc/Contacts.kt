@@ -1,7 +1,9 @@
 package com.xinwang.xinwallet.jsonrpc
 
 import android.util.Log
+import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.models.Contacts
+import org.greenrobot.eventbus.EventBus
 import org.json.JSONObject
 import java.util.*
 
@@ -94,6 +96,8 @@ class Contacts : JSONRPC() {
         val ss = GenerateJsonRPCFormat.createJson("addFriends", mapOf("list" to list)).toJsonString()
         super.send(domain, ss) { status, res ->
             if (status && JsonerrorIsNull(res)) {
+                //Publish event
+                EventBus.getDefault().post(DataUpdateEvent(true, DataUpdateEvent.FRIENDS_LIST))
                 callback(true)
             } else {
                 showToast(res)

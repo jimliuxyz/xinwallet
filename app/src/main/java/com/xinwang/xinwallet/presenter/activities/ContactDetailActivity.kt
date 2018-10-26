@@ -7,6 +7,8 @@ import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.xinwang.xinwallet.R
+import com.xinwang.xinwallet.jsonrpc.Contacts
+import com.xinwang.xinwallet.jsonrpc.Profile
 import kotlinx.android.synthetic.main.activity_contact_detail.*
 
 class ContactDetailActivity : AppCompatActivity() {
@@ -21,20 +23,28 @@ class ContactDetailActivity : AppCompatActivity() {
     private fun getContactData() {
         Glide.with(this@ContactDetailActivity).load(intent.getStringExtra("avatar"))
                 .apply(RequestOptions().centerCrop().circleCrop()).into(image)
-        tvName.text=intent.getStringExtra("name")
-        tvPhone.text=intent.getStringExtra("phone")
-
+        tvName.text = intent.getStringExtra("name")
+        tvPhone.text = intent.getStringExtra("phone")
+        tvPhone.text = intent.getStringExtra("userId")
     }
 
     private fun titleSetting() {
         val backText = includeContactDetail.findViewById(R.id.txt_back) as TextView
         val titleBarText = includeContactDetail.findViewById(R.id.title_name) as TextView
         val rightText = includeContactDetail.findViewById(R.id.titleBarRightText) as TextView
-        backText.text=getText(R.string.Cancel)
+        backText.text = getText(R.string.Cancel)
         backText.setOnClickListener {
             finish()
         }
-        titleBarText.text=getText(R.string.Contacts)
-        rightText.visibility=View.GONE
+        titleBarText.text = getText(R.string.Contacts)
+        rightText.visibility = View.GONE
+    }
+
+    fun delContact(view: View) {
+        Contacts().delFriends(arrayListOf(intent.getStringExtra("userId"))) {
+            if (it!!) {
+                finish()
+            }
+        }
     }
 }

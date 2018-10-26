@@ -75,7 +75,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.ContactsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.AddFriendActivity"
             android:screenOrientation="portrait"
@@ -122,7 +122,10 @@
         <activity
             android:name=".presenter.activities.ChangeUserNameActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".presenter.activities.ContactDetailActivity"></activity>
+        <activity
+            android:name=".presenter.activities.ContactDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".presenter.activities.ExchangeActivity"></activity>
     </application>
 
 </manifest>

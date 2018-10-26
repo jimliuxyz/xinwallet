@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
-import android.transition.Visibility
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -12,7 +11,7 @@ import com.xinwang.xinwallet.R
 import com.xinwang.xinwallet.busevent.DataUpdateEvent
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.models.Currency
-import com.xinwang.xinwallet.models.adapter.RecycleerViewOrderSettingAdapter
+import com.xinwang.xinwallet.models.adapter.RecyclerViewOrderSettingAdapter
 import com.xinwang.xinwallet.models.adapter.helper.OnStartDragListener
 import com.xinwang.xinwallet.models.adapter.helper.SimpleItemTouchHelperCallback
 import kotlinx.android.synthetic.main.activity_currency_setting.*
@@ -28,7 +27,6 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
 
     private var mItemTouchHelper: ItemTouchHelper? = null
     private var isDragged: Boolean = false
-    val loader = LoaderDialogFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +34,7 @@ class CurrencySettingActivity : XinActivity(), OnStartDragListener {
         titleBarSetting()
         val orderList = getPREFCurrencyOrderList()
         orderList.sortBy { it.order }
-        val adapter = RecycleerViewOrderSettingAdapter(this, this, orderList)
+        val adapter = RecyclerViewOrderSettingAdapter(this, this, orderList)
         cycleViewerSittingOrder.setHasFixedSize(true)
         cycleViewerSittingOrder.adapter = adapter
         cycleViewerSittingOrder.layoutManager = LinearLayoutManager(this)

@@ -136,12 +136,6 @@ class HomeActivity : XinActivity() {
         overridePendingTransition(R.anim.enter_from_right, R.anim.exit_to_left)
     }
 
-    fun friendsActivity() {
-        var intent = Intent()
-        intent.setClass(this, ContactsActivity::class.java)
-        startActivity(intent)
-    }
-
     fun dealHistoryBtnOnClick(view: View) {
         val intent = Intent(this, HistoricalTxActivity::class.java)
         intent.putExtra("from", "Home")
@@ -151,7 +145,11 @@ class HomeActivity : XinActivity() {
 
     fun saveBtnOnClick(view: View) {}
     fun dealBtnOnClick(view: View) {}
-    fun exchangeBtnOnClick(view: View) {}
+
+    fun exchangeBtnOnClick(view: View) {
+        val intent = Intent(this@HomeActivity, ExchangeActivity::class.java)
+        startActivity(intent)
+    }
 
     fun settingBtnOnClick(view: View) {
         val intent = Intent(this@HomeActivity, SettingActivity::class.java)

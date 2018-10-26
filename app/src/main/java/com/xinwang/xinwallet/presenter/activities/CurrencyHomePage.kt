@@ -65,7 +65,6 @@ class CurrencyHomePage : XinActivity() {
                     intent.putExtra("obj",Gson().toJson(founderArray[poistion]))
                     startActivity(intent)
                 }
-
             })
 
             recyclerView_HistoryTrx.adapter = historyAdapter

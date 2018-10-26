@@ -125,10 +125,10 @@ class TxFilterActivity : XinActivity() {
 
     fun customDateOnClick(view: View) {
         val intent = Intent(this@TxFilterActivity, DatePickerActivity::class.java)
-        if (customDate1 > 0) {
-            intent.putExtra("customDate1", customDate1)
-            intent.putExtra("customDate2", customDate2)
-        }
+//        if (customDate1 > 0) {
+//            intent.putExtra("customDate1", customDate1)
+//            intent.putExtra("customDate2", customDate2)
+//        }
         startActivityForResult(intent, RESULTCODE_CUSTOMDATE)
     }
 
@@ -137,28 +137,38 @@ class TxFilterActivity : XinActivity() {
 
         when (requestCode) {
             RESULTCODE_CUSTOMDATE -> {
-                customDate1 = data!!.getStringExtra("date1").toLong()
-                customDate2 = data!!.getStringExtra("date2").toLong()
-                val sdf = SimpleDateFormat("MMM,dd")
-                val date1 = Date(customDate1)
-                val date2 = Date(customDate2)
-                customDate.text = sdf.format(date1) + "-" + sdf.format(date2)
+                try {
+                    customDate1 = data!!.getStringExtra("date1").toLong()
+                    customDate2 = data.getStringExtra("date2").toLong()
+                    val sdf = SimpleDateFormat("MMM,dd")
+                    val date1 = Date(customDate1)
+                    val date2 = Date(customDate2)
+                    customDate.text = sdf.format(date1) + "-" + sdf.format(date2)
+                } catch (e: Exception) {
+                    println(e)
+                    TxDateDefault.performClick()
+                }
             }
             RESULTCODE_SELECTEDTARGET -> {
-                val getData = data!!.getStringExtra("selectedTarget")
-                val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type
-                val selectedContacts = Gson().fromJson<java.util.ArrayList<Contacts>>(getData, type)
-                if (selectedContacts.size > 0) {
-                    recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-                     var horizontalAdapter=ContactsHorizontalAdapter(selectedContacts, this, false)
-                    horizontalAdapter.setOnBtnClickListen(object :IOnBtnClickListen{
-                        override fun onClickListen(position: Int) {
-                        }
-                    })
-                    recyclerView1.adapter = horizontalAdapter
-                    textViewWho.text = ""
-                } else {
-                    textViewWho.text = getString(R.string.TxSort_All)
+                try {
+                    val getData = data!!.getStringExtra("selectedTarget")
+
+                    val type = object : TypeToken<java.util.ArrayList<Contacts>>() {}.type
+                    val selectedContacts = Gson().fromJson<java.util.ArrayList<Contacts>>(getData, type)
+                    if (selectedContacts.size > 0) {
+                        recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                        var horizontalAdapter = ContactsHorizontalAdapter(selectedContacts, this, false)
+                        horizontalAdapter.setOnBtnClickListen(object : IOnBtnClickListen {
+                            override fun onClickListen(position: Int) {
+                            }
+                        })
+                        recyclerView1.adapter = horizontalAdapter
+                        textViewWho.text = ""
+                    } else {
+                        textViewWho.text = getString(R.string.TxSort_All)
+                    }
+                } catch (e: Exception) {
+                    println(e)
                 }
             }
         }

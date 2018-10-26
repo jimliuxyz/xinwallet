@@ -161,6 +161,7 @@ open class XinActivity : AppCompatActivity() {
         return Gson().fromJson<ArrayList<Currency>>(obj, type)
     }
 
+
     fun getPREFCurrencyBalance(curName: String): Double {
         val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_BALANCE, "")
         val type = object : TypeToken<ArrayList<Currency>>() {}.type

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presenter.activities.ExchangeActivity">
+
+
+    <com.xinwang.xinwallet.presenter.customviews.BRButton
+        android:layout_width="0dp"
+        android:layout_height="59dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/Exchange"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCury2" />
+
+    <include
+        android:id="@+id/includeExchange"
+        layout="@layout/title_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/totalAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/includeExchange" />
+
+    <TextView
+        android:id="@+id/btnAllExchange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/totalAmount"
+        app:layout_constraintTop_toTopOf="@+id/totalAmount" />
+
+    <Spinner
+        android:id="@+id/spinnerCury1"
+        android:layout_width="185dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/totalAmount"
+        app:layout_constraintTop_toBottomOf="@+id/totalAmount" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="186dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerCury1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCury1" />
+
+    <Spinner
+        android:id="@+id/spinnerCury2"
+        android:layout_width="185dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="72dp"
+        app:layout_constraintStart_toStartOf="@+id/spinnerCury1"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCury1" />
+
+    <TextView
+        android:id="@+id/textView44"
+        android:layout_width="169dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerCury2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinnerCury2" />
+
+    <TextView
+        android:id="@+id/Exange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerCury2"
+        app:layout_constraintStart_toStartOf="@+id/spinnerCury1" />
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textSize="17sp"
+        app:layout_constraintStart_toEndOf="@+id/Exange"
+        app:layout_constraintTop_toTopOf="@+id/Exange" />
+
+</android.support.constraint.ConstraintLayout>

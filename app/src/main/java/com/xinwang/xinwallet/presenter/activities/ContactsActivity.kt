@@ -69,18 +69,17 @@ class ContactsActivity : XinActivity() {
                     })
                     adapter.setOnItemClickListen(object : OnItemClickListen {
                         override fun onItemClick(position: Int) {
-                            val intent=Intent(this@ContactsActivity,ContactDetailActivity::class.java)
-                            intent.putExtra("avatar",it[position].avatar)
-                            intent.putExtra("userId",it[position].userId)
-                            intent.putExtra("name",it[position].name)
-                            intent.putExtra("phone",it[position].phoneno)
-                            Toast.makeText(this@ContactsActivity, it[position].userId, Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ContactsActivity, ContactDetailActivity::class.java)
+                            intent.putExtra("avatar", it[position].avatar)
+                            intent.putExtra("userId", it[position].userId)
+                            intent.putExtra("name", it[position].name)
+                            intent.putExtra("phone", it[position].phoneno)
                             startActivity(intent)
                         }
 
                     })
                     doUI {
-                        if (it!!.size > 0) {
+                        if (it.size > 0) {
                             imgEmpty.visibility = View.GONE
                         } else {
                             imgEmpty.visibility = View.VISIBLE

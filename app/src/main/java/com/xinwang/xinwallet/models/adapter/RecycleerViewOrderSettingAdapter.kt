@@ -43,7 +43,8 @@ import java.util.Collections
  *
  * @author Paul Burke (ipaulpro)
  */
-class RecycleerViewOrderSettingAdapter(context: Context, private val mDragStartListener: OnStartDragListener,data:ArrayList<Currency>) : RecyclerView.Adapter<RecyclerListAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
+class RecyclerViewOrderSettingAdapter(context: Context, private val mDragStartListener: OnStartDragListener,data:ArrayList<Currency>)
+    : RecyclerView.Adapter<RecyclerViewOrderSettingAdapter.ItemViewHolder>(), ItemTouchHelperAdapter {
 
 
     private var mItems = ArrayList<Currency>()
@@ -53,12 +54,12 @@ class RecycleerViewOrderSettingAdapter(context: Context, private val mDragStartL
         mItems.sortWith(compareBy{it.order})
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerListAdapter.ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewOrderSettingAdapter.ItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.listitem_currency_order_setting, parent, false)
-        return RecyclerListAdapter.ItemViewHolder(view)
+        return RecyclerViewOrderSettingAdapter.ItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerListAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerViewOrderSettingAdapter.ItemViewHolder, position: Int) {
 
         holder.currencyEnName.text = mItems[position].name
         holder.currencyIcon.setImageResource(XinActivity().getCoinIconId(mItems[position].name))

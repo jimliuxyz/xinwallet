@@ -66,7 +66,6 @@ class ContactsCheckBoxActivity : XinActivity() {
         val backImage = includeTitlebarContCheckbox.findViewById(R.id.imageBack) as ImageView?
         titleBarText?.text = getText(R.string.HistoricalTx_Filter)
         titleBarRight?.text = getText(R.string.Ok)
-        backImage?.setImageResource(R.drawable.ic_coin_btc)
         backImage?.setOnClickListener {
             finish()
         }

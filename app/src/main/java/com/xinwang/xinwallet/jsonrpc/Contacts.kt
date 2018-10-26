@@ -11,7 +11,7 @@ class Contacts : JSONRPC() {
     val domain = "contacts"
     override var TAG = "Contacts"
 
-     fun getContactsList(callback: (status: Boolean, result: ArrayList<Contacts>?) -> Unit) {
+    fun getContactsList(callback: (status: Boolean, result: ArrayList<Contacts>?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("getContacts", null).toJsonString()
         super.send(domain, ss) { status, it ->
             if (status) {
@@ -48,7 +48,7 @@ class Contacts : JSONRPC() {
         }
     }
 
-     fun finedUserByPhone(phoneArray: Array<String>, callback: (status: Boolean, result: ArrayList<Contacts>?) -> Unit) {
+    fun finedUserByPhone(phoneArray: Array<String>, callback: (status: Boolean, result: ArrayList<Contacts>?) -> Unit) {
         val ss = GenerateJsonRPCFormat.createJson("findUsersByPhone", mapOf("list" to phoneArray)).toJsonString()
         super.send(domain, ss) { status, res ->
             if (status) {
@@ -140,6 +140,20 @@ class Contacts : JSONRPC() {
                 //system 錯誤
                 Log.i(TAG, "getContactsList3_$it")
                 showToast(it)
+            }
+        }
+    }
+
+    fun delFriends(list: ArrayList<String>, callback: (result: Boolean?) -> Unit) {
+        val ss = GenerateJsonRPCFormat.createJson("delFriends", mapOf("list" to list)).toJsonString()
+        super.send(domain, ss) { status, result ->
+            if (status && JsonerrorIsNull(result))  {
+                //Publish event
+                EventBus.getDefault().post(DataUpdateEvent(true, DataUpdateEvent.FRIENDS_LIST))
+                callback(true)
+            } else {
+                showToast(result)
+                Log.i(TAG, "delFriends_$result")
             }
         }
     }

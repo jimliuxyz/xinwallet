@@ -125,7 +125,8 @@
         <activity
             android:name=".presenter.activities.ContactDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".presenter.activities.ExchangeActivity"></activity>
+        <activity android:name=".presenter.activities.ExchangeActivity" />
+        <activity android:name=".presenter.activities.CurrencySelectActivity"></activity>
     </application>
 
 </manifest>

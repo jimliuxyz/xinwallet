@@ -125,10 +125,6 @@ class TxFilterActivity : XinActivity() {
 
     fun customDateOnClick(view: View) {
         val intent = Intent(this@TxFilterActivity, DatePickerActivity::class.java)
-//        if (customDate1 > 0) {
-//            intent.putExtra("customDate1", customDate1)
-//            intent.putExtra("customDate2", customDate2)
-//        }
         startActivityForResult(intent, RESULTCODE_CUSTOMDATE)
     }
 

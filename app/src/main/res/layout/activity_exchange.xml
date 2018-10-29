@@ -7,24 +7,11 @@
     tools:context=".presenter.activities.ExchangeActivity">
 
 
-    <com.xinwang.xinwallet.presenter.customviews.BRButton
-        android:layout_width="0dp"
-        android:layout_height="59dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="48dp"
-        android:text="@string/Exchange"
-        android:textSize="17sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCury2" />
-
     <include
         android:id="@+id/includeExchange"
         layout="@layout/title_bar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="58dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,65 +37,157 @@
         app:layout_constraintStart_toEndOf="@+id/totalAmount"
         app:layout_constraintTop_toTopOf="@+id/totalAmount" />
 
-    <Spinner
-        android:id="@+id/spinnerCury1"
-        android:layout_width="185dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintStart_toStartOf="@+id/totalAmount"
-        app:layout_constraintTop_toBottomOf="@+id/totalAmount" />
+    <ImageView
+        android:id="@+id/imgCury1"
+        android:layout_width="45dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:onClick="selectCury"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totalAmount"
+        app:srcCompat="@drawable/ic_coin_btc" />
+
+    <TextView
+        android:id="@+id/curyName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="selectCury"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury1"
+        app:layout_constraintStart_toEndOf="@+id/imgCury1"
+        app:layout_constraintTop_toTopOf="@+id/imgCury1" />
+
+    <TextView
+        android:id="@+id/curyEnName1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="selectCury"
+        android:text="TextView"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury1"
+        app:layout_constraintStart_toEndOf="@+id/curyName1"
+        app:layout_constraintTop_toTopOf="@+id/imgCury1" />
+
+    <ImageView
+        android:id="@+id/imgDown1"
+        android:layout_width="35dp"
+        android:layout_height="27dp"
+        android:onClick="selectCury"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury1"
+        app:layout_constraintStart_toEndOf="@+id/curyEnName1"
+        app:layout_constraintTop_toTopOf="@+id/imgCury1"
+        app:srcCompat="@android:drawable/arrow_down_float" />
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="186dp"
-        android:layout_height="49dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:gravity="center_horizontal"
         android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerCury1"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinnerCury1" />
+        app:layout_constraintStart_toEndOf="@+id/imgDown1"
+        app:layout_constraintTop_toTopOf="@+id/imgCury1" />
 
-    <Spinner
-        android:id="@+id/spinnerCury2"
-        android:layout_width="185dp"
+    <ImageView
+        android:id="@+id/imgCury2"
+        android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="72dp"
-        app:layout_constraintStart_toStartOf="@+id/spinnerCury1"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerCury1" />
+        android:layout_marginTop="16dp"
+        android:contentDescription="TODO"
+        android:onClick="selectCury"
+        app:layout_constraintStart_toStartOf="@+id/imgCury1"
+        app:layout_constraintTop_toBottomOf="@+id/textView45"
+        app:srcCompat="@drawable/ic_coin_eth" />
+
+    <TextView
+        android:id="@+id/curyName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="selectCury"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury2"
+        app:layout_constraintStart_toEndOf="@+id/imgCury2"
+        app:layout_constraintTop_toTopOf="@+id/imgCury2" />
+
+    <TextView
+        android:id="@+id/curyEnName2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="selectCury"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury2"
+        app:layout_constraintStart_toEndOf="@+id/curyName2"
+        app:layout_constraintTop_toTopOf="@+id/imgCury2" />
+
+    <ImageView
+        android:id="@+id/imgDown2"
+        android:layout_width="35dp"
+        android:layout_height="27dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="selectCury"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury2"
+        app:layout_constraintStart_toEndOf="@+id/curyEnName2"
+        app:layout_constraintTop_toTopOf="@+id/imgCury2"
+        app:srcCompat="@android:drawable/arrow_down_float" />
 
     <TextView
         android:id="@+id/textView44"
-        android:layout_width="169dp"
-        android:layout_height="41dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
+        android:text="0"
         android:textSize="17dp"
-        app:layout_constraintBottom_toBottomOf="@+id/spinnerCury2"
+        app:layout_constraintBottom_toBottomOf="@+id/imgCury2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/spinnerCury2" />
+        app:layout_constraintStart_toEndOf="@+id/imgDown2"
+        app:layout_constraintTop_toTopOf="@+id/imgCury2" />
 
-    <TextView
-        android:id="@+id/Exange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerCury2"
-        app:layout_constraintStart_toStartOf="@+id/spinnerCury1" />
-
-    <TextView
-        android:id="@+id/rate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
+    <com.xinwang.xinwallet.presenter.customviews.BRButton
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/Exchange"
         android:textSize="17sp"
-        app:layout_constraintStart_toEndOf="@+id/Exange"
-        app:layout_constraintTop_toTopOf="@+id/Exange" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgCury2" />
+
+    <TextView
+        android:id="@+id/textView45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/imgCury1"
+        app:layout_constraintTop_toBottomOf="@+id/imgCury1" />
+
+    <TextView
+        android:id="@+id/textView46"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/textView45"
+        app:layout_constraintTop_toTopOf="@+id/textView45" />
 
 </android.support.constraint.ConstraintLayout>

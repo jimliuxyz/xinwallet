@@ -28,6 +28,7 @@ import android.net.ConnectivityManager
 
 open class XinActivity : AppCompatActivity() {
     val TAG_XinActivity = "XinActivity"
+    val RESULT_CODE = 9999
 
     companion object {
         private var LOCKTIME = 20 * 1000
@@ -154,6 +155,16 @@ open class XinActivity : AppCompatActivity() {
         }
 
     }
+
+    fun getCuryString(str: String): String {
+        when (str) {
+            "BTC" -> return getString(R.string.Currency_BTC)
+            "USD" -> return getString(R.string.Currency_USD)
+            "ETH" -> return getString(R.string.Currency_ETH)
+            else -> return getString(R.string.Currency_CNY)
+        }
+    }
+
 
     fun getPREFCurrencyOrderList(): ArrayList<Currency> {
         val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_ORDER, "")

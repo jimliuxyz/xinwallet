@@ -98,5 +98,9 @@
     <string name="AddContacts">Add Contacts</string>
     <string name="Contact.AddFavorite">Add my favorite</string>
     <string name="Contact.Delete">Delete Contact</string>
+    <string name="Exchange.SellOut">Sell Out</string>
+    <string name="DepositWithdraw.Message">Message(optional)</string>
+    <string name="DepositWithdraw.DepositAmount">Deposit Amount(Max three Million per day)</string>
+    <string name="DepositWithdraw.WithdrawAmount">Withdraw Amount(Max three Million per day)</string>
 
 </resources>

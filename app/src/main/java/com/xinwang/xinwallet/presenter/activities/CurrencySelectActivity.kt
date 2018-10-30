@@ -1,5 +1,6 @@
 package com.xinwang.xinwallet.presenter.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.xinwang.xinwallet.R.id.recyclerView
 class CurrencySelectActivity : XinActivity(), OnStartDragListener {
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_currency_select)
@@ -28,7 +30,6 @@ class CurrencySelectActivity : XinActivity(), OnStartDragListener {
 
     override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {
         val listMas = recyclerView.adapter.itemCount - 1
-
         if (viewHolder!!.adapterPosition >= 0) {
             for (i in 0..listMas) {
                 val view = recyclerView.findViewHolderForAdapterPosition(i).itemView
@@ -43,20 +44,20 @@ class CurrencySelectActivity : XinActivity(), OnStartDragListener {
                     }
                 }
             }
+            val backIntent=Intent().putExtra("selectedCury",viewHolder!!.adapterPosition)
+            setResult(RESULT_CODE,backIntent)
+            finish()
         }
-
-
     }
-
 
     private fun loadData() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = RecyclerViewOrderSettingAdapter(this, this, getPREFCurrencyOrderList())
         recyclerView.adapter = adapter
         val listMas = recyclerView.adapter.itemCount - 1
+        //勾選預設幣別
         recyclerView.viewTreeObserver.addOnGlobalLayoutListener(
                 object : ViewTreeObserver.OnGlobalLayoutListener {
-
                     override fun onGlobalLayout() {
                         for (i in 0..listMas) {
                             val view = recyclerView.getChildAt(i)

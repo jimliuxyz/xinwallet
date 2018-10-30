@@ -95,6 +95,11 @@
     <string name="AddContacts">新增联络人</string>
     <string name="Contact.AddFavorite">加入常用联络人</string>
     <string name="Contact.Delete">删除联络人</string>
+    <string name="Exchange.SellOut">全部兌換</string>
+    <string name="DepositWithdraw.Message">说明(选填)</string>
+    <string name="DepositWithdraw.DepositAmount">存款金额(每日上限3百万)</string>
+    <string name="DepositWithdraw.WithdrawAmount">提款金额(每日上限3百万)</string>
+
 
 
 </resources>

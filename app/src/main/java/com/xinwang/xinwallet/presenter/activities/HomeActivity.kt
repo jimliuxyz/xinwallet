@@ -143,7 +143,10 @@ class HomeActivity : XinActivity() {
         startActivity(intent)
     }
 
-    fun saveBtnOnClick(view: View) {}
+    fun saveBtnOnClick(view: View) {
+        val intent=Intent(this,SaveWithdrawActivity::class.java)
+        startActivity(intent)
+    }
     fun dealBtnOnClick(view: View) {}
 
     fun exchangeBtnOnClick(view: View) {

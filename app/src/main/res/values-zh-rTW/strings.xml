@@ -99,7 +99,8 @@
     <string name="DepositWithdraw.Message">说明(选填)</string>
     <string name="DepositWithdraw.DepositAmount">存款金额(每日上限3百万)</string>
     <string name="DepositWithdraw.WithdrawAmount">提款金额(每日上限3百万)</string>
-
+    <string name="BankAccount">銀行帳戶</string>
+    <string name="BankAccount.SwiftCode">銀行代碼</string>
 
 
 </resources>

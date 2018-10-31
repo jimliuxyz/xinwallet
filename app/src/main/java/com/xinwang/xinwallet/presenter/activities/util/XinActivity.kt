@@ -181,6 +181,7 @@ open class XinActivity : AppCompatActivity() {
 
     }
 
+
     fun updateCuryOrderFromServer(callback: (result: Boolean?) -> Unit) {
         Profile().getProfile { status: Boolean, it ->
             val jsonObject = JSONObject(it.toString())

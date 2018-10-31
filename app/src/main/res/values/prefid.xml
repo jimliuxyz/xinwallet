@@ -6,4 +6,5 @@
     <string name="PREF_CURRENCY_ORDER" translatable="false">PREF_CURRENCY_ORDER</string>
     <string name="PREF_CURRENCY_BALANCE" translatable="false">REF_CURRENCY_BALANCE</string>
     <string name="PREF_MYPROFILE" translatable="false">PREF_MYPROFILE</string>
+    <string name="PREF_BANK_ACCOUNT" translatable="false">PREF_BANK</string>
 </resources>

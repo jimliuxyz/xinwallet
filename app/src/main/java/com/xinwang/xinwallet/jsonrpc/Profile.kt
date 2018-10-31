@@ -90,9 +90,8 @@ class Profile : JSONRPC() {
             } else {
                 //system error
                 Log.i(TAG, "getProfile3_$res")
-                // showToast(res)
             }
-            //  EventBus.getDefault().post(ApiDataEvent(0, ApiDataEvent.TYPE_PROFILE, jsonObject))
+
         }
     }
 

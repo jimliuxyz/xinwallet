@@ -102,7 +102,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.SettingActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".presenter.activities.ProfileActivity"
             android:screenOrientation="portrait" />
@@ -119,9 +119,10 @@
             android:name=".presenter.activities.CurrencySelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".presenter.activities.SaveWithdrawActivity"
+            android:name=".presenter.activities.bank.SaveWithdrawActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
+        <activity android:name=".presenter.activities.bank.BankAccountListActivity"></activity>
     </application>
 
 </manifest>

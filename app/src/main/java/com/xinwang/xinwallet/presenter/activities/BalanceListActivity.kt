@@ -98,7 +98,7 @@ class BalanceListActivity : XinActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: DataUpdateEvent) {
         when (event.type) {
-            2 -> {
+            DataUpdateEvent.CURY_ORDER -> {
                 defaultCurrencySetting()
                 getCurrencyList()
             }

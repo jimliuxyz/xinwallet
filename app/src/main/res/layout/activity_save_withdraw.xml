@@ -75,7 +75,7 @@
                     android:onClick="btnListOnClick"
                     android:text="@string/Currency"
                     android:textSize="18dp"
-                    app:layout_constraintBottom_toTopOf="@+id/editText3"
+                    app:layout_constraintBottom_toTopOf="@+id/etDepositAmount"
                     app:layout_constraintEnd_toEndOf="@+id/tvbankAccount1"
                     app:layout_constraintStart_toStartOf="@+id/tvbankAccount1"
                     app:layout_constraintTop_toBottomOf="@+id/tvbankAccount1" />
@@ -99,7 +99,7 @@
                     app:srcCompat="@drawable/ic_keyboard_arrow_right_grey" />
 
                 <EditText
-                    android:id="@+id/editText3"
+                    android:id="@+id/etDepositAmount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -119,9 +119,9 @@
                     android:ems="10"
                     android:hint="@string/DepositWithdraw.Message"
                     android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="@+id/editText3"
-                    app:layout_constraintStart_toStartOf="@+id/editText3"
-                    app:layout_constraintTop_toBottomOf="@+id/editText3" />
+                    app:layout_constraintEnd_toEndOf="@+id/etDepositAmount"
+                    app:layout_constraintStart_toStartOf="@+id/etDepositAmount"
+                    app:layout_constraintTop_toBottomOf="@+id/etDepositAmount" />
 
                 <com.xinwang.xinwallet.presenter.customviews.BRButton
                     android:id="@+id/btnDeposit"
@@ -129,6 +129,7 @@
                     android:layout_height="50dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginTop="32dp"
+                    android:onClick="bankAction"
                     android:text="@string/Deposit"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/imageView19"
@@ -170,34 +171,28 @@
                 android:background="@drawable/bg_deposit_withdraw_block">
 
                 <TextView
-                    android:id="@+id/tvbankAccount2"
+                    android:id="@+id/tvCury2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
                     android:onClick="btnListOnClick"
-                    android:text="@string/BankAccount"
+                    android:text="@string/Currency"
                     android:textSize="18dp"
-                    app:layout_constraintBottom_toTopOf="@+id/tvCury2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/tvCury2"
+                    android:id="@+id/tvbankAccount2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginTop="8dp"
                     android:onClick="btnListOnClick"
-                    android:text="@string/Currency"
+                    android:text="@string/BankAccount"
                     android:textSize="18dp"
-                    app:layout_constraintBottom_toTopOf="@+id/editText30"
-                    app:layout_constraintEnd_toEndOf="@+id/tvbankAccount2"
-                    app:layout_constraintStart_toStartOf="@+id/tvbankAccount2"
-                    app:layout_constraintTop_toBottomOf="@+id/tvbankAccount2" />
+                    app:layout_constraintEnd_toEndOf="@+id/imageView200"
+                    app:layout_constraintStart_toStartOf="@+id/tvCury2"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCury2" />
 
                 <ImageView
                     android:id="@+id/imageView190"
@@ -218,7 +213,7 @@
                     app:srcCompat="@drawable/ic_keyboard_arrow_right_grey" />
 
                 <EditText
-                    android:id="@+id/editText30"
+                    android:id="@+id/etWithdrawAmount"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -227,30 +222,34 @@
                     android:inputType="numberDecimal"
                     app:layout_constraintEnd_toEndOf="@+id/imageView200"
                     app:layout_constraintStart_toStartOf="@+id/tvCury2"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCury2" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvbankAccount2" />
 
                 <EditText
                     android:id="@+id/editText60"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
                     android:ems="10"
                     android:hint="@string/DepositWithdraw.Message"
                     android:inputType="textPersonName"
-                    app:layout_constraintEnd_toEndOf="@+id/editText30"
-                    app:layout_constraintStart_toStartOf="@+id/editText30"
-                    app:layout_constraintTop_toBottomOf="@+id/editText30" />
+                    app:layout_constraintEnd_toEndOf="@+id/imageView200"
+                    app:layout_constraintStart_toStartOf="@+id/tvCury2"
+                    app:layout_constraintTop_toBottomOf="@+id/etWithdrawAmount" />
 
                 <com.xinwang.xinwallet.presenter.customviews.BRButton
                     android:id="@+id/btnWithdraw"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="32dp"
+                    android:onClick="bankAction"
                     android:text="@string/Withdraw"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView190"
-                    app:layout_constraintStart_toStartOf="@+id/tvbankAccount2"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView200"
+                    app:layout_constraintStart_toStartOf="@+id/tvCury2"
                     app:layout_constraintTop_toBottomOf="@+id/editText60" />
 
 

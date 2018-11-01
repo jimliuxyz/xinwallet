@@ -84,7 +84,7 @@ class Profile : JSONRPC() {
                         // showToast(jsonObject.getJSONObject("error").toString())
                     }
                 } catch (e: Exception) {
-                    Log.i(TAG, "getProfile2_${e.toString()}")
+                    Log.i(TAG, "getProfile2_$e")
                     showToast(e.toString())
                 }
             } else {
@@ -99,7 +99,7 @@ class Profile : JSONRPC() {
         val requestJson = GenerateJsonRPCFormat.createJson("updateCurrencySetting", mapOf("list" to parms)).toJsonString()
         super.send(domaim, requestJson) { status, result ->
             callback(status, result)
-            Log.i(TAG, "updateCurrencySetting_$result")
+            Log.i(TAG, "F$result")
         }
     }
 

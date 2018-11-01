@@ -37,7 +37,6 @@ import kotlin.collections.ArrayList
 class HomeActivity : XinActivity() {
 
     private val loader = LoaderDialogFragment()
-    private val loader_balance = LoaderDialogFragment()
     val TAG = "HomeActivity"
     var currencies = ArrayList<Currency>()
     //千位數符號
@@ -47,9 +46,8 @@ class HomeActivity : XinActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        //loadingDate
+        //loadingData
         loadProfileData()
-        loadBalanceData()
         println("$TAG+token_${JSONRPC().getUserToken()}")
         //EventBus subscriber
         EventBus.getDefault().register(this@HomeActivity)
@@ -60,6 +58,7 @@ class HomeActivity : XinActivity() {
         Profile().getProfile { status, result ->
             if (status) {
                 try {
+                    currencies.clear()
                     saveMyProfileInSharedPreference(result.toString())
                     var res = JSONObject(result.toString())
                     val jsonArray = res.getJSONArray("currencies")
@@ -74,6 +73,7 @@ class HomeActivity : XinActivity() {
                 saveCurrencyOrderInSharedPreference()
                 doUI {
                     profileViewSetting()
+                    loadBalanceData()
                 }
             }
         }
@@ -86,7 +86,10 @@ class HomeActivity : XinActivity() {
             XinWalletApp.instance.applicationContext.setPref(R.string.PREF_CURRENCY_BALANCE, json)
             val balData = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_BALANCE, "")
             Log.i(TAG, "saveCurrencyBalanceInSharedPreference_$balData")
-            defaultCurySetting()
+            doUI {
+                defaultCurySetting()
+            }
+
         }
     }
 
@@ -137,9 +140,10 @@ class HomeActivity : XinActivity() {
     }
 
     fun saveBtnOnClick(view: View) {
-        val intent=Intent(this, SaveWithdrawActivity::class.java)
+        val intent = Intent(this, SaveWithdrawActivity::class.java)
         startActivity(intent)
     }
+
     fun dealBtnOnClick(view: View) {}
 
     fun exchangeBtnOnClick(view: View) {
@@ -157,6 +161,9 @@ class HomeActivity : XinActivity() {
         when (event.type) {
             DataUpdateEvent.PROFILE -> profileViewSetting()
             DataUpdateEvent.CURY_ORDER -> defaultCurySetting()
+            DataUpdateEvent.BANLANCE -> {
+                loadProfileData()
+            }
         }
     }
 

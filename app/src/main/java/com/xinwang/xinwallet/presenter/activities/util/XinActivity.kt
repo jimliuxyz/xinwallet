@@ -173,12 +173,11 @@ open class XinActivity : AppCompatActivity() {
     }
 
 
-    fun getPREFCurrencyBalance(curName: String): Double {
+    fun  getPREFCurrencyBalance(curName: String): Double {
         val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_BALANCE, "")
         val type = object : TypeToken<ArrayList<Currency>>() {}.type
         val balanceList = Gson().fromJson<ArrayList<Currency>>(obj, type)
         return balanceList.filter { it.name == curName }[0].balance
-
     }
 
 

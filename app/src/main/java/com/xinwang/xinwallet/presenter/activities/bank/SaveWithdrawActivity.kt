@@ -77,6 +77,8 @@ class SaveWithdrawActivity : XinActivity() {
                 }
             } else {
                 doUI {
+                    Toast.makeText(this, getString(R.string.BankAccount_TransactionFailed) + result,
+                            Toast.LENGTH_LONG).show()
                     loader.dismiss()
                 }
             }
@@ -97,6 +99,8 @@ class SaveWithdrawActivity : XinActivity() {
                 }
             } else {
                 doUI {
+                    Toast.makeText(this, getString(R.string.BankAccount_TransactionFailed) + result,
+                            Toast.LENGTH_LONG).show()
                     loader.dismiss()
                 }
             }

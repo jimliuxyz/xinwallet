@@ -54,9 +54,7 @@ class Trading : JSONRPC() {
                             currencyItem.balance = jsonList.getDouble(it)
                             currencyList!!.add(currencyItem)
                         }
-
                         callback(currencyList)
-
                     } else {
                         callback(null)
                     }
@@ -118,11 +116,11 @@ class Trading : JSONRPC() {
                     EventBus.getDefault().post(DataUpdateEvent(true, DataUpdateEvent.BANLANCE))
                     callback(true, resultObj.toString())
                 } else {
-                    showToast("$result")
+                    callback(false,result)
                     Log.i(tag, "deposit1_$result")
                 }
             } else {
-                showToast("$result")
+                callback(false,result)
                 Log.i(tag, "deposit2_$result")
             }
         }
@@ -146,11 +144,11 @@ class Trading : JSONRPC() {
                     EventBus.getDefault().post(DataUpdateEvent(true,DataUpdateEvent.BANLANCE))
                     callback(true, resultObj.toString())
                 } else {
-                    showToast("$result")
+                    callback(false,result)
                     Log.i(tag, "withdraw1_$result")
                 }
             } else {
-                showToast("$result")
+                callback(false,result)
                 Log.i(tag, "withdraw2_$result")
             }
         }

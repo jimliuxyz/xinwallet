@@ -101,6 +101,6 @@
     <string name="DepositWithdraw.WithdrawAmount">提款金额(每日上限3百万)</string>
     <string name="BankAccount">銀行帳戶</string>
     <string name="BankAccount.SwiftCode">銀行代碼</string>
-
+    <string name="BankAccount.TransactionFailed">交易失败</string>
 
 </resources>

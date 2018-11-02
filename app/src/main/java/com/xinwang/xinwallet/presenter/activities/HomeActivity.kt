@@ -18,6 +18,7 @@ import com.xinwang.xinwallet.tools.photo.UriUtil
 import com.xinwang.xinwallet.jsonrpc.Profile
 import com.xinwang.xinwallet.jsonrpc.Trading
 import com.xinwang.xinwallet.models.Currency
+import com.xinwang.xinwallet.presenter.activities.bank.GenQRCodeActivity
 import com.xinwang.xinwallet.presenter.activities.bank.SaveWithdrawActivity
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.presenter.fragments.LoaderDialogFragment
@@ -144,7 +145,10 @@ class HomeActivity : XinActivity() {
         startActivity(intent)
     }
 
-    fun dealBtnOnClick(view: View) {}
+    fun dealBtnOnClick(view: View) {
+        val intent = Intent(this@HomeActivity, GenQRCodeActivity::class.java)
+        startActivity(intent)
+    }
 
     fun exchangeBtnOnClick(view: View) {
         val intent = Intent(this@HomeActivity, ExchangeActivity::class.java)

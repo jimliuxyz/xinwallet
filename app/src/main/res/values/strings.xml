@@ -104,5 +104,6 @@
     <string name="DepositWithdraw.WithdrawAmount">Withdraw Amount(Max three Million per day)</string>
     <string name="BankAccount">Bank Account</string>
     <string name="BankAccount.SwiftCode">Swift Code</string>
+    <string name="BankAccount.TransactionFailed">Transaction Failed</string>
 
 </resources>

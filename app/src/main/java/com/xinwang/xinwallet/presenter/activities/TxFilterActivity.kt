@@ -1,7 +1,6 @@
 package com.xinwang.xinwallet.presenter.activities
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
@@ -9,14 +8,11 @@ import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.xinwang.xinwallet.R
-import com.xinwang.xinwallet.XinWalletApp
 import com.xinwang.xinwallet.models.Contacts
-import com.xinwang.xinwallet.models.Currency
 import com.xinwang.xinwallet.models.adapter.ContactsHorizontalAdapter
 import com.xinwang.xinwallet.models.adapter.IOnBtnClickListen
 import com.xinwang.xinwallet.presenter.activities.util.XinActivity
 import com.xinwang.xinwallet.tools.util.DatePickerActivity
-import kotlinx.android.synthetic.main.activity_date_picker.*
 import kotlinx.android.synthetic.main.activity_tx_filter.*
 import java.lang.Exception
 import java.text.SimpleDateFormat
@@ -71,7 +67,7 @@ class TxFilterActivity : XinActivity() {
 
     private fun filterDone() {
         try {
-            val TxView: RadioButton = findViewById(RGTxType.checkedRadioButtonId)
+            val TxView: RadioButton = findViewById(RGobjType.checkedRadioButtonId)
             val dateView: RadioButton = findViewById(RGDateType.checkedRadioButtonId)
             val currencyView: RadioButton = findViewById(RGCurrencyType.checkedRadioButtonId)
             val sortingView: RadioButton = findViewById(RGOrder.checkedRadioButtonId)
@@ -86,7 +82,7 @@ class TxFilterActivity : XinActivity() {
     }
 
     private fun radioGroupSetting() {
-        RGTxType.setOnCheckedChangeListener { radioGroup, selectedID ->
+        RGobjType.setOnCheckedChangeListener { radioGroup, selectedID ->
             for (i in 1..radioGroup.childCount) {
                 val view = radioGroup.getChildAt(i - 1) as RadioButton
                 if (view.isChecked) {

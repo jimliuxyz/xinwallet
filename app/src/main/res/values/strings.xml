@@ -105,5 +105,9 @@
     <string name="BankAccount">Bank Account</string>
     <string name="BankAccount.SwiftCode">Swift Code</string>
     <string name="BankAccount.TransactionFailed">Transaction Failed</string>
+    <string name="Transfer.Pay">Pay</string>
+    <string name="Transfer.Receipt">Receipt</string>
+    <string name="QRCode" translatable="false">QRcode</string>
+    <string name="Transfer.Store">Store</string>
 
 </resources>

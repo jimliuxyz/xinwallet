@@ -124,7 +124,8 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
         <activity android:name=".presenter.activities.bank.BankAccountListActivity" />
-        <activity android:name=".presenter.activities.bank.GenQRCodeActivity"></activity>
+        <activity android:name=".presenter.activities.bank.GenQRCodeActivity" />
+        <activity android:name=".presenter.activities.bank.TransferActivity"></activity>
     </application>
 
 </manifest>

@@ -65,7 +65,7 @@
     <string name="TxSort.lowTohigh">金額(由低到高)</string>
     <string name="TxSort.Ascending">時間(由远到近)</string>
     <string name="TxSort.Descending">時間(由近到远)</string>
-    <string name="TxSort.All">不限</string>ds
+    <string name="TxSort.All">不限</string>
     <string name="TxSort.Who">交易对象</string>
     <string name="TxSort.WithinAMonth">最近一個月</string>
     <string name="TxSort.WithinAWeek">最近一週</string>
@@ -102,5 +102,10 @@
     <string name="BankAccount">銀行帳戶</string>
     <string name="BankAccount.SwiftCode">銀行代碼</string>
     <string name="BankAccount.TransactionFailed">交易失败</string>
+    <string name="Transfer.Pay">付款</string>
+    <string name="Transfer.Receipt">收款</string>
+    <string name="Transfer.Store">商家提供</string>
+
+    
 
 </resources>

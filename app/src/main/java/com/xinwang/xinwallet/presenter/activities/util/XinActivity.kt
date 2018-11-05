@@ -24,6 +24,10 @@ import com.xinwang.xinwallet.tools.util.setPref
 import org.json.JSONObject
 import java.util.ArrayList
 import android.net.ConnectivityManager
+import com.xinwang.xinwallet.jsonrpc.Contacts
+import io.michaelrocks.libphonenumber.android.NumberParseException
+import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
+import io.michaelrocks.libphonenumber.android.Phonenumber
 
 
 open class XinActivity : AppCompatActivity() {
@@ -173,7 +177,7 @@ open class XinActivity : AppCompatActivity() {
     }
 
 
-    fun  getPREFCurrencyBalance(curName: String): Double {
+    fun getPREFCurrencyBalance(curName: String): Double {
         val obj = XinWalletApp.instance.applicationContext.getPref(R.string.PREF_CURRENCY_BALANCE, "")
         val type = object : TypeToken<ArrayList<Currency>>() {}.type
         val balanceList = Gson().fromJson<ArrayList<Currency>>(obj, type)
@@ -227,6 +231,35 @@ open class XinActivity : AppCompatActivity() {
             return true
         }
 
+    }
+
+
+    fun searchUserByPhone(countryCode: String, phoneNo: String, callback: (result: Boolean?, com.xinwang.xinwallet.models.Contacts?) -> Unit) {
+
+        var phoneUtil = PhoneNumberUtil.createInstance(this)
+        var curPhoneNo: Phonenumber.PhoneNumber?
+        try {
+            curPhoneNo = phoneUtil.parse(phoneNo, countryCode)
+                    .takeIf {
+                        phoneUtil.isValidNumber(it)
+                    }
+            if (curPhoneNo != null) {
+                val number = "${curPhoneNo.countryCode}${curPhoneNo.nationalNumber}"
+                Contacts().finedUserByPhone(arrayOf(number)) { status, result ->
+                    if (status && result!!.size >= 1) {
+                        callback(true, result[0])
+                    } else {
+                        callback(false, null)
+                    }
+
+                }
+            }
+        } catch (e: NumberParseException) {
+            callback(false, null)
+            e.printStackTrace()
+        }
+
+        callback(false, null)
     }
 
 }
